@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lab Universe — Xuesu Xiao Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f17; --panel:#0f172a; --ink:#e5e7eb; --muted:#9aa4b2;
+    --ring: rgba(96,165,250,.35); --rule: rgba(148,163,184,.22);
+    --accent:#ef4444; /* red accent, matches your site */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto}
+  a{color:#ef4444;text-decoration:none} a:hover{text-decoration:underline}
+
+  header{position:sticky;top:0;z-index:10;
+    backdrop-filter:saturate(140%) blur(6px);
+    background:linear-gradient(180deg,rgba(11,15,23,.85),rgba(11,15,23,.55));
+    border-bottom:1px solid var(--rule);
+  }
+  .nav{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;padding:12px 16px}
+  .brand{font-weight:700}
+  .pill{padding:8px 12px;border-radius:999px;background:#0c1220;border:1px solid var(--rule);color:#cbd5e1}
+  .spacer{flex:1}
+
+  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+  h1{font-size:1.6rem;margin:0 0 8px}
+  .muted{color:var(--muted)}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--rule);border-radius:16px}
+
+  /* Universe canvas */
+  .universe{position:relative;height:640px;border-radius:16px;overflow:hidden}
+  #sky{position:absolute;inset:0;
+    background:
+      radial-gradient(900px 600px at 20% 10%, rgba(239,68,68,.18), rgba(239,68,68,0) 60%),
+      radial-gradient(700px 520px at 85% 120%, rgba(96,165,250,.14), rgba(96,165,250,0) 60%);
+  }
+  .stars{position:absolute;inset:0;opacity:.5;
+    background-image:
+      radial-gradient(1px 1px at 20% 40%, #93c5fd 50%, transparent 51%),
+      radial-gradient(1px 1px at 60% 20%, #c084fc 50%, transparent 51%),
+      radial-gradient(1px 1px at 80% 80%, #fda4af 50%, transparent 51%),
+      radial-gradient(1px 1px at 35% 75%, #bae6fd 50%, transparent 51%);
+  }
+
+  .controls{position:absolute;left:16px;top:16px;display:flex;flex-wrap:wrap;gap:8px;z-index:5}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#0c1220;border:1px solid var(--rule);cursor:pointer;user-select:none}
+  .chip input{all:unset;width:14px;height:14px;border-radius:3px;border:1px solid var(--rule);display:inline-block}
+  .chip.active{outline:2px solid var(--ring)}
+
+  /* Planets */
+  .node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+  .planet{width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg, rgba(239,68,68,.25), rgba(96,165,250,.25));
+    border:2px solid var(--rule); box-shadow:0 0 0 4px rgba(239,68,68,.09), 0 6px 20px rgba(0,0,0,.5);
+    display:grid;place-items:center;cursor:pointer;transition:transform .15s ease;
+  }
+  .planet img{width:78px;height:78px;border-radius:50%;object-fit:cover}
+  .node:hover .planet{transform:scale(1.06)}
+  .label{font-size:.85rem;color:#d1d5db;text-align:center;max-width:180px}
+
+  /* Links */
+  svg.links{position:absolute;inset:0;pointer-events:none}
+  .link{stroke:rgba(148,163,184,.35);stroke-width:1.5}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:40}
+  .modal.open{display:flex}
+  .sheet{max-width:800px;width:min(92%,800px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .sheet-header{display:flex;gap:16px;align-items:center;padding:16px;border-bottom:1px solid var(--rule)}
+  .sheet-header img{width:64px;height:64px;border-radius:12px;object-fit:cover}
+  .sheet-body{padding:16px;color:#cbd5e1}
+  .close{margin-left:auto;background:#0b1220;border:1px solid var(--rule);color:#e5e7eb;padding:8px 10px;border-radius:10px;cursor:pointer}
+  .tag{display:inline-block;margin:6px 6px 0 0;padding:4px 8px;border-radius:999px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);font-size:.78rem}
+
+  .hero{padding:16px}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">Lab Universe</div>
+    <a class="pill" href="index.html">← Back to Home</a>
+    <span class="spacer"></span>
+    <a class="pill" href="#about">About</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="card hero">
+    <h1>MCU-style “Universe” of the Xuesu Xiao Lab</h1>
+    <div class="muted">Click a planet to view details. Use the chips to filter by role/topic. All code and visuals here are original, no third-party assets.</div>
+  </div>
+
+  <div class="card universe" id="universe">
+    <div id="sky"></div>
+    <div class="stars"></div>
+    <svg class="links" viewBox="0 0 1200 640" preserveAspectRatio="none"></svg>
+    <div class="controls" id="controls"></div>
+    <!-- nodes injected by JS -->
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal" aria-hidden="true" role="dialog">
+  <div class="sheet">
+    <div class="sheet-header">
+      <img id="m-thumb" alt="">
+      <div>
+        <div id="m-title" style="font-weight:700"></div>
+        <div id="m-sub" class="muted" style="font-size:.9rem"></div>
+      </div>
+      <button class="close" id="m-close">Close</button>
+    </div>
+    <div class="sheet-body">
+      <div id="m-desc"></div>
+      <div id="m-tags" style="margin-top:6px"></div>
+      <div id="m-links" style="margin-top:10px"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== DATA: Edit this with your lab members ======
+   Put images into assets/lab/ and reference them here.
+   Coordinates are a 1200x640 design space (x:0-1200, y:0-640).
+*/
+const data = {
+  filters: [
+    { id:'pi', label:'PI' },
+    { id:'phd', label:'PhD' },
+    { id:'ms', label:'MS' },
+    { id:'ug', label:'Undergrad' },
+    { id:'alum', label:'Alumni' },
+    { id:'nav', label:'Navigation' },
+    { id:'cv',  label:'Computer Vision' },
+    { id:'rl',  label:'Reinforcement Learning' }
+  ],
+  nodes: [
+    // EXAMPLES — replace with real people from your lab page:
+    { id:'xiao', title:'Xuesu Xiao', sub:'PI — Robotics', img:'assets/lab/xiao.jpg',
+      topics:['pi','nav','rl'], x:210, y:200,
+      desc:'Principal Investigator. Interests include autonomous navigation and field robotics.',
+      links:[{label:'Lab Page', href:'https://robotixx.cs.gmu.edu/'}]
+    },
+    { id:'student1', title:'PhD Student A', sub:'Navigation & RL', img:'assets/lab/student1.jpg',
+      topics:['phd','nav','rl'], x:460, y:320,
+      desc:'Researches hybrid planners combining global planning with SAC-based local policies.',
+      links:[{label:'GitHub', href:'#'}]
+    },
+    { id:'student2', title:'MS Student B', sub:'Computer Vision', img:'assets/lab/student2.jpg',
+      topics:['ms','cv'], x:720, y:260,
+      desc:'Works on fine-grained recognition and perception for mobile robots.',
+      links:[{label:'Website', href:'#'}]
+    },
+    { id:'alum1', title:'Alumni C', sub:'Alumni', img:'assets/lab/alum1.jpg',
+      topics:['alum','nav'], x:950, y:420,
+      desc:'Former member focused on multi-robot coordination.',
+      links:[{label:'LinkedIn', href:'#'}]
+    }
+  ],
+  // draw some relationships (pairs of node ids)
+  links: [
+    ['xiao','student1'], ['xiao','student2'], ['student1','student2']
+  ]
+};
+
+/* ====== Rendering logic (no dependencies) ====== */
+const wrap = document.getElementById('universe');
+const linkSvg = document.querySelector('svg.links');
+const controls = document.getElementById('controls');
+const active = new Set();
+const nodeMap = new Map();
+
+data.filters.forEach(f=>{
+  const chip = document.createElement('label');
+  chip.className = 'chip';
+  chip.innerHTML = `<input type="checkbox"/> ${f.label}`;
+  chip.onclick = (e)=>{
+    if(e.target.tagName.toLowerCase()==='input'){
+      if(e.target.checked) active.add(f.id); else active.delete(f.id);
+      chip.classList.toggle('active', e.target.checked);
+      renderNodes();
+    }
+  };
+  controls.appendChild(chip);
+});
+
+function renderNodes(){
+  // clear old nodes
+  [...wrap.querySelectorAll('.node')].forEach(n=>n.remove());
+  nodeMap.clear();
+
+  const filtered = data.nodes.filter(n => active.size===0 || n.topics.some(t=>active.has(t)));
+  filtered.forEach(n=>{
+    const el = document.createElement('div');
+    el.className = 'node';
+    el.style.left = (n.x/1200*100)+'%';
+    el.style.top  = (n.y/640*100)+'%';
+    el.innerHTML = `
+      <div class="planet" data-id="${n.id}"><img alt="${n.title}" src="${n.img}"></div>
+      <div class="label">${n.title}</div>
+    `;
+    el.querySelector('.planet').addEventListener('click', ()=> openModal(n));
+    wrap.appendChild(el);
+    nodeMap.set(n.id, el);
+  });
+  drawLinks();
+}
+function drawLinks(){
+  const W=1200,H=640; linkSvg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  linkSvg.innerHTML = '';
+  data.links.forEach(([a,b])=>{
+    if(!nodeMap.has(a) || !nodeMap.has(b)) return;
+    const A = data.nodes.find(n=>n.id===a), B = data.nodes.find(n=>n.id===b);
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.classList.add('link');
+    line.setAttribute('x1', A.x); line.setAttribute('y1', A.y);
+    line.setAttribute('x2', B.x); line.setAttribute('y2', B.y);
+    linkSvg.appendChild(line);
+  });
+}
+const modal = document.getElementById('modal');
+const mClose = document.getElementById('m-close');
+function openModal(n){
+  document.getElementById('m-thumb').src = n.img;
+  document.getElementById('m-title').textContent = n.title;
+  document.getElementById('m-sub').textContent = n.sub || '';
+  document.getElementById('m-desc').textContent = n.desc || '';
+  document.getElementById('m-tags').innerHTML = (n.topics||[]).map(t=>`<span class="tag">${labelFor(t)}</span>`).join('');
+  document.getElementById('m-links').innerHTML = (n.links||[]).map(l=>`<a class="pill" style="margin-right:8px" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('');
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+}
+mClose.onclick = ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); };
+modal.addEventListener('click', (e)=>{ if(e.target===modal) mClose.click(); });
+
+function labelFor(id){ const f=data.filters.find(x=>x.id===id); return f?f.label:id; }
+renderNodes();
+window.addEventListener('resize', drawLinks);
+</script>
+</body>
+</html>
