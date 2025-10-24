@@ -8,531 +8,430 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0b0f17; --panel:#0f172a; --ink:#e5e7eb; --muted:#9aa4b2;
-    --ring: rgba(96,165,250,.35); --rule: rgba(148,163,184,.22);
-    --accent:#ef4444; 
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto}
-  a{color:#ef4444;text-decoration:none} a:hover{text-decoration:underline}
-
-  header{position:sticky;top:0;z-index:10;
-    backdrop-filter:saturate(140%) blur(6px);
-    background:linear-gradient(180deg,rgba(11,15,23,.85),rgba(11,15,23,.55));
-    border-bottom:1px solid var(--rule);
-  }
-  .nav{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;padding:12px 16px}
-  .brand{font-weight:700}
-  .pill{padding:8px 12px;border-radius:999px;background:#0c1220;border:1px solid var(--rule);color:#cbd5e1}
-  .spacer{flex:1}
-
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  h1{font-size:1.6rem;margin:0 0 8px}
-  .muted{color:var(--muted)}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--rule);border-radius:16px}
-
-  /* Universe canvas */
-  .universe{position:relative;height:640px;border-radius:16px;overflow:hidden; touch-action:none; /* Disable default touch actions like pinch-zoom */ }
-  #sky{position:absolute;inset:0;
-    background:
-      radial-gradient(900px 600px at 20% 10%, rgba(239,68,68,.18), rgba(239,68,68,0) 60%),
-      radial-gradient(700px 520px at 85% 120%, rgba(96,165,250,.14), rgba(96,165,250,0) 60%);
-  }
-  .stars{position:absolute;inset:0;opacity:.7;pointer-events:none;
-    background-image:
-      radial-gradient(1px 1px at 12% 18%, #ffffff 70%, transparent 71%),
-      radial-gradient(1px 1px at 22% 46%, #bae6fd 70%, transparent 71%),
-      radial-gradient(1px 1px at 31% 78%, #c084fc 70%, transparent 71%),
-      radial-gradient(1px 1px at 44% 28%, #fda4af 70%, transparent 71%),
-      radial-gradient(1px 1px at 57% 63%, #ffffff 70%, transparent 71%),
-      radial-gradient(1px 1px at 69% 12%, #bae6fd 70%, transparent 71%),
-      radial-gradient(1px 1px at 81% 41%, #c084fc 70%, transparent 71%),
-      radial-gradient(1px 1px at 90% 83%, #fda4af 70%, transparent 71%);
-    background-repeat:no-repeat;
-  }
-
-  .controls{position:absolute;left:16px;top:16px;display:flex;flex-wrap:wrap;gap:8px;z-index:5}
-  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#0c1220;border:1px solid var(--rule);cursor:pointer;user-select:none}
-  .chip input{all:unset;width:14px;height:14px;border-radius:3px;border:1px solid var(--rule);display:inline-block}
-  .chip.active{outline:2px solid var(--ring)}
-
-  /* Stage (for pan, zoom, rotate). Also hosts CSS vars to counter-scale nodes */
-  #stage { position:absolute; inset:0; transform-origin:50% 50%; will-change:transform; 
-    /* defaults for custom props used by node content */
-    --invScale: 1;    /* 1/scale */
-    --negRot: 0deg;   /* -rot to keep labels upright */
-  }
-
-  /* Nodes */
-  .node{
-    position:absolute;
-    transform:translate(-50%,-50%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    /* Add transition for smoother filtering */
-    transition: opacity 0.3s ease;
-    opacity: 1;
+  :root{
+    --bg:#0b0f17; --panel:#0f172a; --ink:#e5e7eb; --muted:#9aa4b2;
+    --ring: rgba(96,165,250,.35); --rule: rgba(148,163,184,.22);
+    --accent:#ef4444; 
   }
-  /* Hidden class for filtering */
-  .node.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
-  .node .content{ display:flex; flex-direction:column; align-items:center; gap:8px; 
-    transform: scale(var(--invScale)) rotate(var(--negRot));
-    transform-origin: center; }
-  .planet{width:88px;height:88px;border-radius:50%;
-    background:linear-gradient(135deg, rgba(239,68,68,.25), rgba(96,165,250,.25));
-    border:2px solid var(--rule); box-shadow:0 0 0 4px rgba(239,68,68,.09), 0 6px 20px rgba(0,0,0,.5);
-    display:grid;place-items:center;cursor:grab;transition:transform .15s ease; /* Changed cursor to 'grab' */
-  }
-  .planet:active { cursor: grabbing; } /* Show 'grabbing' cursor on click */
-  .planet img{width:78px;height:78px;border-radius:50%;object-fit:cover; pointer-events:none; /* Prevent img from capturing drag events */}
-  .node:hover .planet{transform:scale(1.06)}
-  .label{font-size:.85rem;color:#d1d5db;text-align:center;max-width:180px; pointer-events: none; /* Prevent label from capturing drag events */}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto}
+  a{color:#ef4444;text-decoration:none} a:hover{text-decoration:underline}
 
-  /* Links */
-  svg.links{position:absolute;inset:0;pointer-events:none}
-  .link{
-    stroke:rgba(148,163,184,.35);
-    stroke-width:1.5;
-    /* Add transition for smoother filtering */
-    transition: opacity 0.3s ease;
-    opacity: 1;
+  header{position:sticky;top:0;z-index:10;
+    backdrop-filter:saturate(140%) blur(6px);
+    background:linear-gradient(180deg,rgba(11,15,23,.85),rgba(11,15,23,.55));
+    border-bottom:1px solid var(--rule);
   }
-  /* Hidden class for filtering */
-  .link.hidden {
-    opacity: 0;
+  .nav{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;padding:12px 16px}
+  .brand{font-weight:700}
+  .pill{padding:8px 12px;border-radius:999px;background:#0c1220;border:1px solid var(--rule);color:#cbd5e1;cursor:pointer}
+  .spacer{flex:1}
+
+  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+  h1{font-size:1.6rem;margin:0 0 8px}
+  .muted{color:var(--muted)}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--rule);border-radius:16px}
+
+  /* Universe canvas */
+  .universe{position:relative;height:640px;border-radius:16px;overflow:hidden}
+  #sky{position:absolute;inset:0;
+    background:
+      radial-gradient(900px 600px at 20% 10%, rgba(239,68,68,.18), rgba(239,68,68,0) 60%),
+      radial-gradient(700px 520px at 85% 120%, rgba(96,165,250,.14), rgba(96,165,250,0) 60%);
+  }
+  .stars{position:absolute;inset:0;opacity:.6;pointer-events:none;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, #ffffff 70%, transparent 71%),
+      radial-gradient(1px 1px at 22% 46%, #bae6fd 70%, transparent 71%),
+      radial-gradient(1px 1px at 31% 78%, #c084fc 70%, transparent 71%),
+      radial-gradient(1px 1px at 44% 28%, #fda4af 70%, transparent 71%),
+      radial-gradient(1px 1px at 57% 63%, #ffffff 70%, transparent 71%),
+      radial-gradient(1px 1px at 69% 12%, #bae6fd 70%, transparent 71%),
+      radial-gradient(1px 1px at 81% 41%, #c084fc 70%, transparent 71%),
+      radial-gradient(1px 1px at 90% 83%, #fda4af 70%, transparent 71%);
+    background-repeat:no-repeat;
   }
 
-  /* Modal */
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:40}
-  .modal.open{display:flex}
-  .sheet{max-width:800px;width:min(92%,800px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-  .sheet-header{display:flex;gap:16px;align-items:center;padding:16px;border-bottom:1px solid var(--rule)}
-  .sheet-header img{width:64px;height:64px;border-radius:12px;object-fit:cover}
-  .sheet-body{padding:16px;color:#cbd5e1}
-  .close{margin-left:auto;background:#0b1220;border:1px solid var(--rule);color:#e5e7eb;padding:8px 10px;border-radius:10px;cursor:pointer}
-  .tag{display:inline-block;margin:6px 6px 0 0;padding:4px 8px;border-radius:999px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);font-size:.78rem}
-  .hero{padding:16px}
+  .controls{position:absolute;left:16px;top:16px;display:flex;flex-wrap:wrap;gap:8px;z-index:5}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#0c1220;border:1px solid var(--rule);cursor:pointer;user-select:none}
+  .chip input{all:unset;width:14px;height:14px;border-radius:3px;border:1px solid var(--rule);display:inline-block}
+  .chip.active{outline:2px solid var(--ring)}
+
+  /* Stage (transform target). Host custom props to counter-scale nodes */
+  #stage{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform;--invScale:1;--negRot:0deg}
+
+  /* Nodes: outer .node moves with stage; inner .content counters scale/rotation */
+  .node{position:absolute;transform:translate(-50%,-50%)}
+  .node .content{display:flex;flex-direction:column;align-items:center;gap:8px;transform:scale(var(--invScale)) rotate(var(--negRot));transform-origin:center}
+  .planet{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg, rgba(239,68,68,.25), rgba(96,165,250,.25));border:2px solid var(--rule);box-shadow:0 0 0 4px rgba(239,68,68,.09),0 6px 20px rgba(0,0,0,.5);display:grid;place-items:center;cursor:pointer;transition:transform .15s ease}
+  .planet img{width:78px;height:78px;border-radius:50%;object-fit:cover}
+  .node:hover .planet{transform:scale(1.06)}
+  .label{font-size:.85rem;color:#d1d5db;text-align:center;max-width:180px}
+
+  /* Links live inside stage so they transform with nodes */
+  svg.links{position:absolute;inset:0;pointer-events:none}
+  .link{stroke:rgba(148,163,184,.35);stroke-width:1.5}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:40}
+  .modal.open{display:flex}
+  .sheet{max-width:800px;width:min(92%,800px);background:var(--panel);border:1px solid var(--rule);border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .sheet-header{display:flex;gap:16px;align-items:center;padding:16px;border-bottom:1px solid var(--rule)}
+  .sheet-header img{width:64px;height:64px;border-radius:12px;object-fit:cover}
+  .sheet-body{padding:16px;color:#cbd5e1}
+  .close{margin-left:auto;background:#0b1220;border:1px solid var(--rule);color:#e5e7eb;padding:8px 10px;border-radius:10px;cursor:pointer}
+  .tag{display:inline-block;margin:6px 6px 0 0;padding:4px 8px;border-radius:999px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);font-size:.78rem}
+  .hero{padding:16px}
 </style>
 </head>
 <body>
 <header>
-  <div class="nav">
-    <div class="brand">Lab Universe</div>
-    <a class="pill" href="index.html">← Back to Home</a>
-    <span class="spacer"></span>
-    <a class="pill" href="#about">About</a>
-  </div>
+  <div class="nav">
+    <div class="brand">Lab Universe</div>
+    <a class="pill" href="index.html">← Back to Home</a>
+    <span class="spacer"></span>
+    <a class="pill" href="#about">About</a>
+  </div>
 </header>
 
 <div class="wrap">
-  <div class="card hero">
-    <h1>Research Universe</h1>
-    <!-- Updated instructions -->
-    <div class="muted">Click a planet to view details. Drag planets to move them. Use the chips to filter by role/topic. You can pan, zoom, and rotate the view.</div>
-  </div>
+  <div class="card hero">
+    <h1>Research Universe</h1>
+    <div class="muted">Click a planet to view details. Use the chips to filter by role/topic. Pan/zoom/rotate with mouse or buttons. Nodes stay readable; edges follow nodes.</div>
+  </div>
 
-  <div class="card universe" id="universe">
-    <div id="sky"></div>
-    <div class="stars"></div>
+  <div class="card universe" id="universe">
+    <div id="sky"></div>
+    <div class="stars"></div>
 
-    <!-- THIS DIV WAS MISSING IN YOUR LAST VERSION -->
-    <div class="controls" id="controls">
-      <!-- Filter chips injected here by JS -->
-      <button class="chip" id="zoom-in">＋</button>
-      <button class="chip" id="zoom-out">－</button>
-      <button class="chip" id="rot-left">⟲</button>
-      <button class="chip" id="rot-right">⟳</button>
-      <button class="chip" id="reset">Reset</button>
-    </div>
-    <!-- END OF MISSING DIV -->
+    <div class="controls" id="controls">
+      <!-- Filter chips injected before these buttons -->
+      <button class="chip" id="zoom-in">＋</button>
+      <button class="chip" id="zoom-out">－</button>
+      <button class="chip" id="rot-left">⟲</button>
+      <button class="chip" id="rot-right">⟳</button>
+      <button class="chip" id="reset">Reset</button>
+    </div>
 
-    <!-- Stage (everything that moves together) -->
-    <div id="stage">
-      <!-- Set width/height for links SVG to match physics coordinates -->
-      <svg class="links" width="1200" height="640" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid meet"></svg>
-      <!-- nodes injected by JS -->
-    </div>
-  </div>
+    <!-- Stage holds BOTH the SVG and the nodes -->
+    <div id="stage">
+      <svg class="links" viewBox="0 0 1200 640" preserveAspectRatio="none"></svg>
+      <!-- nodes injected by JS -->
+    </div>
+  </div>
 </div>
 
 <!-- Modal -->
 <div class="modal" id="modal" aria-hidden="true" role="dialog">
-  <div class="sheet">
-    <div class="sheet-header">
-      <img id="m-thumb" alt="">
-      <div>
-        <div id="m-title" style="font-weight:700"></div>
-        <div id="m-sub" class="muted" style="font-size:.9rem"></div>
-      </div>
-      <button class="close" id="m-close">Close</button>
-    </div>
-    <div class="sheet-body">
-      <div id="m-desc"></div>
-      <div id="m-tags" style="margin-top:6px"></div>
-      <div id="m-links" style="margin-top:10px"></div>
-    </div>
-  </div>
+  <div class="sheet">
+    <div class="sheet-header">
+      <img id="m-thumb" alt="">
+      <div>
+        <div id="m-title" style="font-weight:700"></div>
+        <div id="m-sub" class="muted" style="font-size:.9rem"></div>
+      </div>
+      <button class="close" id="m-close">Close</button>
+    </div>
+    <div class="sheet-body">
+      <div id="m-desc"></div>
+      <div id="m-tags" style="margin-top:6px"></div>
+      <div id="m-links" style="margin-top:10px"></div>
+    </div>
+  </div>
 </div>
 
 <script>
-// === Stage references ===
+// ===== Stage refs =====
 const wrap = document.getElementById('universe');
 const stage = document.getElementById('stage');
 const linkSvg = stage.querySelector('svg.links');
-const controls = document.getElementById('controls'); // This line needs the div in the HTML
+const controls = document.getElementById('controls');
 
-// === Data (Unchanged) ===
+// ===== Data (your full list) =====
 const data = {
-  filters: [
-    { id:'pi', label:'PI' },
-    { id:'postdoc', label:'Postdoc' },
-    { id:'phd', label:'PhD' },
-    { id:'ms', label:'MS' },
-    { id:'alum', label:'Alumni' },
-  ],
-  nodes: [
-    { id:'xuesu-xiao', title:'Xuesu Xiao', sub:'PI — Robotics', img:'assets/lab/xiao.jpg', topics:['pi'], x:210, y:200, desc:`Principal Investigator. Dr. Xuesu Xiao is an Assistant Professor of Computer Science at George Mason University. His research focuses on developing highly capable and intelligent mobile robots that are robustly deployable in the real world with minimal human supervision.`, links:[{label:'Lab Page', href:'https://robotixx.cs.gmu.edu/'}] },
-    { id:'daeun-song', title:'Daeun Song', sub:'Postdoctoral Researcher — HRI', img:'assets/lab/song.jpg', topics:['postdoc'], x:460, y:320, desc:`Dr. Daeun Song is a Postdoctoral Researcher in the Department of Computer Science at George Mason University.`, links:[{label:'Website', href:'https://daeunsong.github.io/'},{label:'GitHub', href:'https://github.com/daeunsong'}] },
-    { id:'sameep-shrestha', title:'Sameep Shrestha', sub:'PhD Student — Robotics', img:'assets/lab/sameep.jpg', topics:['phd'], x:540, y:280, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'https://sameepshrestha.github.io/'}] },
-    { id:'nhat-le', title:'Nhat Le', sub:'PhD Student — Robotics', img:'assets/lab/nhat.jpeg', topics:['phd'], x:640, y:340, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'GitHub', href:'https://github.com/nhatleminh1997'},{label:'LinkedIn', href:'https://www.linkedin.com/in/nhat-le-026392149/'}] },
-    { id:'harsh-rangwala', title:'Harsh Rangwala', sub:'PhD Student — Robotics', img:'assets/lab/harsh.jpg', topics:['phd'], x:740, y:300, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'LinkedIn', href:'https://www.linkedin.com/in/harsh-rangwala-020a66164/'},{label:'GitHub', href:'https://github.com/HarshRangwala'}] },
-    { id:'sohail-shaikh', title:'Sohail Shaikh', sub:'PhD Student — Robotics', img:'assets/lab/sohail.png', topics:['phd'], x:860, y:260, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'LinkedIn', href:'https://www.linkedin.com/in/sohailshaikh/'}] },
-    { id:'manas-gupta', title:'Manas Gupta', sub:'PhD Student — Robotics', img:'assets/lab/manas.jpg', topics:['phd'], x:900, y:360, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'LinkedIn', href:'https://www.linkedin.com/in/manasguptangp/'}] },
-    { id:'senthurbavan-kirubaharan', title:'Senthurbavan Kirubaharan', sub:'PhD Student — Robotics', img:'assets/lab/senthu.jpg', topics:['phd'], x:1020, y:300, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'https://senthurbavan.github.io/'},{label:'LinkedIn', href:'https://www.linkedin.com/in/senthurbavan/'}] },
-    { id:'yanlin-zhou', title:'Yanlin Zhou', sub:'PhD Student — Robotics', img:'assets/lab/yanlin.jpg', topics:['phd'], x:980, y:420, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'GitHub', href:'https://github.com/Zed2135'}] },
-    { id:'linji-wang', title:'Linji Wang', sub:'PhD Student — Robotics', img:'assets/lab/linji.jpg', topics:['phd'], x:820, y:420, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'https://linjiwang.com/'},{label:'GitHub', href:'https://github.com/linjiw'},{label:'LinkedIn', href:'https://www.linkedin.com/in/linjiw/'}] },
-    { id:'tong-xu', title:'Tong Xu', sub:'PhD Student — Robotics', img:'assets/lab/tong.jpg', topics:['phd'], x:700, y:420, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'https://xutong05.github.io/'},{label:'GitHub', href:'https://github.com/xutong05'},{label:'LinkedIn', href:'https://www.linkedin.com/in/tong-xu-a802941b1/'}] },
-    { id:'saad-abdul-ghani', title:'Saad Abdul Ghani', sub:'PhD Student — Robotics', img:'assets/lab/saad.jpeg', topics:['phd'], x:600, y:460, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'GitHub', href:'https://github.com/Saadmaghani'},{label:'LinkedIn', href:'https://www.linkedin.com/in/saad-ghani-9b5824158/'}] },
-    { id:'amir-payandeh', title:'Amir Payandeh', sub:'PhD Student — Robotics', img:'assets/lab/amirreza.jpg', topics:['phd'], x:500, y:460, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'GitHub', href:'https.com/Amir-pyh'},{label:'LinkedIn', href:'https.com/in/amir-payandeh/'}] },
-    { id:'mohammad-nazeri', title:'Mohammad Nazeri', sub:'PhD Student — Robotics', img:'assets/lab/mohammad.jpg', topics:['phd'], x:400, y:460, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'https://mhnazeri.github.io/'},{label:'GitHub', href:'https://github.com/mhnazeri'},{label:'LinkedIn', href:'https://www.linkedin.com/in/mhnazeri/'}] },
-    { id:'dibyendu-das', title:'Dibyendu Das', sub:'PhD Student — Robotics', img:'assets/lab/dibyendu.jpg', topics:['phd'], x:320, y:420, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'LinkedIn', href:'https://www.linkedin.com/in/dibyendu-das-b480481bb/'}] },
-    { id:'aniket-datar', title:'Aniket Datar', sub:'PhD Student — Robotics', img:'assets/lab/aniket.jpg', topics:['phd'], x:260, y:340, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'LinkedIn', href:'https::/www.linkedin.com/in/aniket-datar-9187a48b/'}] },
-    { id:'manshi-limbu', title:'Manshi Limbu', sub:'PhD Student — Robotics', img:'assets/lab/manshi.jpg', topics:['phd'], x:300, y:280, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'httpss://mlimbuu.github.io/'},{'GitHub', href:'https://github.com/mlimbuu'}] },
-    { id:'anuj-pokhrel', title:'Anuj Pokhrel', sub:'PhD Student — Robotics', img:'assets/lab/anuj.jpg', topics:['phd'], x:360, y:220, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'httpss://anujpokhrel.github.io/'},{'GitHub', href:'https://github.com/AnujPokhrel'},{label:'LinkedIn', href:'httpss://www.linkedin.com/in/anuj-pokhrel-9b8b67156/'}] },
-    { id:'amir-hossain-raj', title:'Amir Hossain Raj', sub:'PhD Student — Robotics', img:'assets/lab/amir.jpeg', topics:['phd'], x:440, y:200, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'httpss://amirraj.com/'},{'GitHub', href:'https://github.com/amirraj/'},{'LinkedIn', href:'httpss://www.linkedin.com/in/amirraj/'}] },
-    { id:'chenhui-pan', title:'Chenhui Pan', sub:'PhD Student — Robotics', img:'assets/lab/chenhui.jpg', topics:['phd'], x:520, y:180, desc:`Ph.D. student in the Department of Computer Science at George Mason University.` },
-    { id:'duc-aaron-nguyen', title:'Duc (Aaron) M. Nguyen', sub:'PhD Student — Robotics', img:'assets/lab/aaron.png', topics:['phd'], x:620, y:180, desc:`Ph.D. student in the Department of Computer Science at George Mason University.`, links:[{label:'Webpage', href:'httpss://ducmngx.github.io/'},{'GitHub', href:'https://github.com/ducmngx'}] },
-    { id:'ms-alex', title:'Alex Card', sub:'Robotics', img:'assets/lab/alex.png', topics:['ms'], x:720, y:180, desc:`Interests include autonomous robotics, machine learning, computer vision, and motion planning.`, links:[{label:'GitHub', href:'httpss://github.com/acard5meg'}] },
-    { id:'deiching', title:'David Abuín Eichinger', sub:'Robotics', img:'assets/self.png', topics:['ms'], x:820, y:180, desc:`David Abuín Eichinger is a Master's student in the Department of Computer Science at George Mason University. He received his Post-baccalaureate Certificate in Computer Science from GMU. He also received his B.S. degrees in Microbiology from North Carolina State University and Maritime Transportation from the United States Merchant Marine Academy. He is a US Navy veteran with joint operational planning and knowledge management experience. David's interests include biomimicry and bio-inspired robotics with the aim of using robotics in various biological applications such as laboratory automation, environmental restoration, agriculture, and providing autonomous assistance for caretakers of senior citizens and those with disabilities. In his free time, he enjoys reading, playing with family, gardening, and physical fitness activities such as weightlifting, running, cycling, and hiking.`, links:[{label:'LinkedIn', href:'httpss://www.linkedin.com/in/david-abu%C3%ADn-e-b09a36267/'}] }
-],
-links:[
-    ['xuesu-xiao','daeun-song'],['xuesu-xiao','sameep-shrestha'],['xuesu-xiao','nhat-le'],['xuesu-xiao','harsh-rangwala'],['xuesu-xiao','sohail-shaikh'],['xuesu-xiao','manas-gupta'],['xuesu-xiao','senthurbavan-kirubaharan'],['xuesu-xiao','yanlin-zhou'],['xuesu-xiao','linji-wang'],['xuesu-xiao','tong-xu'],['xuesu-xiao','saad-abdul-ghani'],['xuesu-xiao','amir-payandeh'],['xuesu-xiao','mohammad-nazeri'],['xuesu-xiao','dibyendu-das'],['xuesu-xiao','aniket-datar'],['xuesu-xiao','manshi-limbu'],['xuesu-xiao','anuj-pokhrel'],['xuesu-xiao','amir-hossain-raj'],['xuesu-xiao','chenhui-pan'],['xuesu-xiao','duc-aaron-nguyen'],['xuesu-xiao','ms-alex'],['xuesu-xiao','deiching']
-  ]
+  filters: [
+    { id:'pi', label:'PI' },
+    { id:'postdoc', label:'Postdoc' },
+    { id:'phd', label:'PhD' },
+    { id:'ms', label:'MS' },
+    { id:'alum', label:'Alumni' }
+  ],
+
+  nodes: [
+    {
+      id:'xuesu-xiao', title:'Xuesu Xiao', sub:'PI — Robotics', img:'assets/lab/xiao.jpg', topics:['pi'], x:210, y:200,
+      desc:`Principal Investigator. Dr. Xuesu Xiao is an Assistant Professor of Computer Science at George Mason University.
+            His research focuses on developing highly capable and intelligent mobile robots that are robustly deployable
+            in the real world with minimal human supervision.`,
+      links:[{label:'Lab Page', href:'https://robotixx.cs.gmu.edu/'}]
+    },
+
+    { id:'daeun-song', title:'Daeun Song', sub:'Postdoctoral Researcher — HRI', img:'assets/lab/song.jpg', topics:['postdoc'], x:460, y:320,
+      desc:`Dr. Daeun Song is a Postdoctoral Researcher in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Website', href:'https://daeunsong.github.io/'}, {label:'GitHub', href:'https://github.com/daeunsong'} ]
+    },
+
+    { id:'sameep-shrestha', title:'Sameep Shrestha', sub:'PhD Student — Robotics', img:'assets/lab/sameep.jpg', topics:['phd'], x:540, y:280,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[{label:'Webpage', href:'https://sameepshrestha.github.io/'}]
+    },
+
+    { id:'nhat-le', title:'Nhat Le', sub:'PhD Student — Robotics', img:'assets/lab/nhat.jpeg', topics:['phd'], x:640, y:340,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'GitHub', href:'https://github.com/nhatleminh1997'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/nhat-le-026392149/'} ]
+    },
+
+    { id:'harsh-rangwala', title:'Harsh Rangwala', sub:'PhD Student — Robotics', img:'assets/lab/harsh.jpg', topics:['phd'], x:740, y:300,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/harsh-rangwala-020a66164/'}, {label:'GitHub', href:'https://github.com/HarshRangwala'} ]
+    },
+
+    { id:'sohail-shaikh', title:'Sohail Shaikh', sub:'PhD Student — Robotics', img:'assets/lab/sohail.png', topics:['phd'], x:860, y:260,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/sohailshaikh/'} ]
+    },
+
+    { id:'manas-gupta', title:'Manas Gupta', sub:'PhD Student — Robotics', img:'assets/lab/manas.jpg', topics:['phd'], x:900, y:360,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/manasguptangp/'} ]
+    },
+
+    { id:'senthurbavan-kirubaharan', title:'Senthurbavan Kirubaharan', sub:'PhD Student — Robotics', img:'assets/lab/senthu.jpg', topics:['phd'], x:1020, y:300,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://senthurbavan.github.io/'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/senthurbavan/'} ]
+    },
+
+    { id:'yanlin-zhou', title:'Yanlin Zhou', sub:'PhD Student — Robotics', img:'assets/lab/yanlin.jpg', topics:['phd'], x:980, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'GitHub', href:'https://github.com/Zed2135'} ]
+    },
+
+    { id:'linji-wang', title:'Linji Wang', sub:'PhD Student — Robotics', img:'assets/lab/linji.jpg', topics:['phd'], x:820, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://linjiwang.com/'}, {label:'GitHub', href:'https://github.com/linjiw'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/linjiw/'} ]
+    },
+
+    { id:'tong-xu', title:'Tong Xu', sub:'PhD Student — Robotics', img:'assets/lab/tong.jpg', topics:['phd'], x:700, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://xutong05.github.io/'}, {label:'GitHub', href:'https://github.com/xutong05'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/tong-xu-a802941b1/'} ]
+    },
+
+    { id:'saad-abdul-ghani', title:'Saad Abdul Ghani', sub:'PhD Student — Robotics', img:'assets/lab/saad.jpeg', topics:['phd'], x:600, y:460,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'GitHub', href:'https://github.com/Saadmaghani'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/saad-ghani-9b5824158/'} ]
+    },
+
+    { id:'amir-payandeh', title:'Amir Payandeh', sub:'PhD Student — Robotics', img:'assets/lab/amirreza.jpg', topics:['phd'], x:500, y:460,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'GitHub', href:'https://github.com/Amir-pyh'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/amir-payandeh/'} ]
+    },
+
+    { id:'mohammad-nazeri', title:'Mohammad Nazeri', sub:'PhD Student — Robotics', img:'assets/lab/mohammad.jpg', topics:['phd'], x:400, y:460,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://mhnazeri.github.io/'}, {label:'GitHub', href:'https://github.com/mhnazeri'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/mhnazeri/'} ]
+    },
+
+    { id:'dibyendu-das', title:'Dibyendu Das', sub:'PhD Student — Robotics', img:'assets/lab/dibyendu.jpg', topics:['phd'], x:320, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/dibyendu-das-b480481bb/'} ]
+    },
+
+    { id:'aniket-datar', title:'Aniket Datar', sub:'PhD Student — Robotics', img:'assets/lab/aniket.jpg', topics:['phd'], x:260, y:340,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/aniket-datar-9187a48b/'} ]
+    },
+
+    { id:'manshi-limbu', title:'Manshi Limbu', sub:'PhD Student — Robotics', img:'assets/lab/manshi.jpg', topics:['phd'], x:300, y:280,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://mlimbuu.github.io/'}, {label:'GitHub', href:'https://github.com/mlimbuu'} ]
+    },
+
+    { id:'anuj-pokhrel', title:'Anuj Pokhrel', sub:'PhD Student — Robotics', img:'assets/lab/anuj.jpg', topics:['phd'], x:360, y:220,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://anujpokhrel.github.io/'}, {label:'GitHub', href:'https://github.com/AnujPokhrel'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/anuj-pokhrel-9b8b67156/'} ]
+    },
+
+    { id:'amir-hossain-raj', title:'Amir Hossain Raj', sub:'PhD Student — Robotics', img:'assets/lab/amir.jpeg', topics:['phd'], x:440, y:200,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://amirraj.com/'}, {label:'GitHub', href:'https://github.com/amirraj/'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/amirraj/'} ]
+    },
+
+    { id:'chenhui-pan', title:'Chenhui Pan', sub:'PhD Student — Robotics', img:'assets/lab/chenhui.jpg', topics:['phd'], x:520, y:180,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`
+    },
+
+    { id:'duc-aaron-nguyen', title:'Duc (Aaron) M. Nguyen', sub:'PhD Student — Robotics', img:'assets/lab/aaron.png', topics:['phd'], x:620, y:180,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[ {label:'Webpage', href:'https://ducmngx.github.io/'}, {label:'GitHub', href:'https://github.com/ducmngx'} ]
+    },
+
+    { id:'ms-alex', title:'Alex Card', sub:'Robotics', img:'assets/lab/alex.png', topics:['ms'], x:720, y:180,
+      desc:`Interests include autonomous robotics, machine learning, computer vision, and motion planning.`,
+      links:[ {label:'GitHub', href:'https://github.com/acard5meg'} ]
+    },
+
+    { id:'deiching', title:'David Abuín Eichinger', sub:'Robotics', img:'assets/self.png', topics:['ms'], x:820, y:180,
+      desc:`David Abuín Eichinger is a Master's student in the Department of Computer Science at George Mason University. He received his Post-baccalaureate Certificate in Computer Science from GMU. He also received his B.S. degrees in Microbiology from North Carolina State University and Maritime Transportation from the United States Merchant Marine Academy. He is a US Navy veteran with joint operational planning and knowledge management experience. David's interests include biomimicry and bio-inspired robotics with the aim of using robotics in various biological applications such as laboratory automation, environmental restoration, agriculture, and providing autonomous assistance for caretakers of senior citizens and those with disabilities. In his free time, he enjoys reading, playing with family, gardening, and physical fitness activities such as weightlifting, running, cycling, and hiking.`,
+      links:[{label:'LinkedIn', href:'https://www.linkedin.com/in/david-abu%C3%ADn-e-b09a36267/'}]
+    }
+  ],
+
+  // Pairs of related people (ids must match exactly)
+  links: [
+    ['xuesu-xiao','daeun-song'],
+    ['xuesu-xiao','sameep-shrestha'],
+    ['xuesu-xiao','nhat-le'],
+    ['xuesu-xiao','harsh-rangwala'],
+    ['xuesu-xiao','sohail-shaikh'],
+    ['xuesu-xiao','manas-gupta'],
+    ['xuesu-xiao','senthurbavan-kirubaharan'],
+    ['xuesu-xiao','yanlin-zhou'],
+    ['xuesu-xiao','linji-wang'],
+    ['xuesu-xiao','tong-xu'],
+    ['xuesu-xiao','saad-abdul-ghani'],
+    ['xuesu-xiao','amir-payandeh'],
+    ['xuesu-xiao','mohammad-nazeri'],
+    ['xuesu-xiao','dibyendu-das'],
+    ['xuesu-xiao','aniket-datar'],
+    ['xuesu-xiao','manshi-limbu'],
+    ['xuesu-xiao','anuj-pokhrel'],
+    ['xuesu-xiao','amir-hossain-raj'],
+    ['xuesu-xiao','chenhui-pan'],
+    ['xuesu-xiao','duc-aaron-nguyen'],
+    ['xuesu-xiao','ms-alex'],
+    ['xuesu-xiao','deiching']
+  ]
 };
 
-// === Physics & Sim globals ===
-const W = 1200, H = 640; // Internal coordinate system size
-const sim = {
-  repulsion: -10000,  // Force pushing nodes apart
-  linkSpring: 0.05,    // Spring constant (k)
-  linkLength: 150,     // Ideal spring length
-  centerGravity: 0.01, // Pull towards center
-  damping: 0.9,      // Slows down movement (friction)
-};
-let draggedNode = null;
-let isDragging = false; // Used to distinguish a click from a drag
-
-// === Build filters ===
+// ===== Filters =====
 const active = new Set();
-const nodeMap = new Map(); // Will store DOM elements: {id -> el}
-const linkMap = new Map(); // Will store DOM elements: {id -> el}
+const nodeMap = new Map();
 
 data.filters.forEach(f=>{
-  const chip = document.createElement('label');
-  chip.className = 'chip';
-  chip.innerHTML = `<input type="checkbox"/> ${f.label}`;
-  const input = chip.querySelector('input');
-  input.addEventListener('change', ()=>{
-    if(input.checked) active.add(f.id); else active.delete(f.id);
-    chip.classList.toggle('active', input.checked);
-    applyFilters(); // Call new function
-  });
-  controls.prepend(chip); // put filters before zoom buttons
+  const chip = document.createElement('label');
+  chip.className='chip';
+  chip.innerHTML = `<input type="checkbox"/> ${f.label}`;
+  const input = chip.querySelector('input');
+  input.addEventListener('change', ()=>{
+    if(input.checked) active.add(f.id); else active.delete(f.id);
+    chip.classList.toggle('active', input.checked);
+    renderNodes();
+  });
+  // put filters before zoom buttons
+  controls.prepend(chip);
 });
 
-// === Create node & link DOM elements once ===
-function createElements() {
-  // Create nodes
-  data.nodes.forEach(n => {
-    // Add physics properties to data
-    n.vx = 0; n.vy = 0; // vx/vy = velocity
+// ===== Render nodes & links =====
+function renderNodes(){
+  // clear previous
+  [...stage.querySelectorAll('.node')].forEach(n=>n.remove());
+  nodeMap.clear();
 
+  const filtered = data.nodes.filter(n => active.size===0 || n.topics.some(t=>active.has(t)) );
+  filtered.forEach(n=>{
     const el = document.createElement('div');
-    el.className = 'node';
-    el.innerHTML = `
-      <div class="content">
-        <div class="planet" data-id="${n.id}"><img alt="${n.title}" src="${n.img}"></div>
-        <div class="label">${n.title}</div>
-      </div>`;
-    
-    // Add drag-and-click listeners
-    const planetEl = el.querySelector('.planet');
-    planetEl.addEventListener('pointerdown', (e) => onNodeDown(e, n));
-    planetEl.addEventListener('pointermove', (e) => onNodeMove(e));
-    planetEl.addEventListener('pointerup', (e) => onNodeUp(e, n));
-    planetEl.addEventListener('pointercancel', (e) => onNodeUp(e, n));
-
-    stage.appendChild(el);
-    nodeMap.set(n.id, el);
+    el.className = 'node';
+    el.style.left = (n.x/1200*100)+'%';
+    el.style.top  = (n.y/640*100)+'%';
+    el.innerHTML = `
+      <div class="content">
+        <div class="planet" data-id="${n.id}"><img alt="${n.title}" src="${n.img}"></div>
+        <div class="label">${n.title}</div>
+      </div>`;
+    el.querySelector('.planet').addEventListener('click', ()=> openModal(n));
+    stage.appendChild(el);
+    nodeMap.set(n.id, el);
   });
-
-  // Create links
-  data.links.forEach(([a, b]) => {
-    const id = `${a}--${b}`;
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.classList.add('link');
-    linkSvg.appendChild(line);
-    linkMap.set(id, line);
-  });
-}
-
-// === Filter function (hides/shows elements) ===
-function applyFilters() {
-  data.nodes.forEach(n => {
-    const el = nodeMap.get(n.id);
-    const isVisible = active.size === 0 || n.topics.some(t => active.has(t));
-    el.classList.toggle('hidden', !isVisible);
-  });
-  // Update links based on filter
   drawLinks();
 }
 
-// === Draw links based on visibility ===
 function drawLinks(){
-  data.links.forEach(([a,b])=>{
-    const line = linkMap.get(`${a}--${b}`);
-    if (!line) return;
-
-    const elA = nodeMap.get(a);
-    const elB = nodeMap.get(b);
-
-    // Hide link if either node is hidden
-    if (elA.classList.contains('hidden') || elB.classList.contains('hidden')) {
-      line.classList.add('hidden');
-      return;
-    }
-    line.classList.remove('hidden');
-
-    const A = data.nodes.find(n=>n.id===a);
-    const B = data.nodes.find(n=>n.id===b);
-    if (!A || !B) return;
-
-    line.setAttribute('x1', A.x); line.setAttribute('y1', A.y);
-    line.setAttribute('x2', B.x); line.setAttribute('y2', B.y);
-  });
-}
-
-// === Physics simulation functions ===
-function runSimulation() {
-  updatePhysics();
-  updateDOM();
-  drawLinks();
-  requestAnimationFrame(runSimulation);
-}
-
-function updatePhysics() {
-  data.nodes.forEach(n1 => {
-    // --- Forces ---
-    let fX = 0, fY = 0;
-
-    // 1. Repulsion from other nodes
-    data.nodes.forEach(n2 => {
-      if (n1 === n2) return;
-      const dx = n1.x - n2.x;
-      const dy = n1.y - n2.y;
-      let distSq = dx * dx + dy * dy;
-      if (distSq < 100) distSq = 100; // Min distance
-      const force = sim.repulsion / distSq;
-      fX += force * dx;
-      fY += force * dy;
-    });
-
-    // 2. Center gravity
-    fX += (W / 2 - n1.x) * sim.centerGravity;
-    fY += (H / 2 - n1.y) * sim.centerGravity;
-    
-    // 3. Link spring force (only for this node)
-    data.links.forEach(([a, b]) => {
-      const nA = data.nodes.find(n => n.id === a);
-      const nB = data.nodes.find(n => n.id === b);
-      if (n1 !== nA && n1 !== nB) return; // Not our node
-
-      const otherNode = (n1 === nA) ? nB : nA;
-      const dx = otherNode.x - n1.x;
-      const dy = otherNode.y - n1.y;
-      const dist = Math.sqrt(dx * dx + dy * dy) + 0.1; // +0.1 to avoid div by zero
-      const force = sim.linkSpring * (dist - sim.linkLength);
-      fX += force * (dx / dist);
-      fY += force * (dy / dist);
-    });
-
-
-    // --- Update velocity & position ---
-    if (!draggedNode || n1.id !== draggedNode.id) {
-      // Not being dragged
-      n1.vx = (n1.vx + fX) * sim.damping;
-      n1.vy = (n1.vy + fY) * sim.damping;
-
-      n1.x += n1.vx;
-      n1.y += n1.vy;
-    } else {
-      // Being dragged
-      n1.vx = 0; n1.vy = 0;
-    }
-
-    // --- Boundary check ---
-    const R = 44; // Planet radius
-    if (n1.x < R) n1.x = R;
-    if (n1.y < R) n1.y = R;
-    if (n1.x > W - R) n1.x = W - R;
-    if (n1.y > H - R) n1.y = H - R;
-
+  const W=1200,H=640; linkSvg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  linkSvg.innerHTML='';
+  data.links.forEach(([a,b])=>{
+    if(!nodeMap.has(a) || !nodeMap.has(b)) return;
+    const A = data.nodes.find(n=>n.id===a), B = data.nodes.find(n=>n.id===b);
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.classList.add('link');
+    line.setAttribute('x1', A.x); line.setAttribute('y1', A.y);
+    line.setAttribute('x2', B.x); line.setAttribute('y2', B.y);
+    linkSvg.appendChild(line);
   });
 }
 
-function updateDOM() {
-  // Update DOM element positions
-  data.nodes.forEach(n => {
-    const el = nodeMap.get(n.id);
-    el.style.left = (n.x / W * 100) + '%';
-    el.style.top  = (n.y / H * 100) + '%';
-  });
-}
-
-// === Drag handling functions ===
-function onNodeDown(e, node) {
-  // Only drag with primary button (e.g., left-click)
-  if (e.buttons !== 1) return;
-  e.stopPropagation(); // Stop pan-on-background
-  draggedNode = node;
-  isDragging = false;
-  e.target.setPointerCapture(e.pointerId);
-}
-
-function onNodeMove(e) {
-  if (!draggedNode) return;
-  isDragging = true;
-  
-  // Calculate movement based on stage scale
-  // Note: This does not account for rotation, dragging will feel
-  // "off" if you rotate the stage.
-  const dx = e.movementX / t.scale;
-  const dy = e.movementY / t.scale;
-
-  draggedNode.x += dx;
-  draggedNode.y += dy;
-}
-
-function onNodeUp(e, node) {
-  if (!draggedNode) return;
-  e.target.releasePointerCapture(e.pointerId);
-
-  // If we didn't drag, it was a click
-  if (!isDragging) {
-    openModal(node);
-  }
-  
-  draggedNode = null;
-  isDragging = false;
-}
-
-
-// === Modal (Unchanged) ===
+// ===== Modal =====
 const modal = document.getElementById('modal');
 const mClose = document.getElementById('m-close');
 function openModal(n){
-  document.getElementById('m-thumb').src = n.img;
-  document.getElementById('m-title').textContent = n.title;
-  document.getElementById('m-sub').textContent = n.sub || '';
-  document.getElementById('m-desc').textContent = n.desc || '';
-  document.getElementById('m-tags').innerHTML = (n.topics||[]).map(t=>`<span class="tag">${labelFor(t)}</span>`).join('');
-  document.getElementById('m-links').innerHTML = (n.links||[]).map(l=>`<a class="pill" style="margin-right:8px" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('');
-  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  document.getElementById('m-thumb').src = n.img;
+  document.getElementById('m-title').textContent = n.title;
+  document.getElementById('m-sub').textContent = n.sub || '';
+  document.getElementById('m-desc').textContent = n.desc || '';
+  document.getElementById('m-tags').innerHTML = (n.topics||[]).map(t=>`<span class='tag'>${labelFor(t)}</span>`).join('');
+  document.getElementById('m-links').innerHTML = (n.links||[]).map(l=>`<a class='pill' style='margin-right:8px' href='${l.href}' target='_blank' rel='noopener'>${l.label}</a>`).join('');
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
 }
 mClose.onclick = ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); };
-modal.addEventListener('click', (e)=>{ if(e.target===modal) mClose.click(); });
+modal.addEventListener('click',(e)=>{ if(e.target===modal) mClose.click(); });
 function labelFor(id){ const f=data.filters.find(x=>x.id===id); return f?f.label:id; }
 
-// === Pan / Zoom / Rotate / Reset ===
+renderNodes();
+window.addEventListener('resize', drawLinks);
+
+// ===== Pan / Zoom / Rotate =====
 const t = { x:0, y:0, scale:1, rot:0 };
 const LIMIT = { minScale: 0.4, maxScale: 3 };
-
 function applyTransform(){
-  stage.style.transform = `translate(${t.x}px, ${t.y}px) scale(${t.scale}) rotate(${t.rot}deg)`;
-  stage.style.setProperty('--invScale', (1/t.scale).toFixed(3));
-  stage.style.setProperty('--negRot', `${-t.rot}deg`);
+  stage.style.transform = `translate(${t.x}px,${t.y}px) scale(${t.scale}) rotate(${t.rot}deg)`;
+  // counter-scale nodes and keep labels upright
+  stage.style.setProperty('--invScale', (1/t.scale).toFixed(3));
+  stage.style.setProperty('--negRot', `${-t.rot}deg`);
 }
 applyTransform();
 
 // Pan
-let isPanning=false,lastX=0,lastY=0; // Use 'isPanning' to avoid conflict
+let dragging=false,lastX=0,lastY=0;
 wrap.addEventListener('pointerdown', (e)=>{
-  if (draggedNode) return; // Don't pan if we're starting a node drag
-  if(e.target.closest('.planet') || e.target.closest('.chip')) return; // Don't pan on planets or chips
-  isPanning=true; wrap.setPointerCapture(e.pointerId);
-  lastX=e.clientX; lastY=e.clientY;
+  if(e.target.closest('.planet')) return; // allow clicking planets
+  dragging=true; wrap.setPointerCapture(e.pointerId);
+  lastX=e.clientX; lastY=e.clientY;
 });
 wrap.addEventListener('pointermove', (e)=>{
-  if (draggedNode) return; // Don't pan if dragging a node
-  if(!isPanning) return;
-  const dx=e.clientX-lastX, dy=e.clientY-lastY;
-  t.x+=dx; t.y+=dy; lastX=e.clientX; lastY=e.clientY; applyTransform();
+  if(!dragging) return;
+  const dx=e.clientX-lastX, dy=e.clientY-lastY;
+  t.x+=dx; t.y+=dy; lastX=e.clientX; lastY=e.clientY; applyTransform();
 });
-wrap.addEventListener('pointerup', (e)=>{ 
-  isPanning=false;
-  // Check if the pointerId is one we are capturing
-  if (e.target.hasPointerCapture(e.pointerId)) {
-    e.target.releasePointerCapture(e.pointerId);
-  }
-});
-wrap.addEventListener('pointercancel', (e)=>{ 
-  isPanning=false; 
-  if (e.target.hasPointerCapture(e.pointerId)) {
-    e.target.releasePointerCapture(e.pointerId);
-  }
-});
+wrap.addEventListener('pointerup', ()=> dragging=false);
+wrap.addEventListener('pointercancel', ()=> dragging=false);
 
 // Zoom (wheel)
 wrap.addEventListener('wheel', (e)=>{
-  e.preventDefault();
-  const factor = (e.deltaY>0)? 0.9 : 1.1;
-  t.scale = Math.max(LIMIT.minScale, Math.min(LIMIT.maxScale, t.scale*factor));
-  applyTransform();
+  e.preventDefault();
+  const factor = (e.deltaY>0)? 0.9 : 1.1;
+  t.scale = Math.max(LIMIT.minScale, Math.min(LIMIT.maxScale, t.scale*factor));
+  applyTransform();
 }, {passive:false});
 
 // Buttons
-controls.querySelector('#zoom-in').onclick  = ()=>{ t.scale=Math.min(LIMIT.maxScale, t.scale*1.1); applyTransform(); };
+controls.querySelector('#zoom-in').onclick  = ()=>{ t.scale=Math.min(LIMIT.maxScale, t.scale*1.1); applyTransform(); };
 controls.querySelector('#zoom-out').onclick = ()=>{ t.scale=Math.max(LIMIT.minScale, t.scale*0.9); applyTransform(); };
 controls.querySelector('#rot-left').onclick = ()=>{ t.rot-=10; applyTransform(); };
 controls.querySelector('#rot-right').onclick= ()=>{ t.rot+=10; applyTransform(); };
-controls.querySelector('#reset').onclick    = ()=>{ t.x=0; t.y=0; t.scale=1; t.rot=0; applyTransform(); };
+controls.querySelector('#reset').onclick    = ()=>{ t.x=0; t.y=0; t.scale=1; t.rot=0; applyTransform(); };
 
 // Keyboard shortcuts
 window.addEventListener('keydown', (e)=>{
-  // Don't intercept key presses if user is in modal
-  if (modal.classList.contains('open')) return;
-  if(e.key==='+') { t.scale=Math.min(LIMIT.maxScale,t.scale*1.1); }
-  if(e.key==='-') { t.scale=Math.max(LIMIT.minScale,t.scale*0.9); }
-  if(e.key==='[') { t.rot-=10; }
-  if(e.key===']') { t.rot+=10; }
-  if(e.key==='0') { t.x=0; t.y=0; t.scale=1; t.rot=0; }
-  if(e.key==='ArrowLeft')  t.x+=20;
-  if(e.key==='ArrowRight') t.x-=20;
-  if(e.key==='ArrowUp')    t.y+=20;
-  if(e.key==='ArrowDown')  t.y-=20;
-  applyTransform();
+  if(e.key==='+') { t.scale=Math.min(LIMIT.maxScale,t.scale*1.1); }
+  if(e.key==='-') { t.scale=Math.max(LIMIT.minScale,t.scale*0.9); }
+  if(e.key==='[') { t.rot-=10; }
+  if(e.key===']') { t.rot+=10; }
+  if(e.key==='0') { t.x=0; t.y=0; t.scale=1; t.rot=0; }
+  if(e.key==='ArrowLeft')  t.x+=20;
+  if(e.key==='ArrowRight') t.x-=20;
+  if(e.key==='ArrowUp')    t.y+=20;
+  if(e.key==='ArrowDown')  t.y-=20;
+  applyTransform();
 });
-
-// === Start everything ===
-createElements(); // Create DOM elements
-applyFilters();   // Apply default filters (show all)
-runSimulation();  // Start the physics
 </script>
 </body>
 </html>
-
