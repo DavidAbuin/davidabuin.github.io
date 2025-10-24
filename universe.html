@@ -92,7 +92,7 @@
 
 <div class="wrap">
   <div class="card hero">
-    <h1>MCU-style “Universe” of the Xuesu Xiao Lab</h1>
+    <h1>Research Universe</h1>
     <div class="muted">Click a planet to view details. Use the chips to filter by role/topic. All code and visuals here are original, no third-party assets.</div>
   </div>
 
@@ -132,24 +132,21 @@
 const data = {
   filters: [
     { id:'pi', label:'PI' },
+    { id:'postdoc', label: 'Post'},
     { id:'phd', label:'PhD' },
     { id:'ms', label:'MS' },
-    { id:'ug', label:'Undergrad' },
-    { id:'alum', label:'Alumni' },
-    { id:'nav', label:'Navigation' },
-    { id:'cv',  label:'Computer Vision' },
-    { id:'rl',  label:'Reinforcement Learning' }
+
   ],
   nodes: [
-    // EXAMPLES — replace with real people from your lab page:
     { id:'xiao', title:'Xuesu Xiao', sub:'PI — Robotics', img:'assets/lab/xiao.jpg',
-      topics:['pi','nav','rl'], x:210, y:200,
-      desc:'Principal Investigator. Interests include autonomous navigation and field robotics.',
+      topics:['pi'], x:210, y:200,
+      desc:'Principal Investigator. Dr. Xuesu Xiao is an Assistant Professor of the Department of Computer Science at George Mason University. His research focuses on developing highly capable and intelligent mobile robots that are robustly deployable in the real world with minimal human supervision. Dr. Xiao has unique expertise evenly grounded in motion planning and machine learning, and vast experience working on real-world problems in the field with disaster responders, He builds advanced robot platforms, develops complex sensing and actuation systems, designs sophisticated motion planning algorithms, and sets up standardized testbeds and metrics in order to create highly capable 
+        and intelligent robots to locomote on land, in air, and at sea.',
       links:[{label:'Lab Page', href:'https://robotixx.cs.gmu.edu/'}]
     },
-    { id:'student1', title:'PhD Student A', sub:'Navigation & RL', img:'assets/lab/student1.jpg',
-      topics:['phd','nav','rl'], x:460, y:320,
-      desc:'Researches hybrid planners combining global planning with SAC-based local policies.',
+    { id:'Daeun Song', title:'Postdoctoral Researcher', sub:'Human-Robot Interaction', img:'assets/lab/song.jpg',
+      topics:['Post'], x:460, y:320,
+      desc:'Daeun Song is a Postdoctoral Research Fellow in the Department of Computer Science at George Mason University. Previously she was a Postdoctoral Associate at Maryland Robotics Center at University of Maryland. She received her Ph.D. and B.S. degrees in Computer Science and Engineering from Ewha Womans University, Korea. Daeun's research focuses on robot path and motion planning problems with particular applications in the real-world human-robot interaction domain. Her work aims to develop socially compliant and context-aware planning techniques for navigation and manipulation tasks, enhancing robots' ability to operate effectively in human environments.',
       links:[{label:'GitHub', href:'#'}]
     },
     { id:'student2', title:'MS Student B', sub:'Computer Vision', img:'assets/lab/student2.jpg',
