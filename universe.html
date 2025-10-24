@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Lab Universe — Xuesu Xiao Lab</title>
+<title>Dr. Xuesu Xiao's Lab Universe </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
   :root{
     --bg:#0b0f17; --panel:#0f172a; --ink:#e5e7eb; --muted:#9aa4b2;
     --ring: rgba(96,165,250,.35); --rule: rgba(148,163,184,.22);
-    --accent:#ef4444; /* red accent, matches your site */
+    --accent:#ef4444; 
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto}
@@ -52,6 +52,14 @@
   .chip input{all:unset;width:14px;height:14px;border-radius:3px;border:1px solid var(--rule);display:inline-block}
   .chip.active{outline:2px solid var(--ring)}
 
+  /* Stage (for pan, zoom, rotate) */
+  #stage {
+  position:absolute;
+  inset:0;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  }
+  
   /* Planets */
   .node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
   .planet{width:88px;height:88px;border-radius:50%;
@@ -93,14 +101,25 @@
 <div class="wrap">
   <div class="card hero">
     <h1>Research Universe</h1>
-    <div class="muted">Click a planet to view details. Use the chips to filter by role/topic. All code and visuals here are original, no third-party assets.</div>
+    <div class="muted">Click a planet to view details. Use the chips to filter by role/topic. </div>
   </div>
 
   <div class="card universe" id="universe">
     <div id="sky"></div>
     <div class="stars"></div>
+
+    <!-- Controls (add to your existing .controls div or keep separate) -->
+    <div class="controls" id="controls">
+    <!-- your filter chips are already added here via JS -->
+    <button class="chip" id="zoom-in">＋</button>
+    <button class="chip" id="zoom-out">－</button>
+    <button class="chip" id="rot-left">⟲</button>
+    <button class="chip" id="rot-right">⟳</button>
+    <button class="chip" id="reset">Reset</button>
+  </div>
+     <!-- Stage (everything that moves together) -->
+  <div id="stage">
     <svg class="links" viewBox="0 0 1200 640" preserveAspectRatio="none"></svg>
-    <div class="controls" id="controls"></div>
     <!-- nodes injected by JS -->
   </div>
 </div>
@@ -129,6 +148,11 @@
    Put images into assets/lab/ and reference them here.
    Coordinates are a 1200x640 design space (x:0-1200, y:0-640).
 */
+const wrap = document.getElementById('universe');
+const stage = document.getElementById('stage');
+const linkSvg = stage.querySelector('svg.links');
+const controls = document.getElementById('controls');
+  
 const data = {
   filters: [
     { id:'pi', label:'PI' },
@@ -561,6 +585,62 @@ modal.addEventListener('click', (e)=>{ if(e.target===modal) mClose.click(); });
 function labelFor(id){ const f=data.filters.find(x=>x.id===id); return f?f.label:id; }
 renderNodes();
 window.addEventListener('resize', drawLinks);
+
+// === Add pan / zoom / rotate logic ===
+const t = { x:0, y:0, scale:1, rot:0 };
+const LIMIT = { minScale: 0.4, maxScale: 3 };
+
+function applyTransform(){
+  stage.style.transform =
+    `translate(${t.x}px, ${t.y}px) scale(${t.scale}) rotate(${t.rot}deg)`;
+}
+applyTransform();
+
+// --- mouse drag (pan)
+let dragging=false,lastX=0,lastY=0;
+wrap.addEventListener('pointerdown', e=>{
+  if(e.target.closest('.planet')) return;
+  dragging=true; wrap.setPointerCapture(e.pointerId);
+  lastX=e.clientX; lastY=e.clientY;
+});
+wrap.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  const dx=e.clientX-lastX, dy=e.clientY-lastY;
+  t.x+=dx; t.y+=dy; lastX=e.clientX; lastY=e.clientY; applyTransform();
+});
+wrap.addEventListener('pointerup', ()=>dragging=false);
+wrap.addEventListener('pointercancel',()=>dragging=false);
+
+// --- zoom (wheel)
+wrap.addEventListener('wheel', e=>{
+  e.preventDefault();
+  const factor=(e.deltaY>0)?0.9:1.1;
+  t.scale=Math.max(LIMIT.minScale,Math.min(LIMIT.maxScale,t.scale*factor));
+  applyTransform();
+},{passive:false});
+
+// --- rotate & reset buttons
+document.getElementById('zoom-in').onclick=()=>{t.scale=Math.min(LIMIT.maxScale,t.scale*1.1);applyTransform();};
+document.getElementById('zoom-out').onclick=()=>{t.scale=Math.max(LIMIT.minScale,t.scale*0.9);applyTransform();};
+document.getElementById('rot-left').onclick=()=>{t.rot-=10;applyTransform();};
+document.getElementById('rot-right').onclick=()=>{t.rot+=10;applyTransform();};
+document.getElementById('reset').onclick=()=>{t.x=0;t.y=0;t.scale=1;t.rot=0;applyTransform();};
+
+// --- optional keyboard shortcuts
+window.addEventListener('keydown', e=>{
+  if(e.key==='+'){t.scale=Math.min(LIMIT.maxScale,t.scale*1.1);}
+  if(e.key==='-'){t.scale=Math.max(LIMIT.minScale,t.scale*0.9);}
+  if(e.key==='['){t.rot-=10;}
+  if(e.key===']'){t.rot+=10;}
+  if(e.key==='0'){t.x=0;t.y=0;t.scale=1;t.rot=0;}
+  if(e.key==='ArrowLeft')t.x+=20;
+  if(e.key==='ArrowRight')t.x-=20;
+  if(e.key==='ArrowUp')t.y+=20;
+  if(e.key==='ArrowDown')t.y-=20;
+  applyTransform();
+});
+
+  
 </script>
 </body>
 </html>
