@@ -132,189 +132,359 @@
 const data = {
   filters: [
     { id:'pi', label:'PI' },
-    { id:'postdoc', label: 'Post'},
+    { id:'postdoc', label:'Postdoc' },
     { id:'phd', label:'PhD' },
     { id:'ms', label:'MS' },
-
+    { id:'alum', label:'Alumni' }
   ],
+
   nodes: [
-    { id:'xiao', title:'Xuesu Xiao', sub:'PI — Robotics', img:'assets/lab/xiao.jpg',
-      topics:['pi'], x:210, y:200,
-      desc:'Principal Investigator. Dr. Xuesu Xiao is an Assistant Professor of the Department of Computer Science at George Mason University. His research focuses on developing highly capable and intelligent mobile robots that are robustly deployable in the real world with minimal human supervision. Dr. Xiao has unique expertise evenly grounded in motion planning and machine learning, and vast experience working on real-world problems in the field with disaster responders, He builds advanced robot platforms, develops complex sensing and actuation systems, designs sophisticated motion planning algorithms, and sets up standardized testbeds and metrics in order to create highly capable 
-        and intelligent robots to locomote on land, in air, and at sea.',
+    {
+      id:'xuesu-xiao',
+      title:'Xuesu Xiao',
+      sub:'PI — Robotics',
+      img:'assets/lab/xiao.jpg',
+      topics:['pi'],
+      x:210, y:200,
+      desc:`Principal Investigator. Dr. Xuesu Xiao is an Assistant Professor of Computer Science at George Mason University.
+            His research focuses on developing highly capable and intelligent mobile robots that are robustly deployable
+            in the real world with minimal human supervision.`,
       links:[{label:'Lab Page', href:'https://robotixx.cs.gmu.edu/'}]
     },
-    { id:'Daeun Song', title:'Postdoctoral Researcher', sub:'Human-Robot Interaction', img:'assets/lab/song.jpg',
-      topics:['postdoc'], x:460, y:320,
-      desc:'Daeun Song is a Postdoctoral Research Fellow in the Department of Computer Science at George Mason University. ',
-      topics:['phd'], x:460, y:320,
-      desc:'Dr. Daeun Song is a Postdoctoral Researcher in the Department of Computer Science at George Mason University. ' ,
+
+    {
+      id:'daeun-song',
+      title:'Daeun Song',
+      sub:'Postdoctoral Researcher — HRI',
+      img:'assets/lab/song.jpg',
+      topics:['postdoc'],
+      x:460, y:320,
+      desc:`Dr. Daeun Song is a Postdoctoral Researcher in the Department of Computer Science at George Mason University.`,
       links:[
-        {label: 'Website', href: 'https://daeunsong.github.io/'},
-        {label:'GitHub', href:'https://github.com/daeunsong'}
+        {label:'Website', href:'https://daeunsong.github.io/'},
+        {label:'GitHub',  href:'https://github.com/daeunsong'}
       ]
     },
-     { id:'Sameep Shrestha', title:'PhD Student', sub:'Robotics', img:'assets/lab/sameep.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Sameep Shrestha is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'sameep-shrestha',
+      title:'Sameep Shrestha',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/sameep.jpg',
+      topics:['phd'],
+      x:540, y:280,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[{label:'Webpage', href:'https://sameepshrestha.github.io/'}]
     },
-    
-    { id:'Nhat Le', title:'PhD Student', sub:'Robotics', img:'assets/lab/nhat.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Nhat Le is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'nhat-le',
+      title:'Nhat Le',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/nhat.jpg',
+      topics:['phd'],
+      x:640, y:340,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'GitHub', href:'https://github.com/nhatleminh1997'},
-        {label:'LinkedIn', href:'https://www.linkedin.com/in/nhat-le-026392149/'}  
+        {label:'GitHub',   href:'https://github.com/nhatleminh1997'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/nhat-le-026392149/'}
       ]
     },
-    { id:'Harsh Rangwala', title:'PhD Student', sub:'Robotics', img:'assets/lab/harsh.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Harsh Rangwala is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'harsh-rangwala',
+      title:'Harsh Rangwala',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/harsh.jpg',
+      topics:['phd'],
+      x:740, y:300,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'GitHub', href:'https://www.linkedin.com/in/harsh-rangwala-020a66164/'},
-        {label:'LinkedIn', href:'https://github.com/HarshRangwala'}
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/harsh-rangwala-020a66164/'},
+        {label:'GitHub',   href:'https://github.com/HarshRangwala'}
       ]
     },
-     { id:'Sohail Shaikh', title:'PhD Student', sub:'Robotics', img:'assets/lab/sohail.png',
-      topics:['phd'], x:460, y:320,
-      desc:'Sohail Shaikh is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      links:[{label:'GitHub', href:'https://www.linkedin.com/in/sohailshaikh/'}]
-    },
-    { id:'Manas Gupta', title:'PhD Student', sub:'Robotics', img:'assets/lab/manas.png',
-      topics:['phd'], x:460, y:320,
-      desc:'Manas Gupta is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      links:[{label:'GitHub', href:'https://www.linkedin.com/in/manasguptangp/'}]
-    },
-    { id:'Senthurbavan Kirubaharan', title:'PhD Student', sub:'Robotics', img:'assets/lab/senthu.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Senthurbavan Kirubaharan is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'sohail-shaikh',
+      title:'Sohail Shaikh',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/sohail.png',
+      topics:['phd'],
+      x:860, y:260,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'Webpage', href:'https://senthurbavan.github.io/'},
-        {label:'GitHub', href:'https://www.linkedin.com/in/sohailshaikh/'},
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/senthurbavan/'}
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/sohailshaikh/'}
       ]
     },
-    { id:'Yanlin Zhou', title:'PhD Student', sub:'Robotics', img:'assets/lab/yanlin.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Yanlin Zhou is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'manas-gupta',
+      title:'Manas Gupta',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/manas.png',
+      topics:['phd'],
+      x:900, y:360,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'GitHub', href:'https://github.com/Zed2135'}] 
-    },
-     { id:'Linji Wang', title:'PhD Student', sub:'Robotics', img:'assets/lab/linji.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Linji Wang is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      links:[
-        {label: 'Webpage', href: 'https://linjiwang.com/'},
-        {label:'GitHub', href:'https://github.com/linjiw'},
-        {label: 'LinkedIn', href: 'https://www.linkedin.com/in/linjiw/'}
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/manasguptangp/'}
       ]
     },
-     { id:'Tong Xu', title:'PhD Student', sub:'Robotics', img:'assets/lab/tong.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Yanlin Zhou is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'senthurbavan-kirubaharan',
+      title:'Senthurbavan Kirubaharan',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/senthu.jpg',
+      topics:['phd'],
+      x:1020, y:300,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'Webpage', href:'https://xutong05.github.io/'},
-        {label:'GitHub', href:'https://github.com/xutong05'},
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/tong-xu-a802941b1/'}
+        {label:'Webpage',  href:'https://senthurbavan.github.io/'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/senthurbavan/'}
       ]
     },
-    
-    { id:'Saad Abdul Ghani', title:'PhD Student', sub:'Robotics', img:'assets/lab/saad.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Saad Abdul Ghani is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'yanlin-zhou',
+      title:'Yanlin Zhou',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/yanlin.jpg',
+      topics:['phd'],
+      x:980, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-            {label:'GitHub', href:'https://github.com/Saadmaghani'},
-            {label:'LinkedIn', href: 'https://www.linkedin.com/in/saad-ghani-9b5824158/'}
-            ]
-    },
-    { id:'Amir Payandeh', title:'PhD Student', sub:'Robotics', img:'assets/lab/amirreza.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Amir Payandeh is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      links:[
-        {label:'GitHub', href:'https://github.com/Amir-pyh'},
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/amir-payandeh/'}
+        {label:'GitHub', href:'https://github.com/Zed2135'}
       ]
     },
-    { id:'Mohammad Nazeri', title:'PhD Student', sub:'Robotics', img:'assets/lab/mohammad.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Mohammad Nazeri is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'linji-wang',
+      title:'Linji Wang',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/linji.jpg',
+      topics:['phd'],
+      x:820, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'Webpage', href:'https://mhnazeri.github.io/'},
-        {label:'GitHub', href:'https://github.com/mhnazeri'},
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/mhnazeri/'}
+        {label:'Webpage',  href:'https://linjiwang.com/'},
+        {label:'GitHub',   href:'https://github.com/linjiw'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/linjiw/'}
       ]
     },
-    { id:'Dibyendu Das', title:'PhD Student', sub:'Robotics', img:'assets/lab/dibyendu.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Dibyendu Das is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'tong-xu',
+      title:'Tong Xu',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/tong.jpg',
+      topics:['phd'],
+      x:700, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/dibyendu-das-b480481bb/'}
+        {label:'Webpage',  href:'https://xutong05.github.io/'},
+        {label:'GitHub',   href:'https://github.com/xutong05'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/tong-xu-a802941b1/'}
       ]
     },
-    { id:'Aniket Datar', title:'PhD Student', sub:'Robotics', img:'assets/lab/aniket.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Aniket Datar is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'saad-abdul-ghani',
+      title:'Saad Abdul Ghani',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/saad.jpg',
+      topics:['phd'],
+      x:600, y:460,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/aniket-datar-9187a48b/'}
+        {label:'GitHub',   href:'https://github.com/Saadmaghani'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/saad-ghani-9b5824158/'}
       ]
     },
-    { id:'Manshi Limbu', title:'PhD Student', sub:'Robotics', img:'assets/lab/manshi.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Manshi Limbu is a Ph.D. student in the Department of Computer Science at George Mason University. ',
+
+    {
+      id:'amir-payandeh',
+      title:'Amir Payandeh',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/amirreza.jpg',
+      topics:['phd'],
+      x:500, y:460,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[
+        {label:'GitHub',   href:'https://github.com/Amir-pyh'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/amir-payandeh/'}
+      ]
+    },
+
+    {
+      id:'mohammad-nazeri',
+      title:'Mohammad Nazeri',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/mohammad.jpg',
+      topics:['phd'],
+      x:400, y:460,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[
+        {label:'Webpage',  href:'https://mhnazeri.github.io/'},
+        {label:'GitHub',   href:'https://github.com/mhnazeri'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/mhnazeri/'}
+      ]
+    },
+
+    {
+      id:'dibyendu-das',
+      title:'Dibyendu Das',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/dibyendu.jpg',
+      topics:['phd'],
+      x:320, y:420,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/dibyendu-das-b480481bb/'}
+      ]
+    },
+
+    {
+      id:'aniket-datar',
+      title:'Aniket Datar',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/aniket.jpg',
+      topics:['phd'],
+      x:260, y:340,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/aniket-datar-9187a48b/'}
+      ]
+    },
+
+    {
+      id:'manshi-limbu',
+      title:'Manshi Limbu',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/manshi.jpg',
+      topics:['phd'],
+      x:300, y:280,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
       links:[
         {label:'Webpage', href:'https://mlimbuu.github.io/'},
-        {label:'GitHub', href:'https://github.com/mlimbuu'},
-    },
-    { id:'Anuj Pokhrel', title:'PhD Student', sub:'Robotics', img:'assets/lab/anuj.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Anuj Pokhrel is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      links:[{label:'Webpage', href:'https://anujpokhrel.github.io/'},
-        {label:'GitHub', href:'https://github.com/AnujPokhrel'},
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/anuj-pokhrel-9b8b67156/'}]
-    },
-    { id:'Amir Hossain Raj', title:'PhD Student', sub:'Robotics', img:'assets/lab/amir.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Amir Hossain Raj is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      links:[{label:'Webpage', href:'https://amirraj.com/'},
-        {label:'GitHub', href:'https://github.com/amirraj/'},
-        {label:'LinkedIn', href: 'https://www.linkedin.com/in/amirraj/}]
-    },
-    { id:'Chenhui Pan', title:'PhD Student', sub:'Robotics', img:'assets/lab/chenhui.jpg',
-      topics:['phd'], x:460, y:320,
-      desc:'Chenhui Pan is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      
-    },
-    { id:'Duc (Aaron) M. Nguyen', title:'PhD Student', sub:'Robotics', img:'assets/lab/aaron.png',
-      topics:['phd'], x:460, y:320,
-      desc:'Duc (Aaron) M. Nguyen is a Ph.D. student in the Department of Computer Science at George Mason University. ',
-      links:[{label:'Webpage', href:'https://ducmngx.github.io/'},
-        {label:'GitHub', href:'https://github.com/ducmngx'},
-       ]
-    },
-    { id:c, title:'Master's Student', sub:'Robotics', img:'assets/lab/alex.png',
-      topics:['ms','cv'], x:720, y:260,
-      desc:'His interests include autonomous robotics, machine learning, computer vision, and motion planning.',
-      links:[{label:'Github', href:'https://github.com/acard5meg'}]
+        {label:'GitHub',  href:'https://github.com/mlimbuu'}
+      ]
     },
 
+    {
+      id:'anuj-pokhrel',
+      title:'Anuj Pokhrel',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/anuj.jpg',
+      topics:['phd'],
+      x:360, y:220,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[
+        {label:'Webpage',  href:'https://anujpokhrel.github.io/'},
+        {label:'GitHub',   href:'https://github.com/AnujPokhrel'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/anuj-pokhrel-9b8b67156/'}
+      ]
+    },
 
+    {
+      id:'amir-hossain-raj',
+      title:'Amir Hossain Raj',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/amir.jpg',
+      topics:['phd'],
+      x:440, y:200,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[
+        {label:'Webpage',  href:'https://amirraj.com/'},
+        {label:'GitHub',   href:'https://github.com/amirraj/'},
+        {label:'LinkedIn', href:'https://www.linkedin.com/in/amirraj/'}
+      ]
+    },
 
-              
-     { id:'student2', title:'MS Student B', sub:'Computer Vision', img:'assets/lab/student2.jpg',
-      topics:['ms','cv'], x:720, y:260,
-      desc:'Works on fine-grained recognition and perception for mobile robots.',
+    {
+      id:'chenhui-pan',
+      title:'Chenhui Pan',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/chenhui.jpg',
+      topics:['phd'],
+      x:520, y:180,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`
+    },
+
+    {
+      id:'duc-aaron-nguyen',
+      title:'Duc (Aaron) M. Nguyen',
+      sub:'PhD Student — Robotics',
+      img:'assets/lab/aaron.png',
+      topics:['phd'],
+      x:620, y:180,
+      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
+      links:[
+        {label:'Webpage', href:'https://ducmngx.github.io/'},
+        {label:'GitHub',  href:'https://github.com/ducmngx'}
+      ]
+    },
+
+    {
+      id:'ms-alex',
+      title:'Alex — MS Student',
+      sub:'Robotics',
+      img:'assets/lab/alex.png',
+      topics:['ms'],
+      x:720, y:180,
+      desc:`Interests include autonomous robotics, machine learning, computer vision, and motion planning.`,
+      links:[
+        {label:'GitHub', href:'https://github.com/acard5meg'}
+      ]
+    },
+
+    {
+      id:'student2',
+      title:'MS Student B',
+      sub:'Computer Vision',
+      img:'assets/lab/student2.jpg',
+      topics:['ms'],
+      x:820, y:180,
+      desc:`Works on fine-grained recognition and perception for mobile robots.`,
       links:[{label:'Website', href:'#'}]
     },
-    { id:'alum1', title:'Alumni C', sub:'Alumni', img:'assets/lab/alum1.jpg',
-      topics:['alum','nav'], x:950, y:420,
-      desc:'Former member focused on multi-robot coordination.',
+
+    {
+      id:'alum1',
+      title:'Alumni C',
+      sub:'Alumni',
+      img:'assets/lab/alum1.jpg',
+      topics:['alum'],
+      x:950, y:420,
+      desc:`Former member focused on multi-robot coordination.`,
       links:[{label:'LinkedIn', href:'#'}]
     }
   ],
-  // draw some relationships (pairs of node ids)
+
+  // Pairs of related people (ids must match exactly)
   links: [
-    ['xiao','Sameep Shrestha', 'Daeun Song'], ['xiao','student2'], ['student1','student2']
+    ['xuesu-xiao','daeun-song'],
+    ['xuesu-xiao','sameep-shrestha'],
+    ['xuesu-xiao','nhat-le'],
+    ['xuesu-xiao','harsh-rangwala'],
+    ['xuesu-xiao','sohail-shaikh'],
+    ['xuesu-xiao','manas-gupta'],
+    ['xuesu-xiao','senthurbavan-kirubaharan'],
+    ['xuesu-xiao','yanlin-zhou'],
+    ['xuesu-xiao','linji-wang'],
+    ['xuesu-xiao','tong-xu'],
+    ['xuesu-xiao','saad-abdul-ghani'],
+    ['xuesu-xiao','amir-payandeh'],
+    ['xuesu-xiao','mohammad-nazeri'],
+    ['xuesu-xiao','dibyendu-das'],
+    ['xuesu-xiao','aniket-datar'],
+    ['xuesu-xiao','manshi-limbu'],
+    ['xuesu-xiao','anuj-pokhrel'],
+    ['xuesu-xiao','amir-hossain-raj'],
+    ['xuesu-xiao','chenhui-pan'],
+    ['xuesu-xiao','duc-aaron-nguyen'],
+    ['xuesu-xiao','ms-alex'],
+    ['xuesu-xiao','student2']
   ]
 };
 
