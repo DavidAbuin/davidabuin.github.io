@@ -1,0 +1,575 @@
+{
+  "characters": {
+    "xuesu-xiao": {
+      "id": "xuesu-xiao",
+      "name": "Xuesu Xiao",
+      "role": "PI",
+      "img": "assets/lab/xiao.jpg",
+      "desc": "Principal Investigator at GMU.",
+      "links": [
+        {
+          "label": "Lab Page",
+          "href": "https://robotixx.cs.gmu.edu/"
+        }
+      ]
+    },
+    "deiching": {
+      "id": "deiching",
+      "name": "David Abuín Eichinger",
+      "role": "MS",
+      "img": "assets/self.png",
+      "desc": "MS student.",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/david-abu%C3%ADn-e-b09a36267/"
+        }
+      ]
+    },
+    "daeun-song": {
+      "id": "daeun-song",
+      "title": "Daeun Song",
+      "sub": "Postdoctoral Researcher — HRI",
+      "img": "assets/lab/song.jpg",
+      "topics": [
+        "postdoc"
+      ],
+      "x": 460,
+      "y": 320,
+      "desc": "Dr. Daeun Song is a Postdoctoral Researcher in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Website",
+          "href": "https://daeunsong.github.io/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/daeunsong"
+        }
+      ]
+    },
+    "sameep-shrestha": {
+      "id": "sameep-shrestha",
+      "title": "Sameep Shrestha",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/sameep.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 540,
+      "y": 280,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://sameepshrestha.github.io/"
+        }
+      ]
+    },
+    "nhat-le": {
+      "id": "nhat-le",
+      "title": "Nhat Le",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/nhat.jpeg",
+      "topics": [
+        "phd"
+      ],
+      "x": 640,
+      "y": 340,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [a
+        {
+          "label": "GitHub",
+          "href": "https://github.com/nhatleminh1997"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/nhat-le-026392149/"
+        }
+      ]
+    },
+    "harsh-rangwala": {
+      "id": "harsh-rangwala",
+      "title": "Harsh Rangwala",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/harsh.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 740,
+      "y": 300,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/harsh-rangwala-020a66164/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/HarshRangwala"
+        }
+      ]
+    },
+    "sohail-shaikh": {
+      "id": "sohail-shaikh",
+      "title": "Sohail Shaikh",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/sohail.png",
+      "topics": [
+        "phd"
+      ],
+      "x": 860,
+      "y": 260,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/sohailshaikh/"
+        }
+      ]
+    },
+    "manas-gupta": {
+      "id": "manas-gupta",
+      "title": "Manas Gupta",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/manas.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 900,
+      "y": 360,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/manasguptangp/"
+        }
+      ]
+    },
+    "senthurbavan-kirubaharan": {
+      "id": "senthurbavan-kirubaharan",
+      "title": "Senthurbavan Kirubaharan",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/senthu.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 1020,
+      "y": 300,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://senthurbavan.github.io/"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/senthurbavan/"
+        }
+      ]
+    },
+    "yanlin-zhou": {
+      "id": "yanlin-zhou",
+      "title": "Yanlin Zhou",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/yanlin.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 980,
+      "y": 420,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/Zed2135"
+        }
+      ]
+    },
+    "linji-wang": {
+      "id": "linji-wang",
+      "title": "Linji Wang",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/linji.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 820,
+      "y": 420,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://linjiwang.com/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/linjiw"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/linjiw/"
+        }
+      ]
+    },
+    "tong-xu": {
+      "id": "tong-xu",
+      "title": "Tong Xu",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/tong.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 700,
+      "y": 420,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://xutong05.github.io/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/xutong05"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/tong-xu-a802941b1/"
+        }
+      ]
+    },
+    "saad-abdul-ghani": {
+      "id": "saad-abdul-ghani",
+      "title": "Saad Abdul Ghani",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/saad.jpeg",
+      "topics": [
+        "phd"
+      ],
+      "x": 600,
+      "y": 460,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/Saadmaghani"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/saad-ghani-9b5824158/"
+        }
+      ]
+    },
+    "amir-payandeh": {
+      "id": "amir-payandeh",
+      "title": "Amir Payandeh",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/amirreza.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 500,
+      "y": 460,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/Amir-pyh"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/amir-payandeh/"
+        }
+      ]
+    },
+    "mohammad-nazeri": {
+      "id": "mohammad-nazeri",
+      "title": "Mohammad Nazeri",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/mohammad.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 400,
+      "y": 460,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://mhnazeri.github.io/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/mhnazeri"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/mhnazeri/"
+        }
+      ]
+    },
+    "dibyendu-das": {
+      "id": "dibyendu-das",
+      "title": "Dibyendu Das",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/dibyendu.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 320,
+      "y": 420,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/dibyendu-das-b480481bb/"
+        }
+      ]
+    },
+    "aniket-datar": {
+      "id": "aniket-datar",
+      "title": "Aniket Datar",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/aniket.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 260,
+      "y": 340,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/aniket-datar-9187a48b/"
+        }
+      ]
+    },
+    "manshi-limbu": {
+      "id": "manshi-limbu",
+      "title": "Manshi Limbu",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/manshi.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 300,
+      "y": 280,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://mlimbuu.github.io/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/mlimbuu"
+        }
+      ]
+    },
+    "anuj-pokhrel": {
+      "id": "anuj-pokhrel",
+      "title": "Anuj Pokhrel",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/anuj.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 360,
+      "y": 220,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://anujpokhrel.github.io/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/AnujPokhrel"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/anuj-pokhrel-9b8b67156/"
+        }
+      ]
+    },
+    "amir-hossain-raj": {
+      "id": "amir-hossain-raj",
+      "title": "Amir Hossain Raj",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/amir.jpeg",
+      "topics": [
+        "phd"
+      ],
+      "x": 440,
+      "y": 200,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://amirraj.com/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/amirraj/"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/amirraj/"
+        }
+      ]
+    },
+    "chenhui-pan": {
+      "id": "chenhui-pan",
+      "title": "Chenhui Pan",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/chenhui.jpg",
+      "topics": [
+        "phd"
+      ],
+      "x": 520,
+      "y": 180,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University."
+    },
+    "duc-aaron-nguyen": {
+      "id": "duc-aaron-nguyen",
+      "title": "Duc (Aaron) M. Nguyen",
+      "sub": "PhD Student — Robotics",
+      "img": "assets/lab/aaron.png",
+      "topics": [
+        "phd"
+      ],
+      "x": 620,
+      "y": 180,
+      "desc": "Ph.D. student in the Department of Computer Science at George Mason University.",
+      "links": [
+        {
+          "label": "Webpage",
+          "href": "https://ducmngx.github.io/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/ducmngx"
+        }
+      ]
+    },
+    "ms-alex": {
+      "id": "ms-alex",
+      "title": "Alex Card",
+      "sub": "Robotics",
+      "img": "assets/lab/alex.png",
+      "topics": [
+        "ms"
+      ],
+      "x": 720,
+      "y": 180,
+      "desc": "Interests include autonomous robotics, machine learning, computer vision, and motion planning.",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/acard5meg"
+        }
+      ]
+    }
+  },
+  "positions": {
+    "xuesu-xiao": {
+      "x": 210,
+      "y": 200
+    },
+    "deiching": {
+      "x": 820,
+      "y": 180
+    },
+    "daeun-song": {
+      "x": 460,
+      "y": 320
+    },
+    "sameep-shrestha": {
+      "x": 540,
+      "y": 280
+    },
+    "nhat-le": {
+      "x": 640,
+      "y": 340
+    },
+    "harsh-rangwala": {
+      "x": 740,
+      "y": 300
+    },
+    "sohail-shaikh": {
+      "x": 860,
+      "y": 260
+    },
+    "manas-gupta": {
+      "x": 900,
+      "y": 360
+    },
+    "senthurbavan-kirubaharan": {
+      "x": 1020,
+      "y": 300
+    },
+    "yanlin-zhou": {
+      "x": 980,
+      "y": 420
+    },
+    "linji-wang": {
+      "x": 820,
+      "y": 420
+    },
+    "tong-xu": {
+      "x": 700,
+      "y": 420
+    },
+    "saad-abdul-ghani": {
+      "x": 600,
+      "y": 460
+    },
+    "amir-payandeh": {
+      "x": 500,
+      "y": 460
+    },
+    "mohammad-nazeri": {
+      "x": 400,
+      "y": 460
+    },
+    "dibyendu-das": {
+      "x": 320,
+      "y": 420
+    },
+    "aniket-datar": {
+      "x": 260,
+      "y": 340
+    },
+    "manshi-limbu": {
+      "x": 300,
+      "y": 280
+    },
+    "anuj-pokhrel": {
+      "x": 360,
+      "y": 220
+    },
+    "amir-hossain-raj": {
+      "x": 440,
+      "y": 200
+    },
+    "chenhui-pan": {
+      "x": 520,
+      "y": 180
+    },
+    "duc-aaron-nguyen": {
+      "x": 620,
+      "y": 180
+    },
+    "ms-alex": {
+      "x": 720,
+      "y": 180
+    }
+  },
+  "relationship": {
+    "r1": {
+      "id": "xuesu-xiao",
+      "target_id": "deiching",
+      "relationship": "advisor"
+    }
+  }
+}
