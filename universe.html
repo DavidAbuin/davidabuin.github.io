@@ -141,193 +141,79 @@
 </div>
 
 <script>
-// ===== Stage refs =====
-const wrap = document.getElementById('universe');
-const stage = document.getElementById('stage');
+
+// ===== DOM refs =====
+const wrap    = document.getElementById('universe');
+const stage   = document.getElementById('stage');
 const linkSvg = stage.querySelector('svg.links');
-const controls = document.getElementById('controls');
+const controls= document.getElementById('controls');
 
-// ===== Data (your full list) =====
-const data = {
-  filters: [
-    { id:'pi', label:'PI' },
+// ===== Data holder (filled by loadData) =====
+let data;
+
+// Map JSON → structure used by renderer (filters, nodes[], links[])
+async function loadData(){
+  const res = await fetch('data/lab-data.json', { cache: 'no-store' });
+  if(!res.ok) throw new Error('Failed to load data/lab-data.json');
+  const raw = await res.json();
+
+  const filters = [
+    { id:'pi',      label:'PI' },
     { id:'postdoc', label:'Postdoc' },
-    { id:'phd', label:'PhD' },
-    { id:'ms', label:'MS' },
-    { id:'alum', label:'Alumni' }
-  ],
+    { id:'phd',     label:'PhD' },
+    { id:'ms',      label:'MS' },
+    { id:'alum',    label:'Alumni' }
+  ];
 
-  nodes: [
-    {
-      id:'xuesu-xiao', title:'Xuesu Xiao', sub:'PI — Robotics', img:'assets/lab/xiao.jpg', topics:['pi'], x:210, y:200,
-      desc:`Principal Investigator. Dr. Xuesu Xiao is an Assistant Professor of Computer Science at George Mason University.
-            His research focuses on developing highly capable and intelligent mobile robots that are robustly deployable
-            in the real world with minimal human supervision.`,
-      links:[{label:'Lab Page', href:'https://robotixx.cs.gmu.edu/'}]
-    },
+  const nodes = Object.values(raw.characters).map(c => ({
+    id: c.id,
+    title: c.name,
+    sub: c.role || '',
+    img: c.img,
+    topics: [(c.role || '').toLowerCase()], // role → topic id
+    x: raw.positions[c.id]?.x ?? 600,
+    y: raw.positions[c.id]?.y ?? 320,
+    desc: c.desc || '',
+    links: c.links || []
+  }));
 
-    { id:'daeun-song', title:'Daeun Song', sub:'Postdoctoral Researcher — HRI', img:'assets/lab/song.jpg', topics:['postdoc'], x:460, y:320,
-      desc:`Dr. Daeun Song is a Postdoctoral Researcher in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Website', href:'https://daeunsong.github.io/'}, {label:'GitHub', href:'https://github.com/daeunsong'} ]
-    },
+  const links = Object.values(raw.relationship).map(r => [ r.id, r.target_id ]);
 
-    { id:'sameep-shrestha', title:'Sameep Shrestha', sub:'PhD Student — Robotics', img:'assets/lab/sameep.jpg', topics:['phd'], x:540, y:280,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[{label:'Webpage', href:'https://sameepshrestha.github.io/'}]
-    },
+  return { filters, nodes, links };
+}
 
-    { id:'nhat-le', title:'Nhat Le', sub:'PhD Student — Robotics', img:'assets/lab/nhat.jpeg', topics:['phd'], x:640, y:340,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'GitHub', href:'https://github.com/nhatleminh1997'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/nhat-le-026392149/'} ]
-    },
-
-    { id:'harsh-rangwala', title:'Harsh Rangwala', sub:'PhD Student — Robotics', img:'assets/lab/harsh.jpg', topics:['phd'], x:740, y:300,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/harsh-rangwala-020a66164/'}, {label:'GitHub', href:'https://github.com/HarshRangwala'} ]
-    },
-
-    { id:'sohail-shaikh', title:'Sohail Shaikh', sub:'PhD Student — Robotics', img:'assets/lab/sohail.png', topics:['phd'], x:860, y:260,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/sohailshaikh/'} ]
-    },
-
-    { id:'manas-gupta', title:'Manas Gupta', sub:'PhD Student — Robotics', img:'assets/lab/manas.jpg', topics:['phd'], x:900, y:360,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/manasguptangp/'} ]
-    },
-
-    { id:'senthurbavan-kirubaharan', title:'Senthurbavan Kirubaharan', sub:'PhD Student — Robotics', img:'assets/lab/senthu.jpg', topics:['phd'], x:1020, y:300,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://senthurbavan.github.io/'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/senthurbavan/'} ]
-    },
-
-    { id:'yanlin-zhou', title:'Yanlin Zhou', sub:'PhD Student — Robotics', img:'assets/lab/yanlin.jpg', topics:['phd'], x:980, y:420,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'GitHub', href:'https://github.com/Zed2135'} ]
-    },
-
-    { id:'linji-wang', title:'Linji Wang', sub:'PhD Student — Robotics', img:'assets/lab/linji.jpg', topics:['phd'], x:820, y:420,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://linjiwang.com/'}, {label:'GitHub', href:'https://github.com/linjiw'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/linjiw/'} ]
-    },
-
-    { id:'tong-xu', title:'Tong Xu', sub:'PhD Student — Robotics', img:'assets/lab/tong.jpg', topics:['phd'], x:700, y:420,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://xutong05.github.io/'}, {label:'GitHub', href:'https://github.com/xutong05'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/tong-xu-a802941b1/'} ]
-    },
-
-    { id:'saad-abdul-ghani', title:'Saad Abdul Ghani', sub:'PhD Student — Robotics', img:'assets/lab/saad.jpeg', topics:['phd'], x:600, y:460,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'GitHub', href:'https://github.com/Saadmaghani'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/saad-ghani-9b5824158/'} ]
-    },
-
-    { id:'amir-payandeh', title:'Amir Payandeh', sub:'PhD Student — Robotics', img:'assets/lab/amirreza.jpg', topics:['phd'], x:500, y:460,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'GitHub', href:'https://github.com/Amir-pyh'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/amir-payandeh/'} ]
-    },
-
-    { id:'mohammad-nazeri', title:'Mohammad Nazeri', sub:'PhD Student — Robotics', img:'assets/lab/mohammad.jpg', topics:['phd'], x:400, y:460,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://mhnazeri.github.io/'}, {label:'GitHub', href:'https://github.com/mhnazeri'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/mhnazeri/'} ]
-    },
-
-    { id:'dibyendu-das', title:'Dibyendu Das', sub:'PhD Student — Robotics', img:'assets/lab/dibyendu.jpg', topics:['phd'], x:320, y:420,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/dibyendu-das-b480481bb/'} ]
-    },
-
-    { id:'aniket-datar', title:'Aniket Datar', sub:'PhD Student — Robotics', img:'assets/lab/aniket.jpg', topics:['phd'], x:260, y:340,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'LinkedIn', href:'https://www.linkedin.com/in/aniket-datar-9187a48b/'} ]
-    },
-
-    { id:'manshi-limbu', title:'Manshi Limbu', sub:'PhD Student — Robotics', img:'assets/lab/manshi.jpg', topics:['phd'], x:300, y:280,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://mlimbuu.github.io/'}, {label:'GitHub', href:'https://github.com/mlimbuu'} ]
-    },
-
-    { id:'anuj-pokhrel', title:'Anuj Pokhrel', sub:'PhD Student — Robotics', img:'assets/lab/anuj.jpg', topics:['phd'], x:360, y:220,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://anujpokhrel.github.io/'}, {label:'GitHub', href:'https://github.com/AnujPokhrel'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/anuj-pokhrel-9b8b67156/'} ]
-    },
-
-    { id:'amir-hossain-raj', title:'Amir Hossain Raj', sub:'PhD Student — Robotics', img:'assets/lab/amir.jpeg', topics:['phd'], x:440, y:200,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://amirraj.com/'}, {label:'GitHub', href:'https://github.com/amirraj/'}, {label:'LinkedIn', href:'https://www.linkedin.com/in/amirraj/'} ]
-    },
-
-    { id:'chenhui-pan', title:'Chenhui Pan', sub:'PhD Student — Robotics', img:'assets/lab/chenhui.jpg', topics:['phd'], x:520, y:180,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`
-    },
-
-    { id:'duc-aaron-nguyen', title:'Duc (Aaron) M. Nguyen', sub:'PhD Student — Robotics', img:'assets/lab/aaron.png', topics:['phd'], x:620, y:180,
-      desc:`Ph.D. student in the Department of Computer Science at George Mason University.`,
-      links:[ {label:'Webpage', href:'https://ducmngx.github.io/'}, {label:'GitHub', href:'https://github.com/ducmngx'} ]
-    },
-
-    { id:'ms-alex', title:'Alex Card', sub:'Robotics', img:'assets/lab/alex.png', topics:['ms'], x:720, y:180,
-      desc:`Interests include autonomous robotics, machine learning, computer vision, and motion planning.`,
-      links:[ {label:'GitHub', href:'https://github.com/acard5meg'} ]
-    },
-
-    { id:'deiching', title:'David Abuín Eichinger', sub:'Robotics', img:'assets/self.png', topics:['ms'], x:820, y:180,
-      desc:`David Abuín Eichinger is a Master's student in the Department of Computer Science at George Mason University. He received his Post-baccalaureate Certificate in Computer Science from GMU. He also received his B.S. degrees in Microbiology from North Carolina State University and Maritime Transportation from the United States Merchant Marine Academy. He is a US Navy veteran with joint operational planning and knowledge management experience. David's interests include biomimicry and bio-inspired robotics with the aim of using robotics in various biological applications such as laboratory automation, environmental restoration, agriculture, and providing autonomous assistance for caretakers of senior citizens and those with disabilities. In his free time, he enjoys reading, playing with family, gardening, and physical fitness activities such as weightlifting, running, cycling, and hiking.`,
-      links:[{label:'LinkedIn', href:'https://www.linkedin.com/in/david-abu%C3%ADn-e-b09a36267/'}]
-    }
-  ],
-
-  // Pairs of related people (ids must match exactly)
-  links: [
-    ['xuesu-xiao','daeun-song'],
-    ['xuesu-xiao','sameep-shrestha'],
-    ['xuesu-xiao','nhat-le'],
-    ['xuesu-xiao','harsh-rangwala'],
-    ['xuesu-xiao','sohail-shaikh'],
-    ['xuesu-xiao','manas-gupta'],
-    ['xuesu-xiao','senthurbavan-kirubaharan'],
-    ['xuesu-xiao','yanlin-zhou'],
-    ['xuesu-xiao','linji-wang'],
-    ['xuesu-xiao','tong-xu'],
-    ['xuesu-xiao','saad-abdul-ghani'],
-    ['xuesu-xiao','amir-payandeh'],
-    ['xuesu-xiao','mohammad-nazeri'],
-    ['xuesu-xiao','dibyendu-das'],
-    ['xuesu-xiao','aniket-datar'],
-    ['xuesu-xiao','manshi-limbu'],
-    ['xuesu-xiao','anuj-pokhrel'],
-    ['xuesu-xiao','amir-hossain-raj'],
-    ['xuesu-xiao','chenhui-pan'],
-    ['xuesu-xiao','duc-aaron-nguyen'],
-    ['xuesu-xiao','ms-alex'],
-    ['xuesu-xiao','deiching']
-  ]
-};
-
-// ===== Filters =====
-const active = new Set();
+// ===== State for filters, node map, transforms =====
+const active  = new Set();
 const nodeMap = new Map();
+const t       = { x:0, y:0, scale:1, rot:0 };
+const LIMIT   = { minScale: 0.4, maxScale: 3 };
 
-data.filters.forEach(f=>{
-  const chip = document.createElement('label');
-  chip.className='chip';
-  chip.innerHTML = `<input type="checkbox"/> ${f.label}`;
-  const input = chip.querySelector('input');
-  input.addEventListener('change', ()=>{
-    if(input.checked) active.add(f.id); else active.delete(f.id);
-    chip.classList.toggle('active', input.checked);
-    renderNodes();
+// ===== Rendering =====
+function buildFilters(){
+  // remove any previously built chips (keeps zoom buttons)
+  [...controls.querySelectorAll('label.chip[data-built]')].forEach(n=>n.remove());
+  data.filters.forEach(f=>{
+    const chip = document.createElement('label');
+    chip.className = 'chip';
+    chip.setAttribute('data-built','');
+    chip.innerHTML = `<input type="checkbox"/> ${f.label}`;
+    const input = chip.querySelector('input');
+    input.addEventListener('change', ()=>{
+      if(input.checked) active.add(f.id); else active.delete(f.id);
+      chip.classList.toggle('active', input.checked);
+      renderNodes();
+    });
+    // put filters before the buttons
+    controls.prepend(chip);
   });
-  // put filters before zoom buttons
-  controls.prepend(chip);
-});
+}
 
-// ===== Render nodes & links =====
 function renderNodes(){
-  // clear previous
+  // clear previous nodes
   [...stage.querySelectorAll('.node')].forEach(n=>n.remove());
   nodeMap.clear();
 
-  const filtered = data.nodes.filter(n => active.size===0 || n.topics.some(t=>active.has(t)) );
+  const filtered = data.nodes.filter(n => active.size===0 || n.topics.some(t=>active.has(t)));
   filtered.forEach(n=>{
     const el = document.createElement('div');
     el.className = 'node';
@@ -342,15 +228,18 @@ function renderNodes(){
     stage.appendChild(el);
     nodeMap.set(n.id, el);
   });
+
   drawLinks();
 }
 
 function drawLinks(){
-  const W=1200,H=640; linkSvg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  linkSvg.innerHTML='';
+  const W=1200,H=640; 
+  linkSvg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  linkSvg.innerHTML = '';
   data.links.forEach(([a,b])=>{
     if(!nodeMap.has(a) || !nodeMap.has(b)) return;
     const A = data.nodes.find(n=>n.id===a), B = data.nodes.find(n=>n.id===b);
+    if(!A || !B) return;
     const line = document.createElementNS('http://www.w3.org/2000/svg','line');
     line.classList.add('link');
     line.setAttribute('x1', A.x); line.setAttribute('y1', A.y);
@@ -360,27 +249,24 @@ function drawLinks(){
 }
 
 // ===== Modal =====
-const modal = document.getElementById('modal');
+const modal  = document.getElementById('modal');
 const mClose = document.getElementById('m-close');
+function labelFor(id){ const f = data.filters.find(x=>x.id===id); return f?f.label:id; }
+
 function openModal(n){
   document.getElementById('m-thumb').src = n.img;
   document.getElementById('m-title').textContent = n.title;
   document.getElementById('m-sub').textContent = n.sub || '';
   document.getElementById('m-desc').textContent = n.desc || '';
-  document.getElementById('m-tags').innerHTML = (n.topics||[]).map(t=>`<span class='tag'>${labelFor(t)}</span>`).join('');
-  document.getElementById('m-links').innerHTML = (n.links||[]).map(l=>`<a class='pill' style='margin-right:8px' href='${l.href}' target='_blank' rel='noopener'>${l.label}</a>`).join('');
-  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  document.getElementById('m-tags').innerHTML = (n.topics||[]).map(t=>`<span class="tag">${labelFor(t)}</span>`).join('');
+  document.getElementById('m-links').innerHTML = (n.links||[]).map(l=>`<a class="pill" style="margin-right:8px" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('');
+  modal.classList.add('open'); 
+  modal.setAttribute('aria-hidden','false');
 }
 mClose.onclick = ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); };
-modal.addEventListener('click',(e)=>{ if(e.target===modal) mClose.click(); });
-function labelFor(id){ const f=data.filters.find(x=>x.id===id); return f?f.label:id; }
+modal.addEventListener('click', (e)=>{ if(e.target===modal) mClose.click(); });
 
-renderNodes();
-window.addEventListener('resize', drawLinks);
-
-// ===== Pan / Zoom / Rotate =====
-const t = { x:0, y:0, scale:1, rot:0 };
-const LIMIT = { minScale: 0.4, maxScale: 3 };
+// ===== Transforms (pan / zoom / rotate) =====
 function applyTransform(){
   stage.style.transform = `translate(${t.x}px,${t.y}px) scale(${t.scale}) rotate(${t.rot}deg)`;
   // counter-scale nodes and keep labels upright
@@ -389,10 +275,10 @@ function applyTransform(){
 }
 applyTransform();
 
-// Pan
+// Drag to pan
 let dragging=false,lastX=0,lastY=0;
 wrap.addEventListener('pointerdown', (e)=>{
-  if(e.target.closest('.planet')) return; // allow clicking planets
+  if(e.target.closest('.planet')) return; // allow clicking planets without panning
   dragging=true; wrap.setPointerCapture(e.pointerId);
   lastX=e.clientX; lastY=e.clientY;
 });
@@ -404,27 +290,35 @@ wrap.addEventListener('pointermove', (e)=>{
 wrap.addEventListener('pointerup', ()=> dragging=false);
 wrap.addEventListener('pointercancel', ()=> dragging=false);
 
-// Zoom (wheel)
+// Cursor-centric zoom (wheel)
 wrap.addEventListener('wheel', (e)=>{
   e.preventDefault();
+  const rect = stage.getBoundingClientRect();
+  const cx = e.clientX - rect.left;
+  const cy = e.clientY - rect.top;
+  const preX = (cx - t.x) / t.scale;
+  const preY = (cy - t.y) / t.scale;
   const factor = (e.deltaY>0)? 0.9 : 1.1;
-  t.scale = Math.max(LIMIT.minScale, Math.min(LIMIT.maxScale, t.scale*factor));
+  const nextScale = Math.max(LIMIT.minScale, Math.min(LIMIT.maxScale, t.scale*factor));
+  t.x = cx - preX * nextScale;
+  t.y = cy - preY * nextScale;
+  t.scale = nextScale;
   applyTransform();
 }, {passive:false});
 
 // Buttons
-controls.querySelector('#zoom-in').onclick  = ()=>{ t.scale=Math.min(LIMIT.maxScale, t.scale*1.1); applyTransform(); };
-controls.querySelector('#zoom-out').onclick = ()=>{ t.scale=Math.max(LIMIT.minScale, t.scale*0.9); applyTransform(); };
-controls.querySelector('#rot-left').onclick = ()=>{ t.rot-=10; applyTransform(); };
-controls.querySelector('#rot-right').onclick= ()=>{ t.rot+=10; applyTransform(); };
-controls.querySelector('#reset').onclick    = ()=>{ t.x=0; t.y=0; t.scale=1; t.rot=0; applyTransform(); };
+document.getElementById('zoom-in').onclick  = ()=>{ t.scale=Math.min(LIMIT.maxScale, t.scale*1.1); applyTransform(); };
+document.getElementById('zoom-out').onclick = ()=>{ t.scale=Math.max(LIMIT.minScale, t.scale*0.9); applyTransform(); };
+document.getElementById('rot-left').onclick = ()=>{ t.rot-=10; applyTransform(); };
+document.getElementById('rot-right').onclick= ()=>{ t.rot+=10; applyTransform(); };
+document.getElementById('reset').onclick    = ()=>{ t.x=0; t.y=0; t.scale=1; t.rot=0; applyTransform(); };
 
-// Keyboard shortcuts
+// Keyboard shortcuts (optional)
 window.addEventListener('keydown', (e)=>{
-  if(e.key==='+') { t.scale=Math.min(LIMIT.maxScale,t.scale*1.1); }
-  if(e.key==='-') { t.scale=Math.max(LIMIT.minScale,t.scale*0.9); }
-  if(e.key==='[') { t.rot-=10; }
-  if(e.key===']') { t.rot+=10; }
+  if(e.key==='+') t.scale=Math.min(LIMIT.maxScale,t.scale*1.1);
+  if(e.key==='-') t.scale=Math.max(LIMIT.minScale,t.scale*0.9);
+  if(e.key==='[') t.rot-=10;
+  if(e.key===']') t.rot+=10;
   if(e.key==='0') { t.x=0; t.y=0; t.scale=1; t.rot=0; }
   if(e.key==='ArrowLeft')  t.x+=20;
   if(e.key==='ArrowRight') t.x-=20;
@@ -432,6 +326,22 @@ window.addEventListener('keydown', (e)=>{
   if(e.key==='ArrowDown')  t.y-=20;
   applyTransform();
 });
+
+// ===== Boot =====
+function init(){
+  buildFilters();
+  renderNodes();
+  window.addEventListener('resize', drawLinks);
+}
+
+loadData()
+  .then(d => { data = d; init(); })
+  .catch(err => { console.error(err); alert('Could not load lab data.'); });
+
+
+
+  
+  
 </script>
 </body>
 </html>
