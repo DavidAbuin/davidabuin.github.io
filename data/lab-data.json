@@ -275,6 +275,28 @@
   },
 
   "relationship": {
-    "r1": { "id": "xuesu-xiao", "target_id": "deiching", "relationship": "advisor" }
+    ""relationship": {
+      "r1":  { "id": "xuesu-xiao", "target_id": "deiching", "relationship": "advisor" },
+      "r2":  { "id": "xuesu-xiao", "target_id": "daeun-song", "relationship": "advisor" },
+      "r3":  { "id": "xuesu-xiao", "target_id": "sameep-shrestha", "relationship": "advisor" },
+      "r4":  { "id": "xuesu-xiao", "target_id": "nhat-le", "relationship": "advisor" },
+      "r5":  { "id": "xuesu-xiao", "target_id": "harsh-rangwala", "relationship": "advisor" },
+      "r6":  { "id": "xuesu-xiao", "target_id": "sohail-shaikh", "relationship": "advisor" },
+      "r7":  { "id": "xuesu-xiao", "target_id": "manas-gupta", "relationship": "advisor" },
+      "r8":  { "id": "xuesu-xiao", "target_id": "senthurbavan-kirubaharan", "relationship": "advisor" },
+      "r9":  { "id": "xuesu-xiao", "target_id": "yanlin-zhou", "relationship": "advisor" },
+      "r10": { "id": "xuesu-xiao", "target_id": "linji-wang", "relationship": "advisor" },
+      "r11": { "id": "xuesu-xiao", "target_id": "tong-xu", "relationship": "advisor" },
+      "r12": { "id": "xuesu-xiao", "target_id": "saad-abdul-ghani", "relationship": "advisor" },
+      "r13": { "id": "xuesu-xiao", "target_id": "amir-payandeh", "relationship": "advisor" },
+      "r14": { "id": "xuesu-xiao", "target_id": "mohammad-nazeri", "relationship": "advisor" },
+      "r15": { "id": "xuesu-xiao", "target_id": "dibyendu-das", "relationship": "advisor" },
+      "r16": { "id": "xuesu-xiao", "target_id": "aniket-datar", "relationship": "advisor" },
+      "r17": { "id": "xuesu-xiao", "target_id": "manshi-limbu", "relationship": "advisor" },
+      "r18": { "id": "xuesu-xiao", "target_id": "anuj-pokhrel", "relationship": "advisor" },
+      "r19": { "id": "xuesu-xiao", "target_id": "amir-hossain-raj", "relationship": "advisor" },
+      "r20": { "id": "xuesu-xiao", "target_id": "chenhui-pan", "relationship": "advisor" },
+      "r21": { "id": "xuesu-xiao", "target_id": "duc-aaron-nguyen", "relationship": "advisor" },
+      "r22": { "id": "xuesu-xiao", "target_id": "ms-alex", "relationship": "advisor" }
   }
 }
