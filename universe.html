@@ -281,7 +281,177 @@ loadData()
 </script>
 
 
+// ===== Helpers for on-screen errors =====
+function showError(msg){
+  let box = document.getElementById('errbox');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'errbox';
+    box.style.cssText = 'position:fixed;left:12px;bottom:12px;max-width:520px;background:#1f2937;color:#fee2e2;border:1px solid #b91c1c;border-radius:10px;padding:12px 14px;z-index:9999;font:14px/1.4 system-ui,Segoe UI,Inter';
+    document.body.appendChild(box);
+  }
+  box.textContent = msg;
+  console.error(msg);
+}
 
+// ===== DOM refs (filled after DOMContentLoaded) =====
+let wrap, stage, linkSvg;
+
+// ===== Render dataset holder =====
+let data;
+
+// ===== Load JSON → normalize to {nodes[], links[]} =====
+async function loadData(){
+  try{
+    const res = await fetch('data/lab-data.json', { cache: 'no-store' });
+    if(!res.ok) throw new Error(`HTTP ${res.status} for data/lab-data.json`);
+    const raw = await res.json();
+
+    const nodes = Object.values(raw.characters).map(c => ({
+      id: c.id,
+      title: c.name,
+      sub: c.role || '',
+      img: c.img,
+      x: raw.positions[c.id]?.x ?? 600,
+      y: raw.positions[c.id]?.y ?? 320,
+      desc: c.desc || '',
+      links: c.links || []
+    }));
+
+    const links = Object.values(raw.relationship).map(r => [ r.id, r.target_id ]);
+    return { nodes, links };
+  }catch(err){
+    showError(`Could not load data/lab-data.json — using fallback. (${err.message})`);
+    // Fallback so you can see nodes immediately
+    const nodes = [
+      { id:'x', title:'Xuesu Xiao', sub:'PI', img:'assets/lab/xiao.jpg', x:210, y:200, desc:'' },
+      { id:'d', title:'David Abuín', sub:'MS', img:'assets/self.png',   x:820, y:180, desc:'' }
+    ];
+    const links = [['x','d']];
+    return { nodes, links };
+  }
+}
+
+// ===== Transform state (pan / zoom) =====
+const t     = { x:0, y:0, scale:1 };
+const LIMIT = { minScale: 0.4, maxScale: 3 };
+
+function applyTransform(){
+  stage.style.transform = `translate(${t.x}px,${t.y}px) scale(${t.scale})`;
+  stage.style.setProperty('--invScale', (1/t.scale).toFixed(3));
+  stage.style.setProperty('--negRot', `0deg`);
+}
+
+// ===== Render nodes & links =====
+function renderNodes(){
+  // clear previous nodes
+  [...stage.querySelectorAll('.node')].forEach(n=>n.remove());
+
+  data.nodes.forEach(n=>{
+    const el = document.createElement('div');
+    el.className = 'node';
+    el.style.left = (n.x/1200*100)+'%';
+    el.style.top  = (n.y/640*100)+'%';
+    el.innerHTML = `
+      <div class="content">
+        <div class="planet" data-id="${n.id}"><img alt="${n.title}" src="${n.img}"></div>
+        <div class="label">${n.title}</div>
+      </div>`;
+    el.querySelector('.planet').addEventListener('click', ()=> openModal(n));
+    stage.appendChild(el);
+  });
+
+  drawLinks();
+}
+
+function drawLinks(){
+  const W=1200,H=640;
+  linkSvg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  linkSvg.innerHTML = '';
+  data.links.forEach(([a,b])=>{
+    const A = data.nodes.find(n=>n.id===a), B = data.nodes.find(n=>n.id===b);
+    if(!A || !B) return;
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.classList.add('link');
+    line.setAttribute('x1', A.x); line.setAttribute('y1', A.y);
+    line.setAttribute('x2', B.x); line.setAttribute('y2', B.y);
+    linkSvg.appendChild(line);
+  });
+}
+
+// ===== Modal =====
+const modal  = document.getElementById('modal');
+const mClose = document.getElementById('m-close');
+
+function openModal(n){
+  document.getElementById('m-thumb').src = n.img;
+  document.getElementById('m-title').textContent = n.title;
+  document.getElementById('m-sub').textContent = n.sub || '';
+  document.getElementById('m-desc').textContent = n.desc || '';
+  document.getElementById('m-tags').innerHTML = '';
+  document.getElementById('m-links').innerHTML = (n.links||[]).map(l=>`<a class="pill" style="margin-right:8px" href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+}
+mClose.onclick = ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); };
+modal.addEventListener('click', (e)=>{ if(e.target===modal) mClose.click(); });
+
+// ===== Mouse interactions =====
+function wireInteractions(){
+  applyTransform();
+
+  // Drag to pan
+  let dragging=false,lastX=0,lastY=0;
+  wrap.addEventListener('pointerdown', (e)=>{
+    if(e.target.closest('.planet')) return;
+    dragging=true; wrap.setPointerCapture(e.pointerId);
+    lastX=e.clientX; lastY=e.clientY;
+  });
+  wrap.addEventListener('pointermove', (e)=>{
+    if(!dragging) return;
+    const dx=e.clientX-lastX, dy=e.clientY-lastY;
+    t.x+=dx; t.y+=dy; lastX=e.clientX; lastY=e.clientY; applyTransform();
+  });
+  wrap.addEventListener('pointerup', ()=> dragging=false);
+  wrap.addEventListener('pointercancel', ()=> dragging=false);
+
+  // Cursor-centric zoom (wheel)
+  wrap.addEventListener('wheel', (e)=>{
+    e.preventDefault();
+    const rect = stage.getBoundingClientRect();
+    const cx = e.clientX - rect.left;
+    const cy = e.clientY - rect.top;
+    const preX = (cx - t.x) / t.scale;
+    const preY = (cy - t.y) / t.scale;
+    const factor = (e.deltaY>0)? 0.9 : 1.1;
+    const nextScale = Math.max(LIMIT.minScale, Math.min(LIMIT.maxScale, t.scale*factor));
+    t.x = cx - preX * nextScale;
+    t.y = cy - preY * nextScale;
+    t.scale = nextScale;
+    applyTransform();
+  }, {passive:false});
+
+  // Double-click empty space to reset
+  wrap.addEventListener('dblclick', (e)=>{
+    if(e.target.closest('.planet')) return;
+    t.x=0; t.y=0; t.scale=1; applyTransform();
+  });
+
+  window.addEventListener('resize', drawLinks);
+}
+
+// ===== Boot after DOM is ready =====
+document.addEventListener('DOMContentLoaded', async ()=>{
+  wrap    = document.getElementById('universe');
+  stage   = document.getElementById('stage');
+  linkSvg = stage.querySelector('svg.links');
+
+  data = await loadData();
+  renderNodes();
+  wireInteractions();
+
+  console.log(`Universe ready: ${data.nodes.length} nodes, ${data.links.length} links`);
+});
   
   
 </script>
