@@ -181,6 +181,46 @@ header {
     to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Changing colors -- */
+/* === Theme fixes (append at end of your <style>) === */
+
+/* 1) Pure black background */
+body { background: #000 !important; }
+.bg-gradient { display: none !important; }  /* remove tinted wallpaper */
+
+/* 2) Subtitles red (and remove green card headings if present) */
+.hero-subtitle { color: #ef4444 !important; }
+.card h3 { color: #ef4444 !important; }     /* e.g., "Research Expertise" */
+
+/* 3) Publications: switch purple/blue to red */
+.publications-list li { 
+  color: #e5e7eb !important;                /* normal text (light gray) */
+}
+.publications-list li::before {
+  color: #ef4444 !important;                /* number prefix */
+}
+.publications-list li em.ptitle {
+  color: #ef4444 !important;                /* paper title in red */
+  font-size: 1.05rem;
+}
+.publications-list li em:not(.ptitle) {
+  color: #9aa4b2 !important;                /* venue in muted gray */
+}
+/* links in pubs */
+.publications-list li a {
+  color: #ef4444 !important;
+}
+.publications-list li a:hover {
+  color: #f87171 !important;
+}
+
+/* Optional: make authors red to match */
+.pub-authors { color: #ef4444 !important; }
+
+/* Fix a missing semicolon that could break styles */
+.publications-list li em.ptitle { color: #ef4444 !important; font-size: 1.05rem; }
+
+
 /*----------------------------------*/
 /* Navigation */
 nav {
