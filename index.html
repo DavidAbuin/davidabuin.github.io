@@ -5,221 +5,991 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>David Abuín Eichinger</title>
   <meta name="description" content="David Abuín Eichinger" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0b0f17;          /* background */
-      --ink:#e5e7eb;         /* primary text */
-      --muted:#9aa4b2;       /* secondary */
-      --link:#ef4444;        /* links */
-      --card:#0f172a;        /* cards */
-      --rule:rgba(148,163,184,.25);
-      --accent:#ef4444;
-      --maxw:1100px;
+
+<style>
+/*----------------------------------*/
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #030303;
+    color: #ffffff;
+    overflow-x: hidden;
+    position: relative;
+
+    /* Publications counter */
+    counter-reset: paper-counter 101; /* replace 101 with latest paper number */
+}
+
+/*----------------------------------*/
+/* Animated gradient background */
+.bg-gradient {
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    z-index: -1;
+    background: linear-gradient(45deg, #ff0080, #7928ca, #0070f3, #00dfd8, #ff0080);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    opacity: 0.15;
+    filter: blur(60px);
+}
+
+@keyframes gradientShift {
+    0%   { transform: translate(0%, 0%) rotate(0deg); }
+    50%  { transform: translate(20%, 20%) rotate(180deg); }
+    100% { transform: translate(0%, 0%) rotate(360deg); }
+}
+
+@keyframes float {
+    0%, 100%   { transform: translate(0, 0) scale(1); }
+    25%        { transform: translate(50px, -50px) scale(1.1); }
+    50%        { transform: translate(-30px, 30px) scale(0.9); }
+    75%        { transform: translate(40px, 20px) scale(1.05); }
+}
+
+/*----------------------------------*/
+/* Containers */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/*----------------------------------*/
+/* Hero Section */
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-left: 1em;
+    padding-top: 140px;          /* height of nav + extra spacing */
+    min-height: calc(100vh - 140px); /* adjust for padding */
+    scroll-margin-top: 140px;    /* same as nav height */
+}
+
+.hero-title {
+    font-size: 3.5vw;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+    animation: titleAppear 1s ease forwards;
+    opacity: 0;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.hero-subtitles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.hero-subtitle {
+    font-size: 1.6em;
+    color: rgba(255, 255, 255, 0.7);
+    animation: titleAppear 1s ease 0.3s forwards;
+    opacity: 0;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.hero-subtitle span.highlight {
+    color: #00dfd8;
+    font-weight: 600;
+}
+
+.hero-subtitle.tagline {
+    font-size: 1.5em;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 40px;
+    text-shadow: 0 0 8px rgba(0,223,216,0.4), 0 0 20px rgba(121,40,202,0.3);
+}
+
+.scroll-indicator {
+    position: relative;
+    display: block;
+    margin: 40px auto 0;
+    animation: bounce 2s infinite;
+    opacity: 0.5;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(10px); }
+}
+
+/* Profile Photo */
+.profile-photo {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 40px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+   /* box-shadow: 0 0 60px rgba(0, 223, 216, 0.4), 0 0 100px rgba(121, 40, 202, 0.3);*/
+    animation: photoAppear 1s ease forwards;
+    opacity: 0;
+    position: relative;
+}
+
+.profile-photo::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+   /* background: linear-gradient(45deg, #ff0080, #7928ca, #0070f3, #00dfd8);*/
+    border-radius: 50%;
+    z-index: -1;
+    animation: rotate 3s linear infinite;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@keyframes photoAppear {
+    from { transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes titleAppear {
+    from { transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/*----------------------------------*/
+/* Navigation */
+nav {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+    animation: navAppear 1s ease 0.5s forwards;
+    opacity: 0;
+}
+
+@keyframes navAppear {
+    to { opacity: 1; }
+}
+
+nav button, nav a.cv-button {
+    background: rgba(25,35, 70, 0.65);
+    backdrop-filter: blur(20px);
+   border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 15px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    text-decoration: none;
+ 
+}
+
+nav button:hover, nav a.cv-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+nav button.active {
+    background: #3377AA;
+    border-color: transparent;
+}
+
+/* New menu for mobile */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-toggle {
+    display: none;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+/*----------------------------------*/
+/* Sections */
+.section {
+    min-height: 100vh;
+    padding: 120px 0;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease;
+    scroll-margin-top: 80px;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-size: 3em;
+    font-weight: 400;
+    margin-bottom: 60px;
+    color: #d1e7ff;
+    letter-spacing: -0.02em;
+}
+
+/*----------------------------------*/
+/* Cards */
+.card, .stat-card, .pub-card {
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 40px;
+    margin-bottom: 30px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transition: left 0.5s;
+}
+
+.card:hover::before {
+    left: 100%;
+}
+
+.card h3 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: #aaffff;
+    font-weight: 700;
+}
+
+.card .date {
+    color: #cff7f7;
+    font-size: 0.9em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.card p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.8;
+    font-size: 1.05em;
+    text-shadow: 0 0 8px rgba(0,223,216,0.4), 0 0 20px rgba(121,40,202,0.3);
+}
+
+/*----------------------------------*/
+/* Stat Cards */
+.stat-card {
+    background: linear-gradient(135deg, rgba(0, 0, 255, 0.1), rgba(50, 50, 128, 0.1));
+    text-align: center;
+}
+
+.stat-card:hover {
+    transform: scale(1.05) rotate(1deg);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.stat-number {
+    font-size: 3em;
+    font-weight: 400;
+    color: #d1e7ff;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: #d1e7ff;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+/*----------------------------------*/
+/* Publication Cards */
+.pub-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 4px solid #7928ca;
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+
+.pub-card:hover {
+    border-left-width: 8px;
+    border-left-color: #ff0080;
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.pub-title {
+    font-size: 1.5em;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.pub-authors {
+    color: #00dfd8;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.pub-venue {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.pub-link a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.pub-link a:hover {
+    text-decoration: underline;
+}
+
+/*----------------------------------*/
+/* Publications List */
+.publications-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.publications-list li {
+    counter-increment: paper-counter -1;
+    color: #ccccff;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    position: relative;
+    padding-left: 3rem;
+}
+
+.publications-list li::before {
+    content: counter(paper-counter);
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: #886fff;
+    font-size: 1.3em;
+}
+
+.publications-list li em.ptitle {
+    font-style: italic;
+    color: #4fc3f7;
+    font-size: 1.05rem;
+}
+
+.publications-list li em:not(.ptitle) {
+    font-style: italic;
+    font-weight: 400;
+    color: #90a4ae;
+}
+
+.publications-list li a {
+    margin-left: 0.25rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #8888ff;
+}
+
+.publications-list li a:hover {
+    color: #bbbbff;
+}
+
+/* Year headings */
+.year-heading {
+    color: #eedfd8;
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+/*----------------------------------*/
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 50px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #ff0080, #7928ca, #0070f3);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -56px;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ff0080;
+    border: 3px solid #0a0a0a;
+    box-shadow: 0 0 20px #ff0080;
+}
+
+/*----------------------------------*/
+/* Badges */
+.badge {
+    display: inline-block;
+    background: rgba(74, 144, 255, 0.2);
+    color: #d1e7ff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(74, 144, 255, 0.3);
+}
+
+/*----------------------------------*/
+/* Grid Layouts */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Cards inside grids flex */
+.card > .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.card > .grid > .card,
+.card > .grid > .stat-card {
+    flex: 1 1 350px;
+    min-width: 350px;
+    width: auto;
+}
+
+/*----------------------------------*/
+/* Responsive */
+@media (max-width: 768px) {
+
+   .profile-photo {
+        width: 150px !important;   /* smaller circle */
+        height: 150px !important;
+        margin-bottom: 30px; /* adjust spacing */
+        border-width: 3px;   /* optional: thinner border */
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
-    a{color:var(--link);text-decoration:none}
-    a:hover{text-decoration:underline}
-    img{max-width:100%;height:auto}
 
-    .proj-course {
-      font-weight: 600;   /* semi-bold */
-      color: #e5e7eb;     /* keep it readable on dark bg */
-      margin-bottom: 6px; /* optional spacing */
+    .profile-photo::before {
+        top: -1px;    /* adjust pseudo-element to match smaller size */
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+    }
+    
+    .orb1, .orb2, .orb3 {
+        width: 200px;
+        height: 200px;
+        filter: blur(30px);
     }
 
-    .wrap{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:320px 1fr;gap:28px;padding:28px}
-    @media (max-width: 960px){.wrap{grid-template-columns:1fr}}
+    .orb1 { top: 5%; left: 5%; animation-duration: 5s; }
+    .orb2 { top: 50%; right: 5%; animation-duration: 8s; }
+    .orb3 { bottom: 5%; left: 50%; animation-duration: 6s; }
 
-    /* Sidebar */
-    .side{position:sticky;top:18px;align-self:start;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--rule);border-radius:14px;padding:18px}
-    .name{font-size:1.6rem;font-weight:700;margin:.3rem 0}
-    .title{color:var(--muted)}
-    .headshot{border-radius:12px;border:1px solid var(--rule)}
-    .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:#0c1220;border:1px solid var(--rule);margin:6px 6px 0 0;color:#cbd5e1;font-size:.85rem}
-    .nav{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:8px}
+    .hero-title { font-size: 11vw; }
+    .hero-subtitle { font-size: 1.2em; }
 
-    /* Main */
-    .main{display:flex;flex-direction:column;gap:22px}
-    section{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--rule);border-radius:14px;padding:18px}
-    h2{
-      font-size:1.2rem;
-      margin:0 0 12px 0;
-      border-left:4px solid var(--accent);
-      padding-left:10px
+ /*   nav {
+        top: 20px;
+        right: 20px;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
     }
-    .muted{color:var(--muted)}
-    .pub{margin:0 0 14px 0}
-    .pub-title{font-weight:600}
-    .pub-authors{color:#cdd5df}
-    .pub-venue{color:#aab4c2;font-style:italic}
-    .links a{margin-right:10px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-    .list{margin:0;padding-left:18px}
-    .list li{margin:6px 0}
-    footer{opacity:.8;text-align:center;padding:18px}
-    .small{font-size:.9rem}
-  </style>
+
+    nav button, nav a.cv-button {
+        padding: 12px 0;
+        font-size: 0.9em;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-toggle { display: inline-block; }
+    .nav-buttons {
+        flex-direction: column;
+        display: none;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+.nav-buttons.show {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 60vh;         
+    overflow-y: auto;         
+    -webkit-overflow-scrolling: touch; 
+    padding-bottom: env(safe-area-inset-bottom, 10px); 
+    box-sizing: border-box;    
+}        
+     .nav-buttons.show::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nav-buttons.show::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}*/
+
+   nav {
+        top: 20px;
+        right: 20px;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+
+    nav button, nav a.cv-button {
+        padding: 12px 0;
+        font-size: 0.9em;
+        width: 100%;
+        text-align: center;
+    }
+
+   .nav-toggle { display: inline-block; }
+   .nav-buttons {
+        flex-direction: column;
+        display: none;
+        width: 100%;
+        margin-top: 10px;
+    }
+  
+
+.nav-buttons.show {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 60vh;          /* menu can take up most of screen height */
+    overflow-y: auto;          /* enable scrolling if items exceed height */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+    padding-bottom: env(safe-area-inset-bottom, 10px); /* avoid cut-off on iPhone/X */
+    box-sizing: border-box;    /* include padding in height calculation */
+}        
+     .nav-buttons.show::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nav-buttons.show::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+
+
+    .section { overflow: visible; }
+    .section-title { font-size: 2.5em; }
+    .grid { grid-template-columns: 1fr; gap: 20px; }
+    .container { padding: 0 20px; }
+
+    .card, .pub-card, .stat-card {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .card p, .pub-card li, .stat-card { font-size: 0.9em; line-height: 1.4; }
+    .pub-card .pub-title { font-size: 1.2em; }
+    .stat-card .stat-number { font-size: 2.5em; }
+    .badge { padding: 6px 14px; font-size: 0.8em; }
+    
+    /* Nested card grids: single column on mobile */
+  .card > .grid {
+    flex-direction: column; /* stack vertically */
+    gap: 20px;              /* slightly smaller gap for mobile */
+  }
+
+  .card > .grid > .card,
+  .card > .grid > .stat-card {
+    flex: 1 1 100%;         /* take full width */
+    min-width: 0;           /* remove min-width to allow shrinking */
+    width: auto;
+  }
+
+    .pub-card {display: block !important;}
+    .publications-list {display: block !important;}
+    #publications.section {opacity: 1 !important; transform: translateY(0) !important;}
+  
+}
+</style>
+
+ 
 </head>
 <body>
-  <div class="wrap">
-    <!-- Sidebar -->
-    <aside class="side">
-      <img class="headshot" src="assets/self.png" alt="Headshot of David Abuin" />
-      <div class="name">David Abuín Eichinger</div>
-      <div class="title">Graduate Student · Robotics, Computer Vision & Machine Learning</div>
-      <div style="margin-top:8px">
-        <a class="chip" href="mailto:deiching@gmu.edu">deiching@gmu.edu</a>
-        <a class="chip" href="https://github.com/DavidAbuin" target="_blank" rel="noopener">GitHub</a>
-        <a class="chip" href="assets/CV_David_Eichinger.pdf" target="_blank" rel="noopener">CV (PDF)</a>
-      </div>
-      <nav class="nav">
-        <a class="chip" href="#research">Research</a>
-        <a class="chip" href="#publications">Publications</a>
-       <!--  a class="chip" href="universe.html">Lab Universe a -->
+    <div class="bg-gradient"></div>
+  
 
-        
-      </nav>
-    </aside>
+<nav>
+    <button class="nav-toggle">&#9776;</button> <!-- Hamburger icon -->
+    <div class="nav-buttons">
+        <button onclick="scrollToSection('job')" class="active">About</button>
+        <button onclick="scrollToSection('summary')">Summary</button>
+        <button onclick="scrollToSection('leadership')">Leadership</button>
+        <button onclick="scrollToSection('research')">Research</button>
+        <a href="assets/CV_David_Eichinger.pdf" class="cv-button">CV</a>
+        <button onclick="scrollToSection('publications')">Publications</button>
+        <button onclick="scrollToSection('disclaimer')">Disclaimer</button>
+    </div>
+</nav>
 
-    <!-- Main content -->
-    <main class="main">
-      <section id="about">
-        <h2>About</h2>
+
+
+<header id="job" >
+    <div class="profile-photo">
+        <img src="assets/self.png" alt="David Abuin Eichinger" />
+    </div>
+
+<h1 class="hero-title">David Abuín Eichinger</h1>
+
+<div class="hero-subtitles">
+    <p class="hero-subtitle">M.S. Computer Science Graduate Student</p>
+    <p class="hero-subtitle">Member of the RobotiXX Lab</p>
+    <p class="hero-subtitle">George Mason University - College of Engineering and Computing</p>
+    <p class="hero-subtitle tagline">
+        <em>Aspiring craftsman. I value integrity, courage, servant leadership, mentorship, service to community, reducing suffering, and a worthy mission.</em>
+    </p>
+</div>
+
+
+    <div class="scroll-indicator">
+        <svg width="30" height="50" viewBox="0 0 30 50">
+            <rect x="5" y="5" width="20" height="35" rx="10" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+            <circle cx="15" cy="15" r="3" fill="rgba(255,255,255,0.5)">
+                <animate attributeName="cy" from="15" to="30" dur="1.5s" repeatCount="indefinite" />
+                <animate attributeName="opacity" from="1" to="0" dur="1.5s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+    </div>
+</header>
+
+<div class="container">
+      
+    
+<section id="summary" class="section visible">
+    <h2 class="section-title">Summary</h2>
+    <div class="card">
         <p>
-          I’m a graduate student in Computer Science at George Mason University. I am interested in building autonomous machines that can adapt and coordinate with others to assist in caretaking and natural exploration.  
+           David Abuín Eichinger is a Master's student in the Department of Computer Science at George Mason University. He received his Post-baccalaureate Certificate in Computer Science from GMU. He also received his B.S. degrees in Microbiology from North Carolina State University and Maritime Transportation from the United States Merchant Marine Academy. He is a US Navy veteran with joint operational planning and knowledge management experience. David's interests include biomimicry and bio-inspired robotics with the aim of using robotics in various biological applications such as laboratory automation, environmental restoration, agriculture, and providing autonomous assistance for caretakers of senior citizens and those with disabilities.
         </p>
-        <p class="muted small">Interests: Motion planning & Navigation · Perception · Visual recognition · Robotics simulation</p>
-      </section>
+        <p style="margin-top:20px">
+          In his free time, he enjoys reading, playing with family, gardening, and physical fitness activities such as weightlifting, running, cycling, and hiking. He had recently completed the Army 10 miler in Washington, DC and the Mason 5K.
+        </p>
+    </div>
+</section>
 
-      <section id="publications">
-        <h2>Publications</h2>
-        <ol class="list">
-          <li class="pub">
-            <div class="pub-title">Automated image analysis reveals the dynamic 3-dimensional organization of multi-ciliary arrays</div>
-            <div class="pub-authors">Galati DF, Abuin DS, Tauber GA, Pham AT, Pearson CG.</div>
-            <div class="pub-venue"> Biology Open. 2015 Dec 23</div>
+
+<section id="leadership" class="section">
+    <h2 class="section-title">Leadership</h2>
+
+    <div class="card">
+        <h3>US Naval Officer</h3>
+        <p style="margin: 20px 0;">
+            David Eichinger served as a Naval Reserve Officer for 17 years serving various leadership posts around the globe. Some of his duties include:
+                ● Provided planning expertise and knowledge management processes to five Geographic Combatant Commands and two federal agencies. 
+                ● Deployed to Joint Special Operations Command-Forward, leveraging the Joint Task Force operational environment in establishing and instituationalizing processes critical to the Task Force's mission. 
+                ● Served as Battle Watch Captain for Combined Forces Command in Korea.
+                ● Deployed to Operation Artemis Headquarters to assist Health & Human Services and FEMA in response to the Unaccompanied Children crisis on the Southern Border, translating Artemis staff process from tacit to explict knowledge to preserve organizational understanding, identify recommended process changes, and accelerate staff integration and learning through battle rhythm analysis, process analysis, and process mapping.
+                ● Recognized positive impact across the Joint Enabling Capability Command and Joint Force.
+                ● Laser Weapon System Officer for ONR prototype ship defense weapon for the USS PONCE from 2015-2016
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Merchant Marine Deck OfficerF</h3>
+        <p style="margin: 20px 0;">
+           David Eichinger served as a 3rd Officer with Military Sealift Command on board the USS BIG HORN and supported cargo and refueling operations to US Navy and NATO ships in heavy seas.
+          ● Trained new personnel in navigation, ship-handling, CBRN defense, and fire-fighting.
+          ● On-scene leader that directed efforts to successfully combat an out of control class alpha fire on board the USNS Big Horn.
+          ● 2nd Mate and Navigator aboard the hospital ship M/V Africa Mercy with the Mercy Ships Organization in 2010
+        </p>
+    </div>
+
+   
+</section>
+
+
+
+<section id="research" class="section">
+    <h2 class="section-title">Research</h2>
+
+    <div class="card">
+        <h3>Research Expertise</h3>
+        <p style="margin-top: 20px;">
+          David Eichinger is currently a member of the Robotixx Lab at George Mason University under the supervision of Dr. Xuesu Xiao. The primary mission of the lab is to develop highly capable and intelligent mobile robots that are robustly deployable in the real world with minimal human supervision.  
+        </p>
+        <p style="margin-top: 20px;">
+          His previous research experience was as a research assistant in the cell biology lab of Dr. Chad Pearon of the University of Colorado Anschutz. The primary focus of the lab was to understand centriole assembly using multiple mammalian cell lines and the protozoan Tetrahymena thermophila as a model organism. David managed laboratory equipment and supplies as well as conducted various experiments with the Tetrahymena to elucidate understanding of centriole structure and assembly.
+        </p>
+    </div>
+
+</section>
+
+
+<section id="publications" class="section">
+<h2 class="section-title">Publications</h2>
+                        
+<div class="grid" style="margin-top: 40px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+    <div class="stat-card">
+        <div class="stat-number">95+</div>
+        <div class="stat-label">papers</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">27</div>
+        <div class="stat-label">h-index</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">58</div>
+        <div class="stat-label">i10-index</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">3200+</div>
+        <div class="stat-label">citations</div>
+    </div>
+</div>
+
+<h3 style="font-size: 2em; margin: 40px 0 20px 0;">2015</h3>
+<div class="pub-card">
+    <ol class="publications-list">
+        <li>
+            Galati DF, <strong>Abuin DS</strong>, and Tauber GA, Pham AT, Pearson CG (2015): 
+            <em class="ptitle">Automated image analysis reveals the dynamic 3-dimensional organization of multi-ciliary arrays.</em> 
+            <em>Biology Open. 2015 Dec 23</em>
             <div class="links small">
               <a href="https://pubmed.ncbi.nlm.nih.gov/26700722/" target="_blank" rel="noopener">Paper</a>
             </div>  
-        </ol>
-      </section>
-
-      <section id="course_projects">
-  <h2>Course Projects</h2>
-  <ol class="list">
-
-    <li class="proj">
-      <div class="proj-title">Detecting Przewalski Horses by Bilinear Convolutional Networks</div>
-      <div class="proj-course"></strong>CS 682 — Computer Vision (Dr. Jana Košecká)</strong></div>
-      <div class="proj-desc">
-       This project addresses the difficulty of distinguishing Przewalski’s horses from domestic horses using advanced image recognition techniques, such as
-        fine-tuned ResNet and VGG16 models, to improve accuracy and support conservation efforts
-      </div>
-      <div class="links small">
-        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1130403424?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Presentation_Video_Eichinger"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
-      </div>
-    </li>
-
-    <li class="proj">
-      <div class="proj-title">The BARN Challenge: Autonomous Robot Navigation in Highly Constrained Spaces</div>
-      <div class="proj-course"></strong>CS 584 - Data Mining (Dr. Fang-Yi Yu)</strong></div>
-      <div class="proj-desc">
-      Each year several robotics competitions are held at the IEEE International Conference on Robotics and Automation
-(ICRA), one of which is the Benchmark Autonomous Robot Navigation (BARN) Challenge. The goal is to challenge
-robotics teams to improve the performance of autonomous navigation in highly constrained spaces. Autonomous
-robot navigation systems have a wide range of real world applications, from warehouse transportation to space exploration. Each scenario provides novel challenges, 
-        particularly the issue of collision-free movement in constrained
-spaces like a cluttered home or rubble from a disaster in which robots are deployed to provide search and rescue or relief services.
-      </div>
-      <div class="links small">
-        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1130405041?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Presenation Recording - Chung, Eichinger, Yajima, Zapata-Rocha"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
-      </div>
-    </li>
-
-    <li class="proj">
-      <div class="proj-title">Characters and Attributes</div>
-      <div class="proj-course"></strong>CS 551 — Computer Graphics (Dr. Jim X. Chen)</strong></div>
-      <div class="proj-desc">
-        Function <code>myCharacter('A', color)</code> draws “A” across the full screen with the specified color.
-        Predefined line segments (vertices with x, y, z) are sent to the vertex shader through a VBO.
-        Color is sent to the vertex shader as a uniform.
-        Displays one character, waits a few seconds, then displays another.
-      </div>
-      <div class="links small">
-        <div style="padding:60.8% 0 0 0;position:relative;">
-          <iframe 
-            src="https://player.vimeo.com/video/1130400045?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
-            frameborder="0" 
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin"
-            style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-            title="HW6 Video">
-          </iframe>
-        </div>
-        <script src="https://player.vimeo.com/api/player.js"></script>
-      </div>
-    </li>
-
-     <li class="proj">
-      <div class="proj-title">2D Geometrical Transformation</div>
-      <div class="proj-course"></strong>CS 551 — Computer Graphics (Dr. Jim X. Chen)</strong></div>
-      <div class="proj-desc">
-       In each display()
-          Draw a circle and draw points bounce in a circle in parallel; 
-          Scale one initial and translate to the left of the center; 
-          Scale another initial and translate to the right of the center; 
-          Rotate the initials counter-clockwise;
-          Draw 3 points (endpoints) that moves on the circle.
-          Draw 3 lines according to the 3 endpoints.
-          Translate 3 characters to the 3 endpoints as labels.
-
-      </div>
-      <div class="links small">
-
-        <div style="padding:75% 0 0 0;position:relative;">
-          <iframe 
-            src="https://player.vimeo.com/video/1130401801?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-            frameborder="0" 
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-            title="Project"></iframe>
-        </div>
-        <script src="https://player.vimeo.com/api/player.js"></script>
+        </li>
         
-        
-      </div>
-    </li>
+    </ol>
+</div>
 
-    <li class="proj">
-      <div class="proj-title">Prokaryotic Cell Development: The Dimorphic Lifestyle of Caulobacter cresentus</div>
-      <div class="proj-course"></strong>MB 351H (NC State)</strong></div>
-      <div class="proj-desc">
-      A description of a gram negative bacterium. Caulobacter bacterium has a dimorphic cell cycle. A dimorphic cell cycle means that during cell division, the mother cell will produce two different types of daughter cells because of the various structures in each of the dividing cells’ cell envelopes. One of the daughter cells will become a stalked cell and the other daughter cell will become a flagellated cell. 
-      </div>
-      <div class="links small">
-        <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/443124447?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Caulobacter crescentus"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
-      </div>
-    </li>
-  </ol>
+
+
+
 </section>
 
-     
- 
+
+<section id="disclaimer">
+<h2 class="section-title">Disclaimer</h2>
+
+<p style="margin-bottom:20px">
+    Any postings on this site are my own and do not necessarily represent the GMU or the Robotixx Lab's positions, strategies, or opinions.
+    </p>
+</section>
+
+
+</div>
+
+<script>
+function scrollToSection(id) {
+    const section = document.getElementById(id);
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     
+    document.querySelectorAll('nav button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
 
-      <footer class="small">
-        © <span id="year"></span> David Abuín Eichinger · Hosted on GitHub Pages
-      </footer>
-    </main>
-  </div>
+// Intersection Observer for fade-in animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target); // Stop observing after fade-in
+        }
+    });
+}, { 
+    threshold: 0.01,
+    rootMargin: "0px 0px -200px 0px"
+});
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
+});
+
+// Force publications section visible on mobile only if not already visible
+function forceMobilePublicationsVisible() {
+    const pubSection = document.getElementById('publications');
+    if (!pubSection) return;
+
+    if (window.innerWidth <= 768 && !pubSection.classList.contains('visible')) {
+        pubSection.classList.add('visible');
+    }
+}
+
+// Run on initial load
+forceMobilePublicationsVisible();
+
+// Run on window resize
+window.addEventListener('resize', forceMobilePublicationsVisible);
+
+// Update active nav button on scroll
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.section');
+    const navButtons = document.querySelectorAll('nav button');
+
+    let currentSectionId = '';
+
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            currentSectionId = section.getAttribute('id');
+        }
+    });
+
+    navButtons.forEach(button => {
+        button.classList.remove('active');
+        if (button.textContent.toLowerCase() === currentSectionId) {
+            button.classList.add('active');
+        }
+    });
+});
+</script>
+
+<script>
+/*
+const toggle = document.querySelector('.nav-toggle');
+const buttons = document.querySelector('.nav-buttons');
+
+// Toggle menu and lock page scroll
+toggle.addEventListener('click', () => {
+    buttons.classList.toggle('show');
+
+    if (buttons.classList.contains('show')) {
+        // Menu is open → prevent background scrolling
+        document.body.style.overflow = 'hidden';
+    } else {
+        // Menu is closed → restore page scrolling
+        document.body.style.overflow = '';
+    }
+});
+
+// Close menu after clicking a nav button (mobile only)
+const navItems = buttons.querySelectorAll('button, a.cv-button');
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        if (buttons.classList.contains('show')) {
+            buttons.classList.remove('show');
+            // Restore page scrolling
+            document.body.style.overflow = '';
+        }
+    });
+});
+*/
+
+const toggle = document.querySelector('.nav-toggle');
+const buttons = document.querySelector('.nav-buttons');
+
+toggle.addEventListener('click', () => {
+    buttons.classList.toggle('show');
+
+    // Optional: scroll to bottom immediately on menu open
+    buttons.scrollTop = buttons.scrollHeight;
+});
+
+// Close menu after clicking a nav button (mobile only)
+const navItems = buttons.querySelectorAll('button, a.cv-button');
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        if (buttons.classList.contains('show')) {
+            buttons.classList.remove('show');
+        }
+    });
+});
+
+// Handle mobile rotation: force browser to recalc scrollable area
+function fixNavScroll() {
+    if (!buttons) return;
+    // Temporarily remove max-height to let browser recalc scroll
+    buttons.style.maxHeight = 'none';
+    const scrollHeight = buttons.scrollHeight;
+    buttons.style.maxHeight = ''; // revert back
+    // The container will now scroll naturally if needed
+}
+
+// Call on rotation and menu open
+window.addEventListener('orientationchange', fixNavScroll);
+toggle.addEventListener('click', fixNavScroll);
+
+
+</script>
+
+
 </body>
 </html>
