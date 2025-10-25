@@ -274,8 +274,8 @@
     "ms-alex": { "x": 720, "y": 180 }
   },
 
-  "relationship": {
-    ""relationship": {
+ 
+    "relationship": {
       "r1":  { "id": "xuesu-xiao", "target_id": "deiching", "relationship": "advisor" },
       "r2":  { "id": "xuesu-xiao", "target_id": "daeun-song", "relationship": "advisor" },
       "r3":  { "id": "xuesu-xiao", "target_id": "sameep-shrestha", "relationship": "advisor" },
