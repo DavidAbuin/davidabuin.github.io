@@ -100,7 +100,7 @@ header {
 
 .hero-subtitle {
     font-size: 1.6em;
-    color: rgba(31, 29, 27, 0.75);
+    color: rgba(31, 29, 27, 0.9);
     animation: titleAppear 1s ease 0.3s forwards;
     opacity: 0.0;
     font-weight: 300;
@@ -115,7 +115,7 @@ header {
 .hero-subtitle.tagline {
     font-size: 1.5em;
     font-style: italic;
-    color: rgba(31, 29, 27, 0.75);
+    color: rgba(31, 29, 27, 0.9);
     margin-top: 40px;
     text-shadow: none;
 }
@@ -397,7 +397,7 @@ nav button.active {
 .pub-venue {
     color: rgba(31, 29, 27, 0.5);
     font-size: 0.9em;
-    font-style: none;
+    font-style: normal;
 }
 
 .pub-link a {
@@ -560,48 +560,6 @@ nav button.active {
     .hero-title { font-size: 11vw; }
     .hero-subtitle { font-size: 1.2em; }
 
- /*   nav {
-        top: 20px;
-        right: 20px;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 10px;
-    }
-
-    nav button, nav a.cv-button {
-        padding: 12px 0;
-        font-size: 0.9em;
-        width: 100%;
-        text-align: center;
-    }
-
-    .nav-toggle { display: inline-block; }
-    .nav-buttons {
-        flex-direction: column;
-        display: none;
-        width: 100%;
-        margin-top: 10px;
-    }
-
-.nav-buttons.show {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-height: 60vh;         
-    overflow-y: auto;         
-    -webkit-overflow-scrolling: touch; 
-    padding-bottom: env(safe-area-inset-bottom, 10px); 
-    box-sizing: border-box;    
-}        
-     .nav-buttons.show::-webkit-scrollbar {
-    width: 6px;
-}
-
-.nav-buttons.show::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-}*/
-
    nav {
         top: 20px;
         right: 20px;
@@ -691,13 +649,13 @@ nav button.active {
 <nav>
     <button class="nav-toggle">&#9776;</button> <!-- Hamburger icon -->
     <div class="nav-buttons">
-        <button onclick="scrollToSection('job')" class="active">About</button>
-        <button onclick="scrollToSection('summary')">Summary</button>
-        <button onclick="scrollToSection('leadership')">Leadership</button>
-        <button onclick="scrollToSection('research')">Research</button>
+        <button onclick="scrollToSection('job', event)" class="active">About</button>
+        <button onclick="scrollToSection('summary', event)">Summary</button>
+        <button onclick="scrollToSection('leadership', event)">Leadership</button>
+        <button onclick="scrollToSection('research', event)">Research</button>
         <a href="assets/CV_David_Eichinger.pdf" class="cv-button">CV</a>
-        <button onclick="scrollToSection('publications')">Publications</button>
-        <button onclick="scrollToSection('disclaimer')">Disclaimer</button>
+        <button onclick="scrollToSection('publications', event)">Publications</button>
+        <button onclick="scrollToSection('disclaimer', event)">Disclaimer</button>
     </div>
 </nav>
 
@@ -844,14 +802,14 @@ nav button.active {
 </div>
 
 <script>
-function scrollToSection(id) {
+function scrollToSection(id, e) {
     const section = document.getElementById(id);
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     
     document.querySelectorAll('nav button').forEach(btn => {
         btn.classList.remove('active');
     });
-    event.target.classList.add('active');
+    e.target.classList.add('active');
 }
 
 // Intersection Observer for fade-in animations
