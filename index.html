@@ -16,8 +16,8 @@
 }  
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: #030303;
-    color: #ffffff;
+    background: #FAF8F4;
+    color: #1f1d1b;
     overflow-x: hidden;
     position: relative;
 
@@ -80,7 +80,7 @@ header {
 .hero-title {
     font-size: 3.5vw;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #1f1d1b;
     margin-bottom: 20px;
     animation: titleAppear 1s ease forwards;
     opacity: 0;
@@ -100,7 +100,7 @@ header {
 
 .hero-subtitle {
     font-size: 1.6em;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(31, 29, 27, 0.75);
     animation: titleAppear 1s ease 0.3s forwards;
     opacity: 0.0;
     font-weight: 300;
@@ -115,9 +115,9 @@ header {
 .hero-subtitle.tagline {
     font-size: 1.5em;
     font-style: italic;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(31, 29, 27, 0.75);
     margin-top: 40px;
-    text-shadow: 0 0 8px rgba(0,223,216,0.4), 0 0 20px rgba(121,40,202,0.3);
+    text-shadow: none;
 }
 
 .scroll-indicator {
@@ -140,7 +140,7 @@ header {
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto 40px;
-    border: 4px solid rgba(255, 255, 255, 0.2);
+    border: 4px solid rgba(31, 29, 27, 0.15);
    /* box-shadow: 0 0 60px rgba(0, 223, 216, 0.4), 0 0 100px rgba(121, 40, 202, 0.3);*/
     animation: photoAppear 1s ease forwards;
     opacity: 0;
@@ -202,10 +202,10 @@ nav {
 }
 
 nav button, nav a.cv-button {
-    background: rgba(0,0, 0, 0.65);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
-   border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ffffff;
+    border: 1px solid rgba(31, 29, 27, 0.12);
+    color: #1f1d1b;
     padding: 15px 30px;
     border-radius: 50px;
     cursor: pointer;
@@ -218,14 +218,15 @@ nav button, nav a.cv-button {
 }
 
 nav button:hover, nav a.cv-button:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(31, 29, 27, 0.06);
+    border-color: rgba(31, 29, 27, 0.2);
     transform: translateY(-2px);
 }
 
 nav button.active {
     background: #ef4444;
     border-color: transparent;
+    color: #ffffff;
 }
 
 /* New menu for mobile */
@@ -236,10 +237,10 @@ nav button.active {
 
 .nav-toggle {
     display: none;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    border: 1px solid rgba(31, 29, 27, 0.12);
+    color: #1f1d1b;
     padding: 15px 20px;
     border-radius: 50px;
     cursor: pointer;
@@ -285,14 +286,14 @@ nav button.active {
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    border: 1px solid rgba(31, 29, 27, 0.1);
 }
 
 .card:hover {
     transform: translateY(-10px);
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border-color: rgba(31, 29, 27, 0.25);
+    box-shadow: 0 20px 60px rgba(31, 29, 27, 0.12);
 }
 
 .card::before {
@@ -302,7 +303,7 @@ nav button.active {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    background: linear-gradient(90deg, transparent, rgba(31, 29, 27, 0.04), transparent);
     transition: left 0.5s;
 }
 
@@ -318,7 +319,7 @@ nav button.active {
 }
 
 .card .date {
-    color: #FFFFFF;
+    color:  #ef4444;
     font-size: 0.9em;
     font-weight: 600;
     text-transform: uppercase;
@@ -328,33 +329,33 @@ nav button.active {
 }
 
 .card p {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(31, 29, 27, 0.8);
     line-height: 1.8;
     font-size: 1.05em;
-    text-shadow: 0 0 8px rgba(0,223,216,0.4), 0 0 20px rgba(121,40,202,0.3);
+    text-shadow: none;
 }
 
 /*----------------------------------*/
 /* Stat Cards */
 .stat-card {
-    background: linear-gradient(135deg, rgba(0, 0, 255, 0.1), rgba(50, 50, 128, 0.1));
+    background: linear-gradient(135deg, rgba(44, 82, 130, 0.07), rgba(44, 82, 130, 0.04));
     text-align: center;
 }
 
 .stat-card:hover {
     transform: scale(1.05) rotate(1deg);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: rgba(31, 29, 27, 0.25);
 }
 
 .stat-number {
     font-size: 3em;
     font-weight: 400;
-    color: #d1e7ff;
+    color: #2c5282;
     margin-bottom: 10px;
 }
 
 .stat-label {
-    color: #d1e7ff;
+    color: #2c5282;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-size: 0.9em;
@@ -364,8 +365,8 @@ nav button.active {
 /*----------------------------------*/
 /* Publication Cards */
 .pub-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #ffffff;
+    border: 1px solid rgba(31, 29, 27, 0.08);
     border-left: 4px solid #ef4444;
     border-radius: 20px;
     padding: 35px;
@@ -377,30 +378,30 @@ nav button.active {
     border-left-width: 8px;
     border-left-color: #ff0080;
     transform: translateX(10px);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(31, 29, 27, 0.02);
 }
 
 .pub-title {
     font-size: 1.5em;
-    color: #ffffff;
+    color: #1f1d1b;
     margin-bottom: 15px;
     font-weight: 700;
 }
 
 .pub-authors {
-    color: #FFFFFF;
+    color: rgba(31, 29, 27, 0.8);
     margin-bottom: 8px;
     font-size: 0.95em;
 }
 
 .pub-venue {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(31, 29, 27, 0.5);
     font-size: 0.9em;
     font-style: none;
 }
 
 .pub-link a {
-    color: rgba(255, 255, 255, 0.5);
+    color: #ef4444;
     text-decoration: none;
 }
 
@@ -417,7 +418,7 @@ nav button.active {
 
 .publications-list li {
     counter-increment: paper-counter -1;
-    color: #ffffff;
+    color: #1f1d1b;
     line-height: 1.6;
     margin-bottom: 1.25rem;
     font-size: 1rem;
@@ -430,7 +431,7 @@ nav button.active {
     position: absolute;
     left: 0;
     font-weight: 700;
-    color: #FFFFFF
+    color: #ef4444
     font-size: 1.3em;
 }
 
@@ -443,7 +444,7 @@ nav button.active {
 .publications-list li em:not(.ptitle) {
     font-style: italic;
     font-weight: 400;
-    color: #ffffff;
+    color: #1f1d1b;
 }
 
 .publications-list li a {
@@ -459,7 +460,7 @@ nav button.active {
 
 /* Year headings */
 .year-heading {
-    color: #eedfd8;
+    color: #1f1d1b;
     font-weight: 700;
     font-size: 1.6rem;
     margin-bottom: 1rem;
@@ -496,7 +497,7 @@ nav button.active {
     height: 14px;
     border-radius: 50%;
     background: #ff0080;
-    border: 3px solid #0a0a0a;
+    border: 3px solid #FAF8F4;
     box-shadow: 0 0 20px #ff0080;
 }
 
@@ -504,8 +505,8 @@ nav button.active {
 /* Badges */
 .badge {
     display: inline-block;
-    background: rgba(74, 144, 255, 0.2);
-    color: #d1e7ff;
+    background: rgba(74, 144, 255, 0.15);
+    color: #2c5282;
     padding: 8px 20px;
     border-radius: 20px;
     font-size: 0.85em;
@@ -640,7 +641,7 @@ nav button.active {
 }
 
 .nav-buttons.show::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(31, 29, 27, 0.3);
     border-radius: 3px;
 }
 
@@ -710,8 +711,8 @@ nav button.active {
 <h1 class="hero-title">David Abuín Eichinger</h1>
 
 <div class="hero-subtitles">
-    <p class="hero-subtitle">M.S. Computer Science Graduate Student</p>
-    <p class="hero-subtitle">Member of the RobotiXX Lab</p>
+    <p class="hero-subtitle">Provisional PhD Robotics Graduate Student</p>
+    <p class="hero-subtitle">Member of the RobotiXX and CRADL Lab</p>
     <p class="hero-subtitle">George Mason University - College of Engineering and Computing</p>
     <p class="hero-subtitle tagline">
         <em>Aspiring craftsman. I value integrity, courage, servant leadership, mentorship, service to community, reducing suffering, and a good mission.</em>
@@ -721,8 +722,8 @@ nav button.active {
 
     <div class="scroll-indicator">
         <svg width="30" height="50" viewBox="0 0 30 50">
-            <rect x="5" y="5" width="20" height="35" rx="10" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-            <circle cx="15" cy="15" r="3" fill="rgba(255,255,255,0.5)">
+            <rect x="5" y="5" width="20" height="35" rx="10" fill="none" stroke="rgba(31, 29, 27, 0.3)" stroke-width="2"/>
+            <circle cx="15" cy="15" r="3" fill="rgba(31, 29, 27, 0.3)">
                 <animate attributeName="cy" from="15" to="30" dur="1.5s" repeatCount="indefinite" />
                 <animate attributeName="opacity" from="1" to="0" dur="1.5s" repeatCount="indefinite" />
             </circle>
@@ -737,7 +738,7 @@ nav button.active {
     <h2 class="section-title">Summary</h2>
     <div class="card">
         <p>
-           David Abuín Eichinger is a Master's student in the Department of Computer Science at George Mason University. He received his Post-baccalaureate Certificate in Computer Science from GMU. He also received his B.S. degrees in Microbiology from North Carolina State University and Maritime Transportation from the United States Merchant Marine Academy. He is a US Navy veteran with joint operational planning and knowledge management experience. David's interests include biomimicry and bio-inspired robotics with the aim of using robotics in various biological applications such as laboratory automation, environmental restoration, agriculture, and providing autonomous assistance for caretakers of senior citizens and those with disabilities.
+           David Abuín Eichinger is a provisional PhD graduate student in the Department of Mechanical at George Mason University. He recently received his M.S. in Computer science from George Mason University. Prveviously, he received his Post-baccalaureate Certificate in Computer Science from the same institution. He also received his B.S. degrees in Microbiology from North Carolina State University and Maritime Transportation from the United States Merchant Marine Academy. He is a US Navy veteran with joint operational planning and knowledge management experience. David's interests include biomimicry and bio-inspired robotics with the aim of using robotics in various biological applications such as laboratory automation, environmental restoration, agriculture, and providing autonomous assistance for caretakers of senior citizens and those with disabilities.
         </p>
         <p style="margin-top:20px">
           In his free time, he enjoys reading, playing with family, gardening, and physical fitness activities such as weightlifting, running, cycling, and hiking. He had recently completed the Army 10 miler in Washington, DC and the Mason 5K.
@@ -835,7 +836,7 @@ nav button.active {
 <h2 class="section-title">Disclaimer</h2>
 
 <p style="margin-bottom:20px">
-    Any postings on this site are my own and do not necessarily represent the GMU or the Robotixx Lab's positions, strategies, or opinions.
+    Any postings on this site are my own and do not necessarily represent the GMU, CRADL Lab, or Robotixx Lab's positions, strategies, or opinions.
     </p>
 </section>
 
