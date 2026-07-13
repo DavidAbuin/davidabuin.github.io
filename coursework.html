@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coursework · David Abuín Eichinger</title>
+<meta name="description" content="Graduate and undergraduate coursework of David Abuín Eichinger, with course descriptions, objectives, and projects." />
+<style>
+/*----------------------------------*/
+/* Theme colors — change the accent for the whole page here */
+:root {
+  --accent: #1f7a3d;         /* primary green (matches index.html) */
+  --accent-dark: #14532d;    /* darker green for small text on tinted backgrounds */
+  --accent-rgb: 31, 122, 61; /* --accent as R, G, B for translucent tints */
+}
+
+/*----------------------------------*/
+/* Global Reset (matches index.html) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #FAF8F4;
+  color: #1f1d1b;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 140px 40px 80px; /* top padding clears the fixed nav */
+}
+
+/*----------------------------------*/
+/* Navigation (same pill style as index.html) */
+nav {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+  z-index: 1000;
+  display: flex;
+  gap: 10px;
+}
+
+nav a {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(31, 29, 27, 0.12);
+  color: #1f1d1b;
+  padding: 15px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background: rgba(31, 29, 27, 0.06);
+  border-color: rgba(31, 29, 27, 0.2);
+  transform: translateY(-2px);
+}
+
+/*----------------------------------*/
+/* Page header */
+.section-title {
+  font-size: 3em;
+  font-weight: 400;
+  margin-bottom: 18px;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.page-intro {
+  max-width: 720px;
+  color: rgba(31, 29, 27, 0.75);
+  line-height: 1.8;
+  margin-bottom: 56px;
+  font-size: 1.05em;
+}
+
+/*----------------------------------*/
+/* Two-column layout: filter rail + course list */
+.layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+}
+
+/*----------------------------------*/
+/* Filter rail (left side) */
+.filters {
+  position: sticky;
+  top: 120px;
+}
+
+.filters-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.filters-head h2 {
+  font-size: 1.05em;
+  font-weight: 700;
+}
+
+#clear-filters {
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 4px 2px;
+}
+
+#clear-filters:hover {
+  text-decoration: underline;
+}
+
+.filter-group {
+  margin-top: 26px;
+}
+
+.filter-group h3 {
+  font-size: 0.78em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(31, 29, 27, 0.5);
+  margin-bottom: 10px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  font: inherit;
+  color: #1f1d1b;
+  transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.filter-option:hover {
+  background: rgba(31, 29, 27, 0.05);
+}
+
+.filter-option.active {
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.3);
+}
+
+.filter-option.active .opt-label {
+  font-weight: 600;
+}
+
+.filter-option.dimmed {
+  opacity: 0.45;
+}
+
+.opt-code {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.82em;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.opt-name {
+  font-size: 0.92em;
+  color: rgba(31, 29, 27, 0.8);
+}
+
+.count {
+  margin-left: auto;
+  background: rgba(31, 29, 27, 0.06);
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.78em;
+  color: rgba(31, 29, 27, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+.filter-option.active .count {
+  background: rgba(var(--accent-rgb), 0.15);
+  color: var(--accent-dark);
+}
+
+/*----------------------------------*/
+/* Course cards (expandable catalog entries) */
+details.course-card {
+  background: #ffffff;
+  border: 1px solid rgba(31, 29, 27, 0.1);
+  border-left: 4px solid transparent;
+  border-radius: 20px;
+  margin-bottom: 24px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  scroll-margin-top: 130px; /* keeps the fixed nav from covering the card on scroll */
+}
+
+details.course-card:hover {
+  border-color: rgba(31, 29, 27, 0.25);
+  box-shadow: 0 14px 44px rgba(31, 29, 27, 0.08);
+}
+
+details.course-card[open] {
+  border-left-color: var(--accent);
+}
+
+summary.course-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 26px 30px;
+}
+
+summary.course-summary::-webkit-details-marker {
+  display: none;
+}
+
+.course-heading {
+  min-width: 0;
+}
+
+.course-code {
+  display: block;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.88em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.course-title {
+  font-size: 1.45em;
+  font-weight: 700;
+  color: #1f1d1b;
+  line-height: 1.25;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 0.82em;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.badge-grad {
+  background: rgba(74, 144, 255, 0.15);
+  color: #2c5282;
+  border: 1px solid rgba(74, 144, 255, 0.3);
+}
+
+.badge-undergrad {
+  background: rgba(31, 29, 27, 0.06);
+  color: #1f1d1b;
+  border: 1px solid rgba(31, 29, 27, 0.15);
+}
+
+.chev {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s ease;
+  color: rgba(31, 29, 27, 0.45);
+}
+
+details[open] .chev {
+  transform: rotate(90deg);
+}
+
+.course-body {
+  margin: 0 30px;
+  padding: 26px 0 32px;
+  border-top: 1px solid rgba(31, 29, 27, 0.08);
+}
+
+.course-meta {
+  color: rgba(31, 29, 27, 0.5);
+  font-size: 0.9em;
+  margin-bottom: 16px;
+}
+
+.course-desc {
+  color: rgba(31, 29, 27, 0.85);
+  line-height: 1.8;
+  font-size: 1.03em;
+}
+
+.kicker {
+  color: var(--accent);
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 28px 0 12px;
+}
+
+.objectives {
+  padding-left: 1.3em;
+  line-height: 1.7;
+  color: rgba(31, 29, 27, 0.85);
+}
+
+.objectives li {
+  margin-bottom: 6px;
+}
+
+/*----------------------------------*/
+/* Projects inside a course */
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 28px;
+  align-items: start;
+  padding: 22px 0;
+}
+
+.project + .project {
+  border-top: 1px solid rgba(31, 29, 27, 0.08);
+}
+
+.project.no-media {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.project h4 {
+  font-size: 1.12em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.project p {
+  line-height: 1.7;
+  color: rgba(31, 29, 27, 0.8);
+  font-size: 0.98em;
+}
+
+.project-links {
+  margin-top: 12px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.project-links a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9em;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.35);
+}
+
+.project-links a:hover {
+  border-bottom-color: var(--accent);
+}
+
+.project-media img,
+.project-media video {
+  width: 100%;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 29, 27, 0.1);
+}
+
+.project-media .yt {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 14px;
+  display: block;
+}
+
+.media-caption {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8em;
+  color: rgba(31, 29, 27, 0.5);
+  text-align: center;
+}
+
+/*----------------------------------*/
+/* Empty state + utilities */
+#no-results {
+  color: rgba(31, 29, 27, 0.6);
+  padding: 30px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.filter-option:focus-visible,
+summary.course-summary:focus-visible,
+#clear-filters:focus-visible,
+nav a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+footer {
+  margin-top: 70px;
+  color: rgba(31, 29, 27, 0.5);
+  font-size: 0.9em;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/*----------------------------------*/
+/* Responsive */
+@media (max-width: 900px) {
+  .container {
+    padding: 120px 20px 60px;
+  }
+
+  nav {
+    top: 20px;
+    right: 20px;
+  }
+
+  nav a {
+    padding: 12px 18px;
+    font-size: 0.8em;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .filters {
+    position: static;
+    border-bottom: 1px solid rgba(31, 29, 27, 0.08);
+    padding-bottom: 20px;
+  }
+
+  /* Filters become wrapping chips on small screens */
+  .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .filter-option {
+    width: auto;
+  }
+
+  .project {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  summary.course-summary {
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .course-body {
+    margin: 0 20px;
+  }
+
+  .course-title {
+    font-size: 1.2em;
+  }
+
+  .badge {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">&larr; Home</a>
+  <a href="assets/CV_David_Eichinger.pdf">CV</a>
+</nav>
+
+<div class="container">
+
+  <h1 class="section-title">Coursework</h1>
+  <p class="page-intro">
+    Graduate and undergraduate courses I have completed, with descriptions, course
+    objectives, and selected projects. Use the filters to narrow by level or jump
+    straight to a specific course. <!-- TODO: replace with your own intro. -->
+  </p>
+
+  <div class="layout">
+
+    <!-- ============ FILTER RAIL ============ -->
+    <aside class="filters" aria-label="Course filters">
+      <div class="filters-head">
+        <h2>Filter by:</h2>
+        <button type="button" id="clear-filters">Clear</button>
+      </div>
+
+      <section class="filter-group">
+        <h3>Level</h3>
+        <div class="filter-options">
+          <button type="button" class="filter-option" data-filter-level="all" aria-pressed="true">
+            <span class="opt-label">Show All</span>
+            <span class="count" data-count="all"></span>
+          </button>
+          <button type="button" class="filter-option" data-filter-level="grad" aria-pressed="false">
+            <span class="opt-label">Graduate Course</span>
+            <span class="count" data-count="grad"></span>
+          </button>
+          <button type="button" class="filter-option" data-filter-level="undergrad" aria-pressed="false">
+            <span class="opt-label">Undergraduate Course</span>
+            <span class="count" data-count="undergrad"></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="filter-group">
+        <h3>Courses</h3>
+        <!-- This list is generated automatically from the course cards below.
+             Add a card in <main> and it appears here on its own. -->
+        <div class="filter-options" id="course-filter-list"></div>
+      </section>
+    </aside>
+
+    <!-- ============ COURSE LIST ============ -->
+    <!--
+      HOW TO ADD A COURSE
+      1. Copy one <details class="course-card"> ... </details> block.
+      2. Give it a UNIQUE id in lowercase with no spaces (e.g. id="cs580").
+         The id doubles as a shareable deep link: coursework.html#cs580
+      3. Set data-level to "grad" or "undergrad" (drives the level filter + badge counts).
+      4. Set data-code and data-title (used to build the sidebar entry automatically).
+      5. Fill in the description, objectives, and projects.
+      Cards appear on the page in the order they appear in this file.
+
+      PROJECT MEDIA OPTIONS (put ONE inside <div class="project-media">):
+        GIF / image:
+          <img src="assets/coursework/your-demo.gif" alt="Short description of what the demo shows" loading="lazy" />
+        Local MP4 (looks like a gif but far smaller; add poster="..." for a thumbnail):
+          <video src="assets/coursework/your-demo.mp4" controls muted playsinline preload="metadata"></video>
+        YouTube embed:
+          <iframe class="yt" src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="Project demo video" loading="lazy" allowfullscreen></iframe>
+      For a text-only project, remove the media div and add class "no-media" to the article.
+      Media files referenced below assume an assets/coursework/ folder in your repo.
+    -->
+    <main id="courses">
+
+      <p id="no-results" class="hidden">
+        No courses match this filter yet. Choose “Show All” or clear the filters.
+      </p>
+
+      <!-- ==================== GRADUATE ==================== -->
+
+      <details class="course-card" id="cs685" data-level="grad" data-code="CS 685" data-title="Autonomous Robotics">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 685</span>
+            <span class="course-title">Autonomous Robotics</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken, e.g. Fall 2025 --></p>
+
+          <p class="course-desc">
+            <!-- TODO: replace with the official GMU catalog description or your own summary. -->
+            Fundamentals of autonomous mobile robots: rigid-body transformations and
+            kinematics, sensing and state estimation, motion planning, and feedback
+            control, with hands-on implementation in ROS 2 on both simulated and
+            physical platforms.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <!-- TODO: replace with the objectives from the syllabus. -->
+            <li>Model robot pose and motion using homogeneous transformations and forward/inverse kinematics.</li>
+            <li>Estimate state from noisy sensor data with Bayesian filters (Kalman and particle filters).</li>
+            <li>Plan collision-free paths with graph-based and sampling-based planners (A*, RRT).</li>
+            <li>Design and tune closed-loop controllers, including PID, for trajectory tracking.</li>
+            <li>Build, launch, and debug multi-node ROS 2 systems.</li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+
+          <article class="project">
+            <div class="project-text">
+              <h4>TurtleBot Waypoint Navigation (ROS 2)</h4>
+              <p>
+                <!-- TODO: replace with your project description. -->
+                Implemented a ROS 2 navigation stack that fuses odometry and LiDAR to
+                localize a TurtleBot, plans waypoint routes with A* on an occupancy
+                grid, and tracks them with a tuned PID controller. Validated in Gazebo
+                before deployment on hardware.
+              </p>
+              <div class="project-links">
+                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
+                <a href="#" target="_blank" rel="noopener">Report</a>
+              </div>
+            </div>
+            <div class="project-media">
+              <img src="assets/coursework/cs685-turtlebot.gif" alt="TurtleBot navigating between waypoints while avoiding obstacles" loading="lazy" />
+              <!-- Or embed the run on YouTube instead:
+              <iframe class="yt" src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="TurtleBot waypoint navigation demo" loading="lazy" allowfullscreen></iframe>
+              -->
+              <small class="media-caption">Waypoint navigation demo</small>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs580" data-level="grad" data-code="CS 580" data-title="Introduction to Artificial Intelligence">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 580</span>
+            <span class="course-title">Introduction to Artificial Intelligence</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            <!-- TODO: replace with the official catalog description or your own summary. -->
+            Core techniques of artificial intelligence: uninformed and heuristic
+            search, adversarial search, constraint satisfaction, probabilistic
+            reasoning with Bayesian networks, and an introduction to Markov decision
+            processes and reinforcement learning.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <!-- TODO: replace with the objectives from the syllabus. -->
+            <li>Formulate problems as state-space search and select appropriate algorithms.</li>
+            <li>Apply admissible heuristics and analyze optimality and completeness of A*.</li>
+            <li>Model uncertainty with Bayesian networks and perform inference by sampling.</li>
+            <li>Solve sequential decision problems with value and policy iteration.</li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+
+          <article class="project">
+            <div class="project-text">
+              <h4>Grid-World Value Iteration Visualizer</h4>
+              <p>
+                <!-- TODO: replace with your project description. -->
+                Built an interactive visualizer that runs value iteration and Q-learning
+                on configurable grid worlds, animating how utilities and the greedy
+                policy converge as rewards, discount factor, and transition noise change.
+              </p>
+              <div class="project-links">
+                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
+              </div>
+            </div>
+            <div class="project-media">
+              <video src="assets/coursework/cs580-value-iteration.mp4" controls muted playsinline preload="metadata"></video>
+              <small class="media-caption">Policy converging over 40 iterations</small>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <!-- ==================== UNDERGRADUATE ==================== -->
+
+      <details class="course-card" id="cs310" data-level="undergrad" data-code="CS 310" data-title="Data Structures">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 310</span>
+            <span class="course-title">Data Structures</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            <!-- TODO: replace with the official catalog description or your own summary. -->
+            Design, implementation, and analysis of fundamental data structures:
+            dynamic arrays, linked lists, stacks and queues, hash tables, trees, heaps,
+            and graphs, with an emphasis on asymptotic analysis and choosing the right
+            structure for a problem.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <!-- TODO: replace with the objectives from the syllabus. -->
+            <li>Analyze time and space complexity using asymptotic notation.</li>
+            <li>Implement core data structures from scratch and test them rigorously.</li>
+            <li>Select appropriate structures based on access patterns and constraints.</li>
+            <li>Apply graph representations and traversals to practical problems.</li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+
+          <!-- Example of a text-only project (no media): note the "no-media" class -->
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Autocomplete Engine with Tries</h4>
+              <p>
+                <!-- TODO: replace with your project description. -->
+                Implemented a prefix-tree-backed autocomplete engine over a large word
+                corpus, comparing lookup latency and memory footprint against a sorted
+                array with binary search and a hash-based approach.
+              </p>
+              <div class="project-links">
+                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs262" data-level="undergrad" data-code="CS 262" data-title="Introduction to Low-Level Programming">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 262</span>
+            <span class="course-title">Introduction to Low-Level Programming</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            <!-- TODO: replace with the official catalog description or your own summary. -->
+            Programming in C with a focus on how software meets the machine: the
+            preprocess–compile–assemble–link pipeline, pointers and memory management,
+            arrays and strings, structs, file and process I/O, and Unix development
+            tools.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <!-- TODO: replace with the objectives from the syllabus. -->
+            <li>Write, compile, and debug C programs using gcc, make, gdb, and valgrind.</li>
+            <li>Manage memory explicitly with pointers, malloc/free, and defensive checks.</li>
+            <li>Explain the compilation pipeline from source to executable.</li>
+            <li>Use system calls for file I/O and process control on Unix.</li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+
+          <article class="project">
+            <div class="project-text">
+              <h4>Mini Unix Shell in C</h4>
+              <p>
+                <!-- TODO: replace with your project description. -->
+                Built a small Unix shell supporting command parsing, pipes, I/O
+                redirection, and background jobs using fork/exec and signal handling,
+                with valgrind-clean memory management throughout.
+              </p>
+              <div class="project-links">
+                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
+                <a href="#" target="_blank" rel="noopener">Report</a>
+              </div>
+            </div>
+            <div class="project-media">
+              <img src="assets/coursework/cs262-shell-demo.gif" alt="Terminal recording of the mini shell running piped commands" loading="lazy" />
+              <small class="media-caption">Shell running piped commands</small>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Dynamic Memory Allocator</h4>
+              <p>
+                <!-- TODO: replace with your project description. -->
+                Implemented malloc, free, and realloc over a fixed heap region using an
+                implicit free list with coalescing, then benchmarked throughput and
+                fragmentation against first-fit and next-fit placement policies.
+              </p>
+              <div class="project-links">
+                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>Any postings on this site are my own and do not necessarily represent GMU's, the CRADL Lab's, or the RobotiXX Lab's positions, strategies, or opinions. <a href="index.html">&larr; Back to home</a></p>
+  </footer>
+
+</div>
+
+<script>
+/*
+ * Filter logic. Safety note (in the Safe Coding sense): the one classic web
+ * risky operation here would be building HTML from strings (an injection
+ * sink). It is avoided entirely — the sidebar is built with
+ * createElement/textContent, and filtering only toggles classes on elements
+ * that already exist in the static markup you author. The only external
+ * input, the URL hash, is validated by exact match against the set of known
+ * card ids (an allowlist) and is never written into the page.
+ */
+(function () {
+  'use strict';
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.course-card'));
+  var levelButtons = Array.prototype.slice.call(document.querySelectorAll('[data-filter-level]'));
+  var courseList = document.getElementById('course-filter-list');
+  var clearBtn = document.getElementById('clear-filters');
+  var noResults = document.getElementById('no-results');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Build the per-course sidebar entries from the cards themselves ---- */
+  var courseButtons = {};  /* id -> sidebar button */
+  var courseLevels = {};   /* id -> "grad" | "undergrad" */
+
+  cards.forEach(function (card) {
+    courseLevels[card.id] = card.dataset.level;
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'filter-option';
+    btn.setAttribute('aria-pressed', 'false');
+
+    var code = document.createElement('span');
+    code.className = 'opt-code';
+    code.textContent = card.dataset.code || card.id;
+
+    var name = document.createElement('span');
+    name.className = 'opt-name';
+    name.textContent = card.dataset.title || '';
+
+    btn.appendChild(code);
+    btn.appendChild(name);
+    btn.addEventListener('click', function () {
+      select({ type: 'course', value: card.id });
+    });
+
+    courseList.appendChild(btn);
+    courseButtons[card.id] = btn;
+  });
+
+  /* ---- Counts next to the level filters ---- */
+  var gradCount = cards.filter(function (c) { return c.dataset.level === 'grad'; }).length;
+  setCount('all', cards.length);
+  setCount('grad', gradCount);
+  setCount('undergrad', cards.length - gradCount);
+
+  function setCount(key, n) {
+    var el = document.querySelector('[data-count="' + key + '"]');
+    if (el) el.textContent = n;
+  }
+
+  /* ---- Selection: exactly one of Show All | a level | a single course ---- */
+  var selection = { type: 'all', value: null };
+
+  function select(next, opts) {
+    selection = next;
+    apply(opts || {});
+  }
+
+  function apply(opts) {
+    var visible = 0;
+
+    cards.forEach(function (card) {
+      var show =
+        selection.type === 'all' ||
+        (selection.type === 'level' && card.dataset.level === selection.value) ||
+        (selection.type === 'course' && card.id === selection.value);
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+
+    noResults.classList.toggle('hidden', visible !== 0);
+
+    levelButtons.forEach(function (btn) {
+      var active =
+        (selection.type === 'all' && btn.dataset.filterLevel === 'all') ||
+        (selection.type === 'level' && btn.dataset.filterLevel === selection.value);
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+
+    Object.keys(courseButtons).forEach(function (id) {
+      var btn = courseButtons[id];
+      var active = selection.type === 'course' && selection.value === id;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
+      /* When a level is selected, dim course entries outside that level */
+      var dim = selection.type === 'level' && courseLevels[id] !== selection.value;
+      btn.classList.toggle('dimmed', dim);
+    });
+
+    if (selection.type === 'course') {
+      var card = document.getElementById(selection.value);
+      if (card) {
+        card.open = true;
+        if (!opts.noScroll) {
+          card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        }
+      }
+    }
+
+    updateHash();
+  }
+
+  function updateHash() {
+    /* replaceState can throw when previewing via file://, so guard it */
+    try {
+      if (selection.type === 'all') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      } else {
+        history.replaceState(null, '', '#' + selection.value);
+      }
+    } catch (e) { /* ignore: filtering still works without shareable URLs */ }
+  }
+
+  levelButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var v = btn.dataset.filterLevel;
+      select(v === 'all' ? { type: 'all', value: null } : { type: 'level', value: v });
+    });
+  });
+
+  clearBtn.addEventListener('click', function () {
+    select({ type: 'all', value: null });
+  });
+
+  /* ---- Deep links: #cs262 opens that course, #grad / #undergrad set a level ---- */
+  function fromHash() {
+    var raw = '';
+    try { raw = decodeURIComponent(window.location.hash.slice(1)); } catch (e) { raw = ''; }
+
+    if (raw === 'grad' || raw === 'undergrad') {
+      select({ type: 'level', value: raw }, { noScroll: true });
+    } else if (Object.prototype.hasOwnProperty.call(courseButtons, raw)) {
+      select({ type: 'course', value: raw });
+    } else {
+      select({ type: 'all', value: null }, { noScroll: true });
+    }
+  }
+
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+})();
+</script>
+
+</body>
+</html>
