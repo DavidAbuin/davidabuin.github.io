@@ -358,6 +358,66 @@ details[open] .chev {
   font-size: 0.98em;
 }
 
+/* Lists inside course cards (objectives, topics, books, project details).
+   The global reset removes default list padding, so restore it here. */
+.course-body ul,
+.course-body ol {
+  padding-left: 1.3em;
+  line-height: 1.7;
+  color: rgba(31, 29, 27, 0.85);
+}
+
+.course-body li {
+  margin-bottom: 6px;
+}
+
+/* Numbered (and bulleted) lists inside a project description are indented
+   one step deeper than the surrounding paragraphs. */
+.project-text ol,
+.project-text ul {
+  margin: 12px 0 14px 1.3em;
+  color: rgba(31, 29, 27, 0.8);
+  font-size: 0.98em;
+}
+
+/* Inline code in project descriptions */
+.project-text code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: rgba(31, 29, 27, 0.06);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+/* Small tables in project descriptions */
+.project-text table {
+  border-collapse: collapse;
+  margin: 14px 0 18px;
+  font-size: 0.92em;
+  color: rgba(31, 29, 27, 0.8);
+}
+
+.project-text th,
+.project-text td {
+  border: 1px solid rgba(31, 29, 27, 0.18);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.project-text th {
+  background: rgba(31, 29, 27, 0.04);
+  font-weight: 600;
+}
+
+.project-text caption {
+  caption-side: bottom;
+  padding-top: 8px;
+  font-size: 0.85em;
+  color: rgba(31, 29, 27, 0.5);
+  text-align: left;
+}
+
 .project-links {
   margin-top: 12px;
   display: flex;
@@ -475,6 +535,12 @@ footer a {
     gap: 16px;
   }
 
+  /* Wide tables scroll sideways instead of overflowing the card */
+  .project-text table {
+    display: block;
+    overflow-x: auto;
+  }
+
   summary.course-summary {
     padding: 20px;
     flex-wrap: wrap;
@@ -582,7 +648,6 @@ footer a {
       </p>
 
       <!-- ==================== GRADUATE ==================== -->
-
 
       <details class="course-card" id="cs685" data-level="grad" data-code="CS 685" data-title="Autonomous Robotics">
         <summary class="course-summary">
@@ -697,7 +762,8 @@ footer a {
       </details>
 
       <!-- ==================== UNDERGRADUATE ==================== -->
-       <details class="course-card" id="cs112" data-level="undergrad" data-code="CS 112" data-title="Introduction to Computer Programming">
+
+      <details class="course-card" id="cs112" data-level="undergrad" data-code="CS 112" data-title="Introduction to Computer Programming">
         <summary class="course-summary">
           <span class="course-heading">
             <span class="course-code">CS 112</span>
@@ -710,10 +776,10 @@ footer a {
           <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
 
           <p class="course-desc">
-            Rigorous introduction to problem solving through development of computer programs. 
-            Focuses on identifying algorithmic patterns in problems, describing problem solutions in high-level pseudocode, then implementing 
-            in a procedural programming language. Basic programming concepts are covered in detail including expressions, control structures, 
-            simple data types, and input/output. Program testing and debugging are discussed to verify that problems are solved correctly. 
+            Rigorous introduction to problem solving through development of computer programs.
+            Focuses on identifying algorithmic patterns in problems, describing problem solutions in high-level pseudocode, then implementing
+            in a procedural programming language. Basic programming concepts are covered in detail including expressions, control structures,
+            simple data types, and input/output. Program testing and debugging are discussed to verify that problems are solved correctly.
           </p>
 
           <p class="kicker">Course Objectives</p>
@@ -763,12 +829,12 @@ footer a {
           <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </summary>
         <div class="course-body">
-          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+          <p class="course-meta">George Mason University · Spring 2022</p>
 
           <p class="course-desc">
             <!-- Official catalog description. -->
             Introduction to the language C, as well as operating system concepts, in UNIX, to prepare students for topics in systems programming.
-            C is a high-level programing language that offers the programmer direct access to much of the underlying hardware and direct access to some operating system services for programs running under Unix. These features make C the preference language of choice for system programming. 
+            C is a high-level programing language that offers the programmer direct access to much of the underlying hardware and direct access to some operating system services for programs running under Unix. These features make C the preference language of choice for system programming.
           </p>
 
           <p class="kicker">Course Objectives</p>
@@ -781,10 +847,10 @@ footer a {
 
           <p class="kicker">Topics</p>
           <ul class="Topics">
-            <li>C Types, Operators, and Expressions </li>  
-            <li>Basic I/O, Input and Output Libraries </li>
-            <li>File I/O </li>
-            <li> Control Flow</li>
+            <li>C Types, Operators, and Expressions</li>
+            <li>Basic I/O, Input and Output Libraries</li>
+            <li>File I/O</li>
+            <li>Control Flow</li>
             <li>Functions and Program Structure</li>
             <li>Strings</li>
             <li>Pointers and Arrays</li>
@@ -800,45 +866,38 @@ footer a {
           <p class="kicker">Associated Books</p>
           <ul class="Books">
             <li>Brian W. Kernighan and Dennis M. Ritchie, The C Programming Language, 2nd ed., Prentice Hall, 1988</li>
-            <li>Byron S. Gottfried, Programming with C, 2nd ed., Schumm’s Outline, 1996</li>
-            <li>Peter Printz and Tony Crawford, C in a Nutshell: A Desktop Quick Reference, 1st ed., O'Reilly', 2006</li>
-            <li>David Griffiths and Dawn Griffiths, Head First C, 1st ed., O'Reilly', 2012</li>
+            <li>Byron S. Gottfried, Programming with C, 2nd ed., Schumm&rsquo;s Outline, 1996</li>
+            <li>Peter Printz and Tony Crawford, C in a Nutshell: A Desktop Quick Reference, 1st ed., O'Reilly, 2006</li>
+            <li>David Griffiths and Dawn Griffiths, Head First C, 1st ed., O'Reilly, 2012</li>
           </ul>
-
 
           <p class="kicker">Projects</p>
 
           <article class="project">
             <div class="project-text">
-              <h4> Project 1: The <i>n</i>-Queens</h4>
-              <p>                            
-                <p> 
+              <h4>Project 1: The <i>n</i>-Queens</h4>
+              <p>
                 The goal is to place <i>n</i> queens on an <i>n</i> &times; <i>n</i> chess board: no two queens are allowed to be in the same row, column, or a diagonal.
-                </p>
-  
-                <p>
-                You can represent a board configuration with a simple <i>n</i>-element sequence <i>Q<sub>n</sub></i> = {<i>q<sub>0 </sub></i><i>q<sub>1</sub></i>...<i>q<sub>n-1</sub></i>}; <i>q</i> corresponds to the column position of <i>i</i>th queen in row <i>i</i>. 
-                For example, {0213} would correspond to the 4 queens in positions (0,0) (row 0, column 0), (1,2) (row 1, column 2), (2, 1) (row 2, column 1), and (3, 3) (row 3, column 3). 
-                Note that in our representation we do not use row indexes: the <i>i</i>th queen is placed in the <i>i</i>th row and its column index is <i>q<sub>i</sub></i>. 
+              </p>
+              <p>
+                You can represent a board configuration with a simple <i>n</i>-element sequence <i>Q<sub>n</sub></i> = {<i>q<sub>0</sub></i> <i>q<sub>1</sub></i> ... <i>q<sub>n&minus;1</sub></i>}; <i>q<sub>i</sub></i> corresponds to the column position of the <i>i</i>th queen in row <i>i</i>.
+                For example, {0 2 1 3} would correspond to the 4 queens in positions (0,0) (row 0, column 0), (1,2) (row 1, column 2), (2,1) (row 2, column 1), and (3,3) (row 3, column 3).
+                Note that in our representation we do not use row indexes: the <i>i</i>th queen is placed in the <i>i</i>th row and its column index is <i>q<sub>i</sub></i>.
                 To check whether a sequence <i>Q<sub>n</sub></i> solves the <i>n</i>-Queens problem you need to make sure that
-               </p>
-  
-               <ol style="margin-left: 40px;">
-                  <li>Two queens do not share a column, i.e. <i>q<sub>i</sub></i> &ne; <i>q<sub>j</sub></i> for <i>i</i> &ne; <i>j</i>, and</li>
-                  <li>Two queens do not share a diagonal, i.e. |<i>q<sub>i</sub></i> - <i>q<sub>j</sub></i>| &ne; |<i>i</i> - <i>j</i>| when <i>i</i> &ne; <i>j</i></li>
-               </ol>
-  
-               <p>
-                There are multiple ways to solve this problem. The simplest one would be to generate all possible configurations and check if they solve the problem. 
-                Note that there are <i>n<sup>n</sup></i> possible configurations that would need to be checked. You can do better if you realize that you only need to check permutations of numbers 0, ..., <i>n</i>-1 as possible configurations. 
-                Note that in the case of the 4 queens that would be 256 possible board configurations, but there are only 24 permutations; you can verify that there are just 4 legal 4-queen placements. 
+              </p>
+              <ol>
+                <li>Two queens do not share a column, i.e. <i>q<sub>i</sub></i> &ne; <i>q<sub>j</sub></i> for <i>i</i> &ne; <i>j</i>, and</li>
+                <li>Two queens do not share a diagonal, i.e. |<i>q<sub>i</sub></i> &minus; <i>q<sub>j</sub></i>| &ne; |<i>i</i> &minus; <i>j</i>| when <i>i</i> &ne; <i>j</i>.</li>
+              </ol>
+              <p>
+                There are multiple ways to solve this problem. The simplest one would be to generate all possible configurations and check if they solve the problem.
+                Note that there are <i>n<sup>n</sup></i> possible configurations that would need to be checked. You can do better if you realize that you only need to check permutations of numbers 0, ..., <i>n</i>&minus;1 as possible configurations.
+                Note that in the case of the 4 queens that would be 256 possible board configurations, but there are only 24 permutations; you can verify that there are just 4 legal 4-queen placements.
                 However, the method for generating all possible permutations is somewhat involved; it is much easier to generate random permutations.
-               </p>
-  
-               <p>
-                Your assignment is to write a program to solve the <i>n</i>-queens problem for <i>n</i> = 4, ..., 20 using random board configurations. 
-                You should use your <code>randperm</code> function to do this. In addition, you will write two additional functions: <code>checkboard</code> for checking if a permutation solves the problem, and <code>displayboard</code> for printing a solution. 
-                Finally, for each board size you should solve the problem 10 times so that you can obtain some statistics on performance of your program.
+              </p>
+              <p>
+                My program solves the <i>n</i>-queens problem for <i>n</i> = 4, ..., 20 using random board configurations: a <code>randperm</code> function generates candidate boards as random permutations, <code>checkboard</code> tests whether a permutation solves the problem, and <code>displayboard</code> prints a solution.
+                Each board size is solved 10 times to collect statistics — the minimum, maximum, and mean number of random boards generated before a solution was found, reported alongside <i>n<sup>n</sup></i> and <i>n</i>! for comparison.
               </p>
               <div class="project-links">
                 <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
@@ -846,8 +905,10 @@ footer a {
               </div>
             </div>
             <div class="project-media">
-              <img src="assets/coursework/cs262-shell-demo.gif" alt="Terminal recording of the mini shell running piped commands" loading="lazy" />
-              <small class="media-caption">Shell running piped commands</small>
+              <!-- TODO: drop a real capture (e.g. displayboard output) into assets/coursework/,
+                   or delete this div and add class "no-media" to the <article> above. -->
+              <img src="assets/coursework/cs262-nqueens.gif" alt="Terminal output of the n-Queens solver printing a solved board" loading="lazy" />
+              <small class="media-caption"><i>n</i>-Queens solver output</small>
             </div>
           </article>
 
@@ -855,89 +916,107 @@ footer a {
             <div class="project-text">
               <h4>Project 2: Spreadsheet</h4>
               <p>
-              The C program simulates a small spreadsheet that performs operations with numeric type data (double)[cite: 2]. 
-            The workspace is a 5 &times; 5 table, where a cell is indicated by the intersection of a column Letter [A, B, C, D] with a row Number [1,2,3,4,5][cite: 2].
-            </p>
-  
-  <p>
-    Operations are performed using reserved words: ADD, MUL, DEL, INS followed by parentheses and ending the operation with a semicolon (;)[cite: 2]. 
-    The cell, or range of cells, where the operation is performed is indicated within the parentheses[cite: 2]. 
-    Empty parentheses indicate that the operation is performed on all data in the spreadsheet[cite: 2]. 
-    If a range is indicated, for it to be valid the cells must meet:[cite: 2]
-  </p>
-  
-  <ol style="margin-left: 40px;">
-    <li>Belong to the same row (start column &lt; end column) or[cite: 2]</li>
-    <li>Belong to the same column (start row &lt; end row)[cite: 2]</li>
-    <li>A cell has the format LN, where $L=[A,B,C,D]$ and $N=[1,2,3,4,5]$.[cite: 2]</li>
-  </ol>
-  
-  <p>
-    Notes: Constraint 3 also applies when the argument is a single cell[cite: 2]. 
-    The program is not case sensitive (<code>toupper()</code> could be used to process the input)[cite: 2].
-  </p>
-  
-  <p>
-    In this assignment, not all operations can be performed with all 3 types of arguments (cell, range of cells or empty parentheses)[cite: 2]. 
-    e.g., for addition and multiplication, only empty parentheses or a range of cells can be applied, while for delete and insert, all 3 types of arguments can be applied[cite: 2].
-  </p>
-  
-  <p>
-    The delete operation replaces the contents of the cell(s) with the value 0.00[cite: 2]. 
-    The insert operation inserts a value in the indicated cell(s)[cite: 2].
-  </p>
+                A C program that simulates a small spreadsheet performing operations with numeric type data (<code>double</code>).
+                The workspace is a 5 &times; 5 table, where a cell is indicated by the intersection of a column letter [A, B, C, D, E] with a row number [1, 2, 3, 4, 5].
+              </p>
+              <p>
+                Operations are performed using the reserved words <code>ADD</code>, <code>MUL</code>, <code>DEL</code>, and <code>INS</code>, followed by parentheses and ending with a semicolon (<code>;</code>).
+                The cell, or range of cells, where the operation is performed is indicated within the parentheses; empty parentheses indicate that the operation is performed on all data in the spreadsheet.
+                If a range is indicated, for it to be valid the cells must meet:
+              </p>
+              <ol>
+                <li>Belong to the same row (start column &lt; end column), or</li>
+                <li>Belong to the same column (start row &lt; end row).</li>
+                <li>A cell has the format LN, where L = [A, B, C, D, E] and N = [1, 2, 3, 4, 5] — this also applies when the argument is a single cell.</li>
+              </ol>
+              <p>
+                The program is not case sensitive (<code>toupper()</code> could be used to process the input), and not every operation accepts all three argument forms:
+                <code>ADD</code> and <code>MUL</code> can only be applied to a range of cells or the whole sheet, while <code>DEL</code> and <code>INS</code> accept all three.
+                The delete operation replaces the contents of the cell(s) with the value 0.00; the insert operation inserts a value in the indicated cell(s).
+              </p>
+              <table>
+                <caption>Table 1: summary of operations in the spreadsheet</caption>
+                <thead>
+                  <tr>
+                    <th>Operation</th>
+                    <th>(cell)</th>
+                    <th>(cell:cell)</th>
+                    <th>( )</th>
+                    <th>Examples</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ADD</td>
+                    <td></td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td><code>ADD(A2:C2); ADD( );</code></td>
+                  </tr>
+                  <tr>
+                    <td>MUL</td>
+                    <td></td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td><code>MUL(E1:E3); MUL( );</code></td>
+                  </tr>
+                  <tr>
+                    <td>DEL</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td><code>DEL(B4:D4); DEL(A2); DEL( );</code></td>
+                  </tr>
+                  <tr>
+                    <td>INS</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td><code>INS(D1:D5) 5.3; INS(C3) 3; INS( ) 1.1;</code></td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                When starting the program, the spreadsheet is displayed with all cells initialized to 0.00 along with the column and row labeling, and a <code>&gt;&gt;</code> prompt reads one operation at a time.
+                <code>INS</code> and <code>DEL</code> redisplay the updated spreadsheet, <code>ADD</code> and <code>MUL</code> print their result, and typing <code>quit</code> exits the program.
+                When an operation is indicated, there are 3 different categories of errors:
+              </p>
+              <ol>
+                <li>Syntax Error: Err msg is &ldquo;Invalid operation&rdquo;</li>
+                <li>Wrong Range: The specifications (1, 2, 3) for range were not met. Err msg is &ldquo;Wrong range&rdquo;</li>
+                <li>Invalid Cell: A single cell specified in parentheses is not valid. Err msg is &ldquo;Invalid cell&rdquo;</li>
+              </ol>
+              <div class="project-links">
+                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
+              </div>
+            </div>
+          </article>
 
-  <table border="1" cellpadding="5" style="border-collapse: collapse; margin-bottom: 1em;">
-    <caption>Table 1: summary of operations in the spreadsheet[cite: 2]</caption>
-    <thead>
-      <tr>
-        <th>Operation</th>
-        <th>(cell)</th>
-        <th>(cell:cell)</th>
-        <th>( )</th>
-        <th>Examples</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>ADD</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>ADD (A2:C2);<br>ADD();[cite: 2]</td>
-      </tr>
-      <tr>
-        <td>MUL</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>MUL (E1:E3);<br>MUL();[cite: 2]</td>
-      </tr>
-      <tr>
-        <td>DEL</td>
-        <td>DEL (A2);[cite: 2]</td>
-        <td>DEL(B4:D4);[cite: 2]</td>
-        <td>DEL();[cite: 2]</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>INS</td>
-        <td>INS (C3) 1.1;[cite: 2]</td>
-        <td>INS (D1:D5) 5.3;[cite: 2]</td>
-        <td>INS() 3;[cite: 2]</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p>When an operation is indicated, there are 3 different categories of errors:[cite: 2]</p>
-  
-  <ol style="margin-left: 40px;">
-    <li>Syntax Error: Err msg is "Invalid operation"[cite: 2]</li>
-    <li>Wrong Range: The specifications (1,2,3) for range were not meet. Err msg is "Wrong range"[cite: 2]</li>
-    <li>Invalid Cell: A single cell specified in parentheses is not valid. Err msg is "Invalid cell"[cite: 2]</li>
-  </ol>
-
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 3: Radix Sort with Linked List</h4>
+              <p>
+                A C program that implements the Radix Sort algorithm for sorting integer sequences, built on singly linked lists written from scratch.
+              </p>
+              <p>
+                The sort uses <i>B</i> = 10 buckets — the number of numerals used in a decimal representation of a value — and <i>N</i>, the exponent for the power of 10 corresponding to the most significant digit of any number in the sequence (for example, if the largest value is 3871, then <i>N</i> = 3, since 10<sup>3</sup> is a four digit number).
+                Radix sort distributes the elements into the buckets by digits, starting from the least significant to the most significant: in each pass the numbers are placed into buckets based on the value of the current digit, and a new sequence is created by stitching the bucket lists in order from the 0th to the 9th.
+                When the algorithm completes, the only non-empty bucket is bucket 0.
+              </p>
+              <p>
+                The supporting linked-list library represents lists with dummy head nodes and provides:
+              </p>
+              <ol>
+                <li><code>newList</code> — returns the head of a new empty list.</li>
+                <li><code>insertNode</code> and <code>removeNode</code> — insert a new node after a given node, or remove and return the node after it.</li>
+                <li><code>insert at tail</code> — attaches a new node at the tail (and makes it the new tail) for efficient bucket appends.</li>
+                <li><code>length</code> and <code>printList</code> — count the elements in a list and print its data fields.</li>
+                <li><code>deleteList</code> — deletes an entire list, so all memory is freed before the program exits.</li>
+              </ol>
+              <p>
+                The program takes 4 arguments — a seed for the random number generator, the number of values to sort, and the low and high ends of the value range — and prints the lists obtained after each important step, such as distributing values over the buckets and stitching the sublists back together.
+                It compiles with no warnings under <code>-Wall -std=c89 -pedantic-errors</code> and runs clean under <code>valgrind --leak-check=yes</code>, with no memory leaks or dangling pointers.
+              </p>
               <div class="project-links">
                 <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
               </div>
