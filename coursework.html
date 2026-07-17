@@ -811,9 +811,7 @@ footer a {
           <article class="project">
             <div class="project-text">
               <h4> Project 1: The <i>n</i>-Queens</h4>
-              <p>
-                <!-- TODO: replace with your project description. -->
-                Project description:
+              <p>                            
                 <p> 
                 The goal is to place <i>n</i> queens on an <i>n</i> &times; <i>n</i> chess board: no two queens are allowed to be in the same row, column, or a diagonal.
                 </p>
@@ -835,12 +833,12 @@ footer a {
                 Note that there are <i>n<sup>n</sup></i> possible configurations that would need to be checked. You can do better if you realize that you only need to check permutations of numbers 0, ..., <i>n</i>-1 as possible configurations. 
                 Note that in the case of the 4 queens that would be 256 possible board configurations, but there are only 24 permutations; you can verify that there are just 4 legal 4-queen placements. 
                 However, the method for generating all possible permutations is somewhat involved; it is much easier to generate random permutations.
-              </p>
+               </p>
   
-              <p>
-              Your assignment is to write a program to solve the <i>n</i>-queens problem for <i>n</i> = 4, ..., 20 using random board configurations. 
-              You should use your <code>randperm</code> function to do this. In addition, you will write two additional functions: <code>checkboard</code> for checking if a permutation solves the problem, and <code>displayboard</code> for printing a solution. 
-              Finally, for each board size you should solve the problem 10 times so that you can obtain some statistics on performance of your program.
+               <p>
+                Your assignment is to write a program to solve the <i>n</i>-queens problem for <i>n</i> = 4, ..., 20 using random board configurations. 
+                You should use your <code>randperm</code> function to do this. In addition, you will write two additional functions: <code>checkboard</code> for checking if a permutation solves the problem, and <code>displayboard</code> for printing a solution. 
+                Finally, for each board size you should solve the problem 10 times so that you can obtain some statistics on performance of your program.
               </p>
               <div class="project-links">
                 <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
@@ -855,11 +853,91 @@ footer a {
 
           <article class="project no-media">
             <div class="project-text">
-              <h4>TODO: add project</h4>
+              <h4>Project 2: Spreadsheet/h4>
               <p>
-                <!-- TODO: replace with your project description. -->
-                description
-              </p>
+    The C program simulates a small spreadsheet that performs operations with numeric type data (double)[cite: 2]. 
+    The workspace is a 5 &times; 5 table, where a cell is indicated by the intersection of a column Letter [A, B, C, D] with a row Number [1,2,3,4,5][cite: 2].
+  </p>
+  
+  <p>
+    Operations are performed using reserved words: ADD, MUL, DEL, INS followed by parentheses and ending the operation with a semicolon (;)[cite: 2]. 
+    The cell, or range of cells, where the operation is performed is indicated within the parentheses[cite: 2]. 
+    Empty parentheses indicate that the operation is performed on all data in the spreadsheet[cite: 2]. 
+    If a range is indicated, for it to be valid the cells must meet:[cite: 2]
+  </p>
+  
+  <ol style="margin-left: 40px;">
+    <li>Belong to the same row (start column &lt; end column) or[cite: 2]</li>
+    <li>Belong to the same column (start row &lt; end row)[cite: 2]</li>
+    <li>A cell has the format LN, where $L=[A,B,C,D]$ and $N=[1,2,3,4,5]$.[cite: 2]</li>
+  </ol>
+  
+  <p>
+    Notes: Constraint 3 also applies when the argument is a single cell[cite: 2]. 
+    The program is not case sensitive (<code>toupper()</code> could be used to process the input)[cite: 2].
+  </p>
+  
+  <p>
+    In this assignment, not all operations can be performed with all 3 types of arguments (cell, range of cells or empty parentheses)[cite: 2]. 
+    e.g., for addition and multiplication, only empty parentheses or a range of cells can be applied, while for delete and insert, all 3 types of arguments can be applied[cite: 2].
+  </p>
+  
+  <p>
+    The delete operation replaces the contents of the cell(s) with the value 0.00[cite: 2]. 
+    The insert operation inserts a value in the indicated cell(s)[cite: 2].
+  </p>
+
+  <table border="1" cellpadding="5" style="border-collapse: collapse; margin-bottom: 1em;">
+    <caption>Table 1: summary of operations in the spreadsheet[cite: 2]</caption>
+    <thead>
+      <tr>
+        <th>Operation</th>
+        <th>(cell)</th>
+        <th>(cell:cell)</th>
+        <th>( )</th>
+        <th>Examples</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ADD</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>ADD (A2:C2);<br>ADD();[cite: 2]</td>
+      </tr>
+      <tr>
+        <td>MUL</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>MUL (E1:E3);<br>MUL();[cite: 2]</td>
+      </tr>
+      <tr>
+        <td>DEL</td>
+        <td>DEL (A2);[cite: 2]</td>
+        <td>DEL(B4:D4);[cite: 2]</td>
+        <td>DEL();[cite: 2]</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>INS</td>
+        <td>INS (C3) 1.1;[cite: 2]</td>
+        <td>INS (D1:D5) 5.3;[cite: 2]</td>
+        <td>INS() 3;[cite: 2]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>When an operation is indicated, there are 3 different categories of errors:[cite: 2]</p>
+  
+  <ol style="margin-left: 40px;">
+    <li>Syntax Error: Err msg is "Invalid operation"[cite: 2]</li>
+    <li>Wrong Range: The specifications (1,2,3) for range were not meet. Err msg is "Wrong range"[cite: 2]</li>
+    <li>Invalid Cell: A single cell specified in parentheses is not valid. Err msg is "Invalid cell"[cite: 2]</li>
+  </ol>
+
               <div class="project-links">
                 <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
               </div>
