@@ -371,6 +371,34 @@ details[open] .chev {
   margin-bottom: 6px;
 }
 
+/* Nested topic lists (sub-topics) get a little breathing room */
+.course-body li > ul {
+  margin-top: 6px;
+}
+
+/* Multi-paragraph course descriptions */
+.course-desc + .course-desc {
+  margin-top: 12px;
+}
+
+/* Short lead-in paragraph under a kicker (e.g. before an objectives list) */
+.objectives-intro {
+  color: rgba(31, 29, 27, 0.85);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+/* Links inside course text (e.g. textbook websites) */
+.course-body a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.35);
+}
+
+.course-body a:hover {
+  border-bottom-color: var(--accent);
+}
+
 /* Numbered (and bulleted) lists inside a project description are indented
    one step deeper than the surrounding paragraphs. */
 .project-text ol,
@@ -649,61 +677,127 @@ footer a {
 
       <!-- ==================== GRADUATE ==================== -->
 
-      <details class="course-card" id="cs685" data-level="grad" data-code="CS 685" data-title="Autonomous Robotics">
+      <details class="course-card" id="cs551" data-level="grad" data-code="CS 551" data-title="Computer Graphics">
         <summary class="course-summary">
           <span class="course-heading">
-            <span class="course-code">CS 685</span>
-            <span class="course-title">Autonomous Robotics</span>
+            <span class="course-code">CS 551</span>
+            <span class="course-title">Computer Graphics</span>
           </span>
           <span class="badge badge-grad">Graduate</span>
           <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </summary>
         <div class="course-body">
-          <p class="course-meta">George Mason University · <!-- TODO: term taken, e.g. Fall 2025 --></p>
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
 
           <p class="course-desc">
-            <!-- TODO: replace with the official GMU catalog description or your own summary. -->
-            Fundamentals of autonomous mobile robots: rigid-body transformations and
-            kinematics, sensing and state estimation, motion planning, and feedback
-            control, with hands-on implementation in ROS 2 on both simulated and
-            physical platforms.
+            Graphics principles and programming. Topics include graphics hardware, antialiasing, transformations, viewing, illumination, blending, texture mapping, color models, curves, surfaces, and animation.
+          </p>
+          <p class="course-desc">
+            Basic graphics principles and programming. Topics include scan-conversion, transformation, viewing, lighting, shading, ray-tracing, blending, texture mapping, and some advanced graphics techniques.
           </p>
 
           <p class="kicker">Course Objectives</p>
           <ul class="objectives">
-            <!-- TODO: replace with the objectives from the syllabus. -->
-            <li>Model robot pose and motion using homogeneous transformations and forward/inverse kinematics.</li>
-            <li>Estimate state from noisy sensor data with Bayesian filters (Kalman and particle filters).</li>
-            <li>Plan collision-free paths with graph-based and sampling-based planners (A*, RRT).</li>
-            <li>Design and tune closed-loop controllers, including PID, for trajectory tracking.</li>
-            <li>Build, launch, and debug multi-node ROS 2 systems.</li>
+            <li>Implement OpenGL programs using JAVA/JOGL.</li>
+            <li>Apply trigonometry, geometry, vector analysis, and linear algebra to solve real world problems in graphics.</li>
+            <li>Utilize transformation and viewing for 3D animation.</li>
+            <li>Utilize GPU shaders for vertex and fragment lighting.</li>
+            <li>Describe some advanced graphics capabilities, including raytracing, blending, texture mapping, bump mapping, displacement mapping, geometry shader, and shadows.</li>
           </ul>
 
-          <p class="kicker">Projects</p>
+          <!-- TODO: Topics — add when ready:
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Topic</li>
+          </ul>
+          -->
 
-          <article class="project">
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>V. Scott Gordon and John L. Clevenger, Computer Graphics Programming in OpenGL with Java, January 2017</li>
+            <li>Jim X. Chen and Chunyang Chen, Foundation of 3D Graphics Programming Using JOGL and Java3D, 2nd ed., Springer Verlag</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
             <div class="project-text">
-              <h4>TurtleBot Waypoint Navigation (ROS 2)</h4>
-              <p>
-                <!-- TODO: replace with your project description. -->
-                Implemented a ROS 2 navigation stack that fuses odometry and LiDAR to
-                localize a TurtleBot, plans waypoint routes with A* on an occupancy
-                grid, and tracks them with a tuned PID controller. Validated in Gazebo
-                before deployment on hardware.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
-                <a href="#" target="_blank" rel="noopener">Report</a>
-              </div>
-            </div>
-            <div class="project-media">
-              <img src="assets/coursework/cs685-turtlebot.gif" alt="TurtleBot navigating between waypoints while avoiding obstacles" loading="lazy" />
-              <!-- Or embed the run on YouTube instead:
-              <iframe class="yt" src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="TurtleBot waypoint navigation demo" loading="lazy" allowfullscreen></iframe>
-              -->
-              <small class="media-caption">Waypoint navigation demo</small>
+              <h4>Project title</h4>
+              <p>Project description.</p>
             </div>
           </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs555" data-level="grad" data-code="CS 555" data-title="Computer Networking">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 555</span>
+            <span class="course-title">Computer Networking</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Techniques and systems for communication of data between computational devices and layers of Internet Protocol Suite. Topics include role of various media and software components, local and wide area network protocols, network design, performance and cost considerations, and emerging advanced commercial technologies. Emphasizes TCP/IP family of protocols.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Foundations of Computer Science: apply mathematical foundations and algorithmic principles in the modeling and design of computing systems.</li>
+            <li>Computer Systems Fundamentals: apply fundamental concepts in computer systems to model, design, and implement a computer-based system, process, or program that meets desired needs.</li>
+            <li>Information Processing Fundamentals: apply fundamental concepts in information processing to model, design, and implement a computer-based system, process, or program that meets desired needs.</li>
+            <li>Advanced Computer Systems: use advanced concepts in computer systems to design, implement, and evaluate a computer-based system, process, component, or program.</li>
+            <li>Advanced Information Processing: use advanced information processing concepts to design, implement, and evaluate a computer-based system, process, component, or program.</li>
+            <li>Recognize the different components of a computer network and network functionality.</li>
+            <li>Recognize the main design issues of transport protocols and the mechanisms used to control traffic flow and congestion and provide robust data delivery.</li>
+            <li>Identify the TCP/IP protocol suite and its characteristics.</li>
+            <li>Analyze the rationale and workings of the different network layers: the Application Layer, the Transport Layer, the Network Layer, and the Data Link Layer.</li>
+            <li>Evaluate feasibility of LAN configurations and Medium Access Protocols.</li>
+            <li>Apply the concepts of layered TCP/IP architecture in understanding how packets are transmitted and received over the Internet.</li>
+            <li>Evaluate and implement the workings of the main Internet protocols such as HTTP, DNS, TCP, UDP, IP, ARP, and ICMP.</li>
+            <li>Recognize and apply NATing and how it allows the communication among private IPs.</li>
+            <li>Implement network applications using socket programming with TCP and UDP.</li>
+            <li>Design and implement Internet addresses utilizing the common CIDR format.</li>
+            <li>Design hybrid networks with IPv4 and IPv6 based routing.</li>
+            <li>Recognize and analyze software defined networks and their contribution to the Internet protocol suite at Layer 4.</li>
+            <li>Analyze wireless links and wireless network characteristics in the context of the WiFi 802.11 wireless LANs protocol.</li>
+            <li>Analyze the mobility principles and management in the context of the 4G/5G networks.</li>
+            <li>Recognize and evaluate mobility and its impact on higher-layer protocols.</li>
+            <li>Recognize the fundamentals of security: confidentiality, authentication and integrity.</li>
+            <li>Analyze and investigate attacks on authentication and message integrity.</li>
+            <li>Analyze and investigate securing the protocols used in the e-mail application.</li>
+            <li>Understand and investigate securing TCP connections at the transport layer using TLS.</li>
+            <li>Analyze and investigate securing the network layer: IPsec and the wireless and mobile networks security.</li>
+          </ul>
+
+          <!-- TODO: Topics — will add later:
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Topic</li>
+          </ul>
+          -->
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>James Kurose and Keith Ross, Computer Networking: A Top-Down Approach, 8th ed., Pearson, 2022, ISBN: 9356061319</li>
+            <li>Douglas E. Comer, Internetworking with TCP/IP Volume One: Principles, Protocols, and Architecture, 6th ed., Addison-Wesley, 2013, ISBN: 013608530X</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
 
         </div>
       </details>
@@ -721,42 +815,481 @@ footer a {
           <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
 
           <p class="course-desc">
-            <!-- TODO: replace with the official catalog description or your own summary. -->
-            Core techniques of artificial intelligence: uninformed and heuristic
-            search, adversarial search, constraint satisfaction, probabilistic
-            reasoning with Bayesian networks, and an introduction to Markov decision
-            processes and reinforcement learning.
+            Artificial Intelligence principles and methods. Topics will include uninformed search, informed search, adversarial search, probabilistic reasoning and models, Bayes networks, machine learning fundamentals, classification and clustering, and neural networks. Additional topics may include knowledge representation, constraint satisfaction search, agent architectures, and Markov decision problems, among others.
           </p>
 
           <p class="kicker">Course Objectives</p>
           <ul class="objectives">
-            <!-- TODO: replace with the objectives from the syllabus. -->
-            <li>Formulate problems as state-space search and select appropriate algorithms.</li>
-            <li>Apply admissible heuristics and analyze optimality and completeness of A*.</li>
-            <li>Model uncertainty with Bayesian networks and perform inference by sampling.</li>
-            <li>Solve sequential decision problems with value and policy iteration.</li>
+            <li>Foundations of Computer Science: apply mathematical foundations and algorithmic principles in the modeling and design of computing systems.</li>
+            <li>Computer Systems Fundamentals: apply fundamental concepts in computer systems to model, design, and implement a computer-based system, process, or program that meets desired needs.</li>
+            <li>Information Processing Fundamentals: apply fundamental concepts in information processing to model, design, and implement a computer-based system, process, or program that meets desired needs.</li>
+            <li>Advanced Computer Systems: use advanced concepts in computer systems to design, implement, and evaluate a computer-based system, process, component, or program.</li>
+            <li>Advanced Information Processing: use advanced information processing concepts to design, implement, and evaluate a computer-based system, process, component, or program.</li>
+            <li>Describe a variety of important AI applications and their importance.</li>
+            <li>Apply supervised and unsupervised learning algorithms and optimization techniques.</li>
+            <li>Explain what intelligent agents are and how they work.</li>
+            <li>Apply local and general search techniques.</li>
+            <li>Explain AI concepts and techniques, such as backtracking, classification and clustering, Bayesian probability, constraints, problem solving with graphs, and decision trees.</li>
+            <li>Explain challenges in AI, including uncertainty and problems in classification.</li>
+            <li>Build a classification model using a variety of AI tools and techniques.</li>
           </ul>
 
-          <p class="kicker">Projects</p>
+          <!-- TODO: Topics — will add later:
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Topic</li>
+          </ul>
+          -->
 
-          <article class="project">
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>S. Russell and P. Norvig, AI: A Modern Approach, 3rd or 4th ed. (US edition), 2022</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
             <div class="project-text">
-              <h4>Grid-World Value Iteration Visualizer</h4>
-              <p>
-                <!-- TODO: replace with your project description. -->
-                Built an interactive visualizer that runs value iteration and Q-learning
-                on configurable grid worlds, animating how utilities and the greedy
-                policy converge as rewards, discount factor, and transition noise change.
-              </p>
-              <div class="project-links">
-                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
-              </div>
-            </div>
-            <div class="project-media">
-              <video src="assets/coursework/cs580-value-iteration.mp4" controls muted playsinline preload="metadata"></video>
-              <small class="media-caption">Policy converging over 40 iterations</small>
+              <h4>Project title</h4>
+              <p>Project description.</p>
             </div>
           </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs583" data-level="grad" data-code="CS 583" data-title="Analysis of Algorithms">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 583</span>
+            <span class="course-title">Analysis of Algorithms</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Topics include analyzing sequential and parallel algorithmic strategies such as greedy methods, divide and conquer strategies, dynamic programming, search and traversal techniques, and approximation algorithms; and analyzing specific algorithms falling into these classes, NP-Hard and NP-Complete problems.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Analyzes computational resources for important problem types by alternative algorithms and their associated data structures, using mathematically rigorous techniques. Specific algorithms analyzed and improved.</li>
+            <li>This course introduces basic algorithm design and analysis techniques, including asymptotic analysis, data structures for graph algorithms, divide-and-conquer techniques, probabilistic analysis and randomized algorithms, greedy algorithms, dynamic programming approaches, amortized analysis, flow algorithms, NP-hardness, and introduction to approximation algorithms.</li>
+            <li>Classic algorithms are introduced and they are analyzed mathematically and rigorously.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Introductory Material (portions of ch. 1–5)</li>
+            <li>Analysis, Sorting and Order Statistics (ch. 5–9)</li>
+            <li>Analysis of Advanced Data Structures (ch. 11–13, 17, 19)</li>
+            <li>Design and Advanced Analysis Techniques (ch. 14–16)</li>
+            <li>Graph Algorithms (ch. 20–25)</li>
+            <li>NP-completeness and Approximation Algorithms (ch. 34–35)</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein, Introduction to Algorithms, 4th ed., 2022, ISBN: 9780262046305</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs584" data-level="grad" data-code="CS 584" data-title="Data Mining">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 584</span>
+            <span class="course-title">Data Mining</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Concepts and techniques in data mining and multidisciplinary applications. Topics include databases; data cleaning and transformation; concept description; association and correlation rules; data classification and predictive modeling; performance analysis and scalability; data mining in advanced database systems, including text, audio, and images; and emerging themes and future challenges.
+          </p>
+          <p class="course-desc">
+            The amount of data available for analysis continues to increase exponentially across a broad range of areas. This leads to the need for development of techniques to discover useful and interesting information from these large collections of data. This course aims to provide an overview of key data mining methods and techniques, including classification, regression, dimension reduction, clustering, association rule mining, recommendation, and text mining. The emphasis will be on developing basic skills for data processing, modeling, prediction, and performance evaluation. Besides, topics about the dark side of data mining techniques and applications will also be introduced, like various types of unfairness and bias in different data mining applications.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>The ability to apply computing principles, probability and statistics relevant to the data mining discipline to analyze data.</li>
+            <li>A thorough understanding of model programming with data mining tools, algorithms for estimation, prediction, and pattern discovery.</li>
+            <li>The ability to analyze a problem, identifying and defining the computing requirements appropriate to its solution: data collection and preparation, functional requirements, selection of models and prediction algorithms, software, and performance evaluation.</li>
+            <li>The ability to understand performance metrics used in the data mining field to interpret the results of applying an algorithm or model, to compare methods and to reach conclusions about data.</li>
+            <li>The ability to communicate effectively to an audience the steps and results followed in solving a data mining problem.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Classification Basics and K Nearest Neighbor</li>
+            <li>Principle Component Analysis</li>
+            <li>Linear Regression</li>
+            <li>Logistic Regression and Neural Networks</li>
+            <li>Deep Learning and Fairness in Machine Learning</li>
+            <li>Clustering</li>
+            <li>Associate Rule Mining</li>
+            <li>Recommender Systems</li>
+            <li>Fairness and Bias in Recommender Systems</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Pang-Ning Tan, Michael Steinbach, Anuj Karpatne, and Vipin Kumar, Introduction to Data Mining, 2nd ed. — <a href="https://www.users.cse.umn.edu/~kumar001/dmbook/index.php" target="_blank" rel="noopener">book website</a></li>
+            <li>Jure Leskovec, Anand Rajaraman, and Jeff Ullman, Mining of Massive Datasets — <a href="http://www.mmds.org/" target="_blank" rel="noopener">mmds.org</a></li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs682" data-level="grad" data-code="CS 682" data-title="Computer Vision">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 682</span>
+            <span class="course-title">Computer Vision</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Study of computational models of visual perception and their implementation in computer systems. Topics include early visual processing, edge detection, segmentation, intrinsic images, image modeling, representation of visual knowledge, and image understanding.
+          </p>
+          <p class="course-desc">
+            This course will cover the essentials of Computer Vision, a discipline that strives to develop techniques to help computers &ldquo;see&rdquo; and understand images. The course is of interest to anyone seeking to process images and acquire a general background in problems related to real-world perception, object and scene recognition and 3D reconstruction. The geometric aspects of the course will focus on extracting 3D metric information from 2D images. The second theme covers methods for extraction of semantic information. This will entail problems of image classification, object detection (e.g., how to detect people, cars, or other objects of interest in images), activity recognition. Applications to 3D modelling, video analysis, video surveillance, image-based retrieval, object detection and recognition and vision-based control will be discussed.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Foundations of Computer Science: apply mathematical foundations and algorithmic principles in the modeling and design of computing systems.</li>
+            <li>Computer Systems Fundamentals: apply fundamental concepts in computer systems to model, design, and implement a computer-based system, process, or program that meets desired needs.</li>
+            <li>Information Processing Fundamentals: apply fundamental concepts in information processing to model, design, and implement a computer-based system, process, or program that meets desired needs.</li>
+            <li>Advanced Computer Systems: use advanced concepts in computer systems to design, implement, and evaluate a computer-based system, process, component, or program.</li>
+            <li>Advanced Information Processing: use advanced information processing concepts to design, implement, and evaluate a computer-based system, process, component, or program.</li>
+            <li>Formulate knowledge on image formation process.</li>
+            <li>Develop and enhance knowledge of image processing techniques, edge detection, corner detection and segmentation.</li>
+            <li>Evaluate and apply tracking, motion computation, and 3D vision.</li>
+            <li>Evaluate and apply image classification and object detection.</li>
+            <li>Implement computer vision algorithms in Python/OpenCV.</li>
+            <li>Apply appropriate techniques to a problem, write a project report, and present the results in the class.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Image Formation</li>
+            <li>Image Processing</li>
+            <li>Image Feature Extraction</li>
+            <li>Corner Extraction</li>
+            <li>Blob Detectors and Descriptors</li>
+            <li>Template Matching, Optical Flow, Feature Tracking</li>
+            <li>Image Alignment and Stitching</li>
+            <li>Epipolar Geometry and Camera Calibration</li>
+            <li>Image Segmentation</li>
+            <li>Machine Learning in Computer Vision</li>
+            <li>Instance Recognition and Face Detection</li>
+            <li>Neural Networks Based Object Recognition</li>
+            <li>Semantic Segmentation and Object Detection with Neural Networks</li>
+            <li>Advanced Stereo, Multiview Stereo</li>
+            <li>Computer Vision and Language, Image Captioning</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>R. Szeliski, Computer Vision: Algorithms and Applications, Springer, 2010</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs685" data-level="grad" data-code="CS 685" data-title="Autonomous Robotics">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 685</span>
+            <span class="course-title">Autonomous Robotics</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Reviews developments in intelligent autonomous systems. Studies applications of artificial intelligence, computer vision, and machine learning to robotics. Topics include analysis and design of algorithms and architectures for planning, navigation, sensory data understanding, sensor fusion, spatial reasoning, motion control, knowledge acquisition, learning concepts and procedures, self-organization, and adaptation to environment.
+          </p>
+          <p class="course-desc">
+            The course covers basic principles of design and practice of intelligent robotics systems. We will cover algorithms for the analysis of the data obtained by vision and range sensors, basic principles of modelling kinematics and dynamics and design of basic control strategies. Notion of robot's configuration space and geometric and topological representations of the environment will be introduced and followed by overview of basic motion planning techniques. Issues of uncertainty modeling, state estimation, probabilistic inference will be introduced and examined in the context of localization and map making problems. We will study and formulate interesting robotics tasks and show how they can be accomplished by individual robot or cooperative robot teams (such as flocking, foraging as well as robotic soccer).
+          </p>
+          <p class="course-desc">
+            The topics and techniques covered are relevant for students interested in robotics, computer vision, artificial intelligence as well as modeling and programming of complex distributed embedded systems which interact with dynamically changing environments.
+          </p>
+          <p class="course-desc">
+            The course will comprise of lectures by the instructor, homeworks and presentations of the selected research publications by students. The grade will be based on homeworks, exam and final presentation of the project. The projects will involve implementation of a system in a mobile robot simulator and/or the actual mobile robot.
+          </p>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Rigid Body Motion</li>
+            <li>Robot Kinematics</li>
+            <li>Mobile robot kinematics</li>
+            <li>Kinematic chains</li>
+            <li>Mobile Robot Control</li>
+            <li>Motion Planning — Graph Algorithms</li>
+            <li>Motion Planning — Configuration Space</li>
+            <li>Trajectory Generation, PID control</li>
+            <li>Motion Planning — Probabilistic Roadmaps</li>
+            <li>Motion Planning — Potential Fields</li>
+            <li>Steering behaviors</li>
+            <li>Introduction to probabilistic robotics, Bayes filters</li>
+            <li>Motion and Sensor Models</li>
+            <li>Kalman Filter</li>
+            <li>Extended Kalman Filter</li>
+            <li>Particle filters, Occupancy Grids</li>
+            <li>SLAM, Graph SLAM</li>
+            <li>Robot perception: single view</li>
+            <li>Robot perception: two views, 3D reconstruction</li>
+            <li>Robot perception: object detection and recognition</li>
+            <li>Deep Learning for Robot Perception</li>
+            <li>PDDL Planning</li>
+            <li>Markov Decision Processes (intro)</li>
+            <li>Reinforcement Learning</li>
+            <li>Deep Q-learning</li>
+            <li>Policy Gradient Methods</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>R. Siegwart and I. Nourbakhsh, Autonomous Mobile Robots, 2nd ed., MIT Press, 2011 — <a href="http://www.mobilerobots.org" target="_blank" rel="noopener">mobilerobots.org</a></li>
+            <li>S. Thrun, W. Burgard, and D. Fox, Probabilistic Robotics — <a href="http://robots.stanford.edu/probabilistic-robotics/" target="_blank" rel="noopener">robots.stanford.edu</a></li>
+            <li>S. LaValle, Planning Algorithms, Cambridge Press — <a href="http://planning.cs.uiuc.edu/" target="_blank" rel="noopener">planning.cs.uiuc.edu</a></li>
+            <li>G. Dudek and M. Jenkin, Computational Principles of Mobile Robotics, Cambridge University Press, 2000</li>
+            <li>S. Russell and P. Norvig, Artificial Intelligence, 4th ed., Prentice Hall</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs688" data-level="grad" data-code="CS 688" data-title="Machine Learning">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 688</span>
+            <span class="course-title">Machine Learning</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Machine learning studies computer algorithms for learning to do things. For example, we might be interested in learning to complete a task, or to make accurate predictions, or to navigate in an unexplored environment. The learning that is being done is always based on some sort of observations or data, such as examples (the most common case in this course), direct experience, or instruction. So in general, machine learning is about learning to do better in the future based on what was experienced in the past.
+          </p>
+          <p class="course-desc">
+            The emphasis of machine learning is on automatic methods. In other words, the goal is to devise learning algorithms that do the learning automatically without human intervention or assistance. The machine learning paradigm can be viewed as &ldquo;programming by example.&rdquo; Often we have a specific task in mind, such as recognizing handwritten digits on an envelope to perform automated mail dispatching. But rather than program the computer with rules to solve the task directly, in machine learning, we seek methods by which the computer will come up with its own program based on examples that we provide.
+          </p>
+          <p class="course-desc">
+            The course covers key algorithms and theory at the core of machine learning. Particular emphasis will be given to the statistical learning aspects of the field, the mathematical formulations of common tasks, and the techniques used to solve them. We will explore the reasoning behind the formulation of learning algorithms. This will enable students to gain a deeper understanding of the objectives, underlying assumptions, advantages, and limitations of the different techniques.
+          </p>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Decision theory</li>
+            <li>Bayesian theory</li>
+            <li>Curse of dimensionality</li>
+            <li>Dimensionality reduction techniques</li>
+            <li>Classification</li>
+            <li>Clustering</li>
+            <li>Neural networks</li>
+            <li>Kernel methods</li>
+            <li>Mixture models and EM</li>
+            <li>Deep learning</li>
+            <li>Reinforcement learning</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>C. M. Bishop, Pattern Recognition and Machine Learning, Springer, 2006</li>
+            <li>T. Hastie, R. Tibshirani, and J. Friedman, The Elements of Statistical Learning, Springer, 2017</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs690" data-level="grad" data-code="CS 690" data-title="Human Robot Interaction">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 690</span>
+            <span class="course-title">Human Robot Interaction</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Introduction to the theory, principles, and methods used to model, design and test automated, autonomous or robotic systems that require or support human interaction. Focus areas include understanding the theory and mechanics of both human and robot perception and cognition, the design of interaction architectures such as teleoperation and human supervisory control, and how to conduct principled tests and experiments of human-robot systems.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <p class="objectives-intro">
+            This course intends to introduce you to the fundamentals of human-robot interaction, with a focus on how theory, methods, and tools all contribute to this emerging field. We will also discuss systems-level issues such as legal and sociotechnical implications, particularly as these relate to complex human-robot systems. After taking this class, you should be able to:
+          </p>
+          <ul class="objectives">
+            <li>Understand the core limitations and strengths of both humans and robots and the implications of these on role and function allocation and system design.</li>
+            <li>Understand the difference between teleoperation, supervisory control, and interactive teaming in human-robot systems.</li>
+            <li>Understand how fundamental concepts from fields such as machine learning, artificial intelligence, and psychology relate to human-robot interaction.</li>
+            <li>Discuss the differences in various brain-computer interfaces and how these could be used as control interfaces to robotic systems.</li>
+            <li>Understand the emerging issues in social robotics as well as the importance of accounting for (dis)trust in robotic systems.</li>
+            <li>Identify strengths and weaknesses in the design of virtual and augmented reality systems and what their implications are.</li>
+            <li>Develop a test and evaluation plan for a human-robot system.</li>
+            <li>Understand the social, legal, and potential policy challenges associated with the design and introduction of human-robot systems.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Introduction and Survey of HRI Applications</li>
+            <li>Information Processing for Humans and Robots</li>
+            <li>Natural Language Processing &amp; Large Language Models in Robotic Applications</li>
+            <li>Cognitive and Human Performance Models</li>
+            <li>Automation, Autonomy, and AI in Robotic Systems</li>
+            <li>Design</li>
+            <li>Ethics, Law &amp; Policy for Robots</li>
+            <li>Testing &amp; Experimentation</li>
+            <li>Robots &amp; Risk Management</li>
+            <li>Interfaces &amp; Social Robotics</li>
+            <li>HRI Teaming</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs747" data-level="grad" data-code="CS 747" data-title="Deep Learning">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 747</span>
+            <span class="course-title">Deep Learning</span>
+          </span>
+          <span class="badge badge-grad">Graduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            This course presents the theory, underlying principles and applications of Deep Learning (DL). Deep learning is a Machine Learning approach based on learning data representations as opposed to designing task-specific algorithms. The course covers the concepts of Multilayer Perceptrons (MLPs) and algorithms to train them (gradient descent, backpropagation), Regularization of DL, Convolutional Networks (CNNs), Autoencoders, Recurrent Networks (RNNs), and Deep Generative Models including Generative Adversarial Methods. Problems from various application domains such as natural language processing and computer vision will be discussed.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <p class="objectives-intro">
+            Students will gain theoretical understanding and practical experience with modern deep learning methods, enabling them to design, train, evaluate, and critically analyze neural network models for real-world applications.
+          </p>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Machine Learning Introduction</li>
+            <li>Supervised Learning, Linear Models</li>
+            <li>Neural Nets, Backpropagation</li>
+            <li>Convolutional Neural Networks</li>
+            <li>Classification, Dense Prediction, Object Detection</li>
+            <li>Training Neural Networks, Recurrent Neural Networks</li>
+            <li>Attention, Transformers</li>
+            <li>Variational Autoencoders</li>
+            <li>Generative Adversarial Networks</li>
+            <li>Diffusion Models</li>
+            <li>Metric and Unsupervised Learning</li>
+            <li>Adversarial Examples, Bias and Fairness</li>
+            <li>Large Language Models, Vision Language Models</li>
+            <li>Deep RL, World Models</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Simon Prince, Understanding Deep Learning — <a href="https://udlbook.github.io/udlbook/" target="_blank" rel="noopener">udlbook.github.io</a></li>
+            <li>Dive into Deep Learning — <a href="https://d2l.ai/" target="_blank" rel="noopener">d2l.ai</a></li>
+            <li>Iddo Drori, The Science of Deep Learning</li>
+            <li>Deep Learning by Goodfellow et al.</li>
+            <li>F. Chollet, Deep Learning with Python, 2nd ed.</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
 
         </div>
       </details>
@@ -813,6 +1346,106 @@ footer a {
               <div class="project-links">
                 <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
               </div>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs211" data-level="undergrad" data-code="CS 211" data-title="Object-Oriented Programming">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 211</span>
+            <span class="course-title">Object-Oriented Programming</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Thorough treatment of programming according to object-oriented principles. Introduces classes, interfaces, inheritance, polymorphism, and single dispatch as means to decompose problems. Covers intermediate programming techniques including error handling through exceptions, arrangement of source code into packages, and simple data structures. Intermediate debugging techniques and unit testing are covered.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>An understanding of basic object-oriented programming concepts and principles.</li>
+            <li>An ability to apply basic object-oriented principles and techniques in the design and development of software systems using a specific programming language.</li>
+            <li>An ability to effectively use both basic command line tools and sophisticated integrated development environments, and to understand the benefits and limitations of each.</li>
+            <li>An ability to successfully perform debugging operations and techniques.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Flow control</li>
+            <li>Arrays, Input/Output</li>
+            <li>Classes, Objects, Methods, Fields</li>
+            <li>Command Line args, Packages, Javadocs</li>
+            <li>Inheritance and Polymorphism</li>
+            <li>Abstract classes, Interfaces, and Enums</li>
+            <li>Exceptions, Unit Testing</li>
+            <li>Generics</li>
+            <li>Collections, Lists, Queues</li>
+            <li>Recursion</li>
+            <li>Sort and Search</li>
+            <li>Inner and Anonymous classes, Lambda Functions</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>zyBooks – Object Oriented Programming, available online at <a href="https://learn.zybooks.com/" target="_blank" rel="noopener">learn.zybooks.com</a></li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 1</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 2</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 3</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 4</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 5</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
             </div>
           </article>
 
@@ -1039,39 +1672,553 @@ footer a {
           <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
 
           <p class="course-desc">
-            <!-- TODO: replace with the official catalog description or your own summary. -->
-            Design, implementation, and analysis of fundamental data structures:
-            dynamic arrays, linked lists, stacks and queues, hash tables, trees, heaps,
-            and graphs, with an emphasis on asymptotic analysis and choosing the right
-            structure for a problem.
+            Focuses on object-oriented programming with an emphasis on tools and techniques for developing moderate to large programs. Topics include use and implementation of linear and nonlinear data structures and the design and analysis of elementary algorithms.
           </p>
 
           <p class="kicker">Course Objectives</p>
           <ul class="objectives">
-            <!-- TODO: replace with the objectives from the syllabus. -->
-            <li>Analyze time and space complexity using asymptotic notation.</li>
-            <li>Implement core data structures from scratch and test them rigorously.</li>
-            <li>Select appropriate structures based on access patterns and constraints.</li>
-            <li>Apply graph representations and traversals to practical problems.</li>
+            <li>Gain an ability to analyze the runtime efficiency of algorithms that create and manipulate data structures.</li>
+            <li>Gain an ability to compare data structure trade-offs such that the student is able to choose appropriate implementations for a given data structure and appropriate data structures for a given application.</li>
+            <li>Reinforce their knowledge of basic data structures (linked lists, dynamic array lists, stacks, and queues) and extend their knowledge to more sophisticated data structures, including hash tables, balanced trees, priority queues, and basic graphs.</li>
+            <li>Implement and use learned data structures to solve real computing problems. This includes substantial reinforcement of language-specific techniques for abstract data types and design and debugging techniques.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Lists, Stacks, and Queues</li>
+            <li>Dynamic Arrays, Linked Lists, Iterators</li>
+            <li>Hash Tables and Hashing</li>
+            <li>Trees and Basic Tree Algorithms</li>
+            <li>Graphs and Basic Graph Algorithms</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Mark Allen Weiss, Data Structures &amp; Problem Solving Using Java, 4th ed., Addison-Wesley, 2010</li>
           </ul>
 
           <p class="kicker">Projects</p>
 
-          <!-- Example of a text-only project (no media): note the "no-media" class -->
           <article class="project no-media">
             <div class="project-text">
-              <h4>Autocomplete Engine with Tries</h4>
+              <h4>Project 0</h4>
               <p>
-                <!-- TODO: replace with your project description. -->
-                Implemented a prefix-tree-backed autocomplete engine over a large word
-                corpus, comparing lookup latency and memory footprint against a sorted
-                array with binary search and a hash-based approach.
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
               </p>
-              <div class="project-links">
-                <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
-              </div>
             </div>
           </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 1</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 2</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 3</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 4</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs330" data-level="undergrad" data-code="CS 330" data-title="Formal Methods and Models">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 330</span>
+            <span class="course-title">Formal Methods and Models</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            This course is an introduction to two kinds of formal systems — languages and logics — with important applications to computer science. The study of formal languages underlies important aspects of compilers and other language processing systems, as well as the theory of computation. Various systems of logic and automatic reasoning are put to use in artificial intelligence, database theory and software engineering. The entire course will give you practice in precise thinking and proof methods that play a role in the analysis of algorithms. The programming assignments provide practical experience with some theoretical topics.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Students will understand the concepts and relevance of logic, formal languages and automata theory, and computability.</li>
+            <li>Students will be able to do mechanical formal proofs, program correctness proofs and solve problems in first-order logic.</li>
+            <li>Students will be able to solve problems in elementary machine models: designing finite-state, pushdown and Turing machines.</li>
+            <li>Students will be able to solve problems in formal languages: writing regular expressions, regular grammars, and context-free grammars.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Logical proofs
+              <ul>
+                <li>Propositional Logic (including truth tables; boolean algebra)</li>
+                <li>Rules of Inference (proof by deduction)</li>
+                <li>Mathematical Induction</li>
+              </ul>
+            </li>
+            <li>Predicate Logic (including quantifiers)</li>
+            <li>Program Verification (including loop invariants)</li>
+            <li>Regular Languages and conversions
+              <ul>
+                <li>Regular Grammars</li>
+                <li>Finite Automata (including deterministic and non-deterministic FAs)</li>
+                <li>Regular Expressions</li>
+              </ul>
+            </li>
+            <li>Context-Free Languages
+              <ul>
+                <li>Context-Free Grammars</li>
+                <li>Push-Down Automata</li>
+              </ul>
+            </li>
+            <li>Turing Machines</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs367" data-level="undergrad" data-code="CS 367" data-title="Computer Systems and Programming">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 367</span>
+            <span class="course-title">Computer Systems and Programming</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Introduces students to computer systems from a programmer's perspective. Topics include data representation, assembly and machine-level representation of high-level language programs, the memory hierarchy, linking, exceptions, interrupts, processes and signals, virtual memory, and system-level I/O. Foundation for courses on compilers; networks; operating systems; and computer architecture, where a deeper understanding of systems-level issues is required.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Demonstrate understanding of data representation at machine level, including binary numeric encodings, data structures, and Boolean operations.</li>
+            <li>Demonstrate understanding of program representation at the machine level using assembly language, including control flow, procedures, and file linking.</li>
+            <li>Demonstrate practical techniques of system tools to understand low level behaviors of programs, including debuggers.</li>
+            <li>Understanding of basic CPU design including circuits, pipelining, and digital logic.</li>
+            <li>Demonstrate understanding of memory concepts including virtual memory, caching, and dynamic memory layout.</li>
+            <li>Demonstrate understanding of computer processes, including its lifecycle and communications with the system.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Data and Number Representation</li>
+            <li>Assembly Programming</li>
+            <li>Processes and Signals</li>
+            <li>Unix I/O</li>
+            <li>CPU Architecture and Design</li>
+            <li>Memory Management</li>
+            <li>Linking and Loading</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Randal Bryant and David O'Hallaron, Computer Systems: A Programmer's Perspective, 3rd ed., Prentice Hall</li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+          <!-- The course had 4 projects. TODO: adjust numbering/titles if needed. -->
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 1</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 2</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 3</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 4</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs450" data-level="undergrad" data-code="CS 450" data-title="Database Concepts">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 450</span>
+            <span class="course-title">Database Concepts</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Covers basics to intermediate knowledge for the design, implementation, and use of relational database systems. Topics include the Entity-Relationship (ER) and Entity-Enhanced Relationship (EER) models for database design, Relational Algebra (RA), Structured Query Language (SQL), SQL programming techniques, functional dependencies and normalization, object and object-relational databases, and security. Students will practice to design, develop, and implement a relational ORACLE database and use the database for queries, transaction processing, and report generation.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Knowledge of fundamental concepts of file and database management.</li>
+            <li>Knowledge of database design principles, and ability to model real-world environments using the ER model.</li>
+            <li>Knowledge of the formal principles of the relational database model and its query languages, and ability to design relational databases and express queries in the relational algebra and calculus.</li>
+            <li>Knowledge of the Structured Query Language (SQL) and database programming principles, and ability to author SQL queries and implement 3-tier database applications using the Oracle database system, Java Servlets/JSP, and Android.</li>
+            <li>Knowledge of the basic principles of the mathematical theory of database design, and ability to design databases that adhere to Boyce-Codd Normal Form.</li>
+            <li>Experience in the complete database creation process: from database design, to database construction, to database programming.</li>
+            <li>Work as part of a team to develop small programming projects in topics related to the course material.</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Ramez Elmasri and Shamkant B. Navathe, Fundamentals of Database Systems, 7th ed., Pearson, 2015, ISBN-13: 9780133970777</li>
+            <li>R. Ramakrishnan and J. Gehrke, Database Management Systems, 3rd ed., McGraw-Hill, 2003, ISBN-13: 978-0071231510</li>
+            <li>Rajshekhar Sunderraman, Oracle 10g Programming: A Primer, Pearson, 2007, ISBN-13: 978-0321463043</li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+          <!-- The course had 4 projects. TODO: adjust numbering/titles if needed. -->
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 1</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 2</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 3</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 4</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs471" data-level="undergrad" data-code="CS 471" data-title="Operating Systems">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 471</span>
+            <span class="course-title">Operating Systems</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Issues in multiprogramming. Covers concurrent processes and synchronization mechanisms; processor scheduling; memory, file, I/O, and deadlock management; performance of operating systems; and projects dealing with synchronization in multiprogrammed OS and virtual memory management.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Demonstrate knowledge of operating systems features, evolution, and design.</li>
+            <li>Show an understanding of the need for concurrent operation of multiple tasks (processes/threads) and an ability to solve basic process synchronization problems that arise from concurrent operation settings.</li>
+            <li>Demonstrate knowledge of process scheduling, basic memory management, storage systems, and file system management.</li>
+            <li>Be able to implement basic algorithms for OS services such as memory management and process scheduling.</li>
+            <li>Demonstrate knowledge of security threats to an operating system from both processes and networked sources and show an understanding of protection techniques.</li>
+            <li>Demonstrate knowledge of how system calls work along with the mechanisms for interrupt handling.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Introduction</li>
+            <li>Processes</li>
+            <li>Threads</li>
+            <li>Concurrency and Synchronization</li>
+            <li>CPU Scheduling</li>
+            <li>Memory Management</li>
+            <li>Virtual Memory</li>
+            <li>Input/Output &amp; Storage</li>
+            <li>File Systems</li>
+            <li>Protection and Security</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Silberschatz, Galvin, and Gagne, Operating System Concepts, 10th ed., John Wiley &amp; Sons, 2018, ISBN: 978-1-118-06333-0</li>
+            <li>Thomas Anderson and Michael Dahlin, Operating Systems: Principles and Practice, 2nd ed., Recursive Books, ISBN: 978-0-9856735-2-9</li>
+          </ul>
+
+          <p class="kicker">Projects</p>
+          <!-- The course had 3 projects. TODO: adjust numbering/titles if needed. -->
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 1</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 2</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project 3</h4>
+              <p>
+                <!-- TODO: replace with the project description. -->
+                Description coming soon.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs483" data-level="undergrad" data-code="CS 483" data-title="Analysis of Algorithms">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 483</span>
+            <span class="course-title">Analysis of Algorithms</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Analyzes computational resources for important problem types by alternative algorithms and their associated data structures, using mathematically rigorous techniques. Specific algorithms analyzed and improved.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>Students will understand classical problems in Computer Science.</li>
+            <li>Students will understand classical algorithm design and analysis strategies.</li>
+            <li>Students will analyze the computability of a problem.</li>
+            <li>Students will design and analyze new algorithms to solve a computational problem.</li>
+            <li>Students will reason algorithmically.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Analysis Basics
+              <ul>
+                <li>Asymptotic Runtime (Big-O notation)</li>
+                <li>Amortized Analysis</li>
+              </ul>
+            </li>
+            <li>Graph Algorithms
+              <ul>
+                <li>Shortest-Path Algorithms</li>
+                <li>Network Flow Algorithms</li>
+              </ul>
+            </li>
+            <li>Algorithmic Techniques
+              <ul>
+                <li>Greedy Algorithms</li>
+                <li>Divide-and-Conquer Algorithms</li>
+                <li>Dynamic Programming</li>
+              </ul>
+            </li>
+            <li>Hard Problems (P vs NP problem classes)</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Kleinberg and Tardos, Algorithm Design, 1st ed.</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
+
+        </div>
+      </details>
+
+      <details class="course-card" id="cs484" data-level="undergrad" data-code="CS 484" data-title="Data Mining">
+        <summary class="course-summary">
+          <span class="course-heading">
+            <span class="course-code">CS 484</span>
+            <span class="course-title">Data Mining</span>
+          </span>
+          <span class="badge badge-undergrad">Undergraduate</span>
+          <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </summary>
+        <div class="course-body">
+          <p class="course-meta">George Mason University · <!-- TODO: term taken --></p>
+
+          <p class="course-desc">
+            Basic principles and methods for data analysis and knowledge discovery. Emphasizes developing basic skills for modeling and prediction and performance evaluation. Topics include system design; data quality, preprocessing, and association; event classification; clustering; biometrics; business intelligence; and mining complex types of data.
+          </p>
+
+          <p class="kicker">Course Objectives</p>
+          <ul class="objectives">
+            <li>The ability to apply computing principles, probability and statistics relevant to the data mining discipline to analyze data.</li>
+            <li>A good understanding of model programming with data mining tools, algorithms for estimation, prediction, and pattern discovery.</li>
+            <li>The ability to analyze a problem, identifying and defining the computing requirements appropriate to its solution: data collection and preparation, functional requirements, selection of models and prediction algorithms, software, and performance evaluation.</li>
+            <li>The ability to understand performance metrics used in data mining to interpret the results of applying an algorithm or model, to compare methods and to reach conclusions about data.</li>
+            <li>The ability to communicate effectively the approach and results followed in solving a data mining problem.</li>
+          </ul>
+
+          <p class="kicker">Topics</p>
+          <ul class="Topics">
+            <li>Data
+              <ul>
+                <li>Types of Data</li>
+                <li>Data Quality</li>
+                <li>Data Processing</li>
+                <li>Measures of Similarity and Dissimilarity</li>
+              </ul>
+            </li>
+            <li>Classification
+              <ul>
+                <li>Basic Concepts</li>
+                <li>General Framework for Classification</li>
+                <li>Decision Tree Classifier</li>
+                <li>Model Overfitting, Selection, Evaluation, and Comparison</li>
+                <li>Rule-Based Classifiers</li>
+                <li>Nearest Neighbors Classifiers</li>
+                <li>Naive Bayes Classifier</li>
+                <li>Logistic Regression</li>
+              </ul>
+            </li>
+            <li>Regression
+              <ul>
+                <li>Linear Regression</li>
+                <li>Adapting Decision Trees and Nearest Neighbors for Regression Analysis</li>
+              </ul>
+            </li>
+            <li>Ensemble Methods</li>
+            <li>Artificial Neural Networks</li>
+            <li>Deep Learning (introduction)</li>
+            <li>Association Analysis</li>
+            <li>Cluster Analysis
+              <ul>
+                <li>K-means Algorithm</li>
+                <li>Agglomerative Hierarchical Clustering</li>
+                <li>DBSCAN</li>
+                <li>Cluster Evaluation</li>
+                <li>Prototype-Based Clustering</li>
+                <li>Density-Based Clustering</li>
+                <li>Graph-Based Clustering</li>
+              </ul>
+            </li>
+            <li>Anomaly Detection</li>
+            <li>Avoiding False Discoveries</li>
+          </ul>
+
+          <p class="kicker">Associated Books</p>
+          <ul class="Books">
+            <li>Pang-Ning Tan, Michael Steinbach, Anuj Karpatne, and Vipin Kumar, Introduction to Data Mining, 2nd ed., Pearson — print ISBN 9780133128901, eText ISBN 9780134080284</li>
+          </ul>
+
+          <!-- TODO: Projects — when ready, add:
+          <p class="kicker">Projects</p>
+          <article class="project no-media">
+            <div class="project-text">
+              <h4>Project title</h4>
+              <p>Project description.</p>
+            </div>
+          </article>
+          -->
 
         </div>
       </details>
