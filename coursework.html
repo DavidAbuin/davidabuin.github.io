@@ -642,8 +642,9 @@ footer a {
 
       <section class="filter-group">
         <h3>Courses</h3>
-        <!-- This list is generated automatically from the course cards below.
-             Add a card in <main> and it appears here on its own. -->
+        <!-- This list is generated automatically from the course cards below:
+             undergraduate courses first, then graduate, in card order within
+             each level. Add a card in <main> and it appears here on its own. -->
         <div class="filter-options" id="course-filter-list"></div>
       </section>
     </aside>
@@ -2253,10 +2254,18 @@ footer a {
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---- Build the per-course sidebar entries from the cards themselves ---- */
+  /* Undergraduate courses are listed first, then graduate, so course numbers
+     read sequentially. Within each level, cards keep their order in <main>. */
   var courseButtons = {};  /* id -> sidebar button */
   var courseLevels = {};   /* id -> "grad" | "undergrad" */
 
-  cards.forEach(function (card) {
+  var sidebarOrder = cards.filter(function (c) {
+    return c.dataset.level === 'undergrad';
+  }).concat(cards.filter(function (c) {
+    return c.dataset.level !== 'undergrad';
+  }));
+
+  sidebarOrder.forEach(function (card) {
     courseLevels[card.id] = card.dataset.level;
 
     var btn = document.createElement('button');
