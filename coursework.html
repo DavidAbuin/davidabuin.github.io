@@ -814,35 +814,34 @@ footer a {
               <p>
                 <!-- TODO: replace with your project description. -->
                 Project description:
-                <p>
-                In this project you will write a C program to solve the <i>n</i>-Queens problem. 
+                <p> 
                 The goal is to place <i>n</i> queens on an <i>n</i> &times; <i>n</i> chess board: no two queens are allowed to be in the same row, column, or a diagonal.
                 </p>
   
                 <p>
-                You can represent a board configuration with a simple <i>n</i>-element sequence <i>Q<sub>n</sub></i> = {<i>q<sub>0</sub></i><i>q<sub>1</sub></i>...<i>q<sub>n-1</sub></i>}; <i>q</i> corresponds to the column position of <i>i</i>th queen in row <i>i</i>. 
+                You can represent a board configuration with a simple <i>n</i>-element sequence <i>Q<sub>n</sub></i> = {<i>q<sub>0 </sub></i><i>q<sub>1</sub></i>...<i>q<sub>n-1</sub></i>}; <i>q</i> corresponds to the column position of <i>i</i>th queen in row <i>i</i>. 
                 For example, {0213} would correspond to the 4 queens in positions (0,0) (row 0, column 0), (1,2) (row 1, column 2), (2, 1) (row 2, column 1), and (3, 3) (row 3, column 3). 
                 Note that in our representation we do not use row indexes: the <i>i</i>th queen is placed in the <i>i</i>th row and its column index is <i>q<sub>i</sub></i>. 
                 To check whether a sequence <i>Q<sub>n</sub></i> solves the <i>n</i>-Queens problem you need to make sure that
                </p>
   
-  <ol>
-    <li>Two queens do not share a column, i.e. <i>q<sub>i</sub></i> &ne; <i>q<sub>j</sub></i> for <i>i</i> &ne; <i>j</i>, and</li>
-    <li>Two queens do not share a diagonal, i.e. |<i>q<sub>i</sub></i> - <i>q<sub>j</sub></i>| &ne; |<i>i</i> - <i>j</i>| when <i>i</i> &ne; <i>j</i></li>
-  </ol>
+               <ol style="margin-left: 40px;">
+                  <li>Two queens do not share a column, i.e. <i>q<sub>i</sub></i> &ne; <i>q<sub>j</sub></i> for <i>i</i> &ne; <i>j</i>, and</li>
+                  <li>Two queens do not share a diagonal, i.e. |<i>q<sub>i</sub></i> - <i>q<sub>j</sub></i>| &ne; |<i>i</i> - <i>j</i>| when <i>i</i> &ne; <i>j</i></li>
+               </ol>
   
-  <p>
-    There are multiple ways to solve this problem. The simplest one would be to generate all possible configurations and check if they solve the problem. 
-    Note that there are <i>n<sup>n</sup></i> possible configurations that would need to be checked. You can do better if you realize that you only need to check permutations of numbers 0, ..., <i>n</i>-1 as possible configurations. 
-    Note that in the case of the 4 queens that would be 256 possible board configurations, but there are only 24 permutations; you can verify that there are just 4 legal 4-queen placements. 
-    However, the method for generating all possible permutations is somewhat involved; it is much easier to generate random permutations.
-  </p>
+               <p>
+                There are multiple ways to solve this problem. The simplest one would be to generate all possible configurations and check if they solve the problem. 
+                Note that there are <i>n<sup>n</sup></i> possible configurations that would need to be checked. You can do better if you realize that you only need to check permutations of numbers 0, ..., <i>n</i>-1 as possible configurations. 
+                Note that in the case of the 4 queens that would be 256 possible board configurations, but there are only 24 permutations; you can verify that there are just 4 legal 4-queen placements. 
+                However, the method for generating all possible permutations is somewhat involved; it is much easier to generate random permutations.
+              </p>
   
-  <p>
-    Your assignment is to write a program to solve the <i>n</i>-queens problem for <i>n</i> = 4, ..., 20 using random board configurations. 
-    You should use your <code>randperm</code> function to do this. In addition, you will write two additional functions: <code>checkboard</code> for checking if a permutation solves the problem, and <code>displayboard</code> for printing a solution. 
-    Finally, for each board size you should solve the problem 10 times so that you can obtain some statistics on performance of your program.
-  </p>
+              <p>
+              Your assignment is to write a program to solve the <i>n</i>-queens problem for <i>n</i> = 4, ..., 20 using random board configurations. 
+              You should use your <code>randperm</code> function to do this. In addition, you will write two additional functions: <code>checkboard</code> for checking if a permutation solves the problem, and <code>displayboard</code> for printing a solution. 
+              Finally, for each board size you should solve the problem 10 times so that you can obtain some statistics on performance of your program.
+              </p>
               <div class="project-links">
                 <a href="https://github.com/DavidAbuin" target="_blank" rel="noopener">Code</a>
                 <a href="#" target="_blank" rel="noopener">Report</a>
