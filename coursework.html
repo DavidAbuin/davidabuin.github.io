@@ -481,6 +481,15 @@ details[open] .chev {
   display: block;
 }
 
+/* Media stacked UNDER a full-width description instead of sitting in the
+   narrow side column. Used for tall screenshots (e.g. terminal captures)
+   that are unreadable at 300px. The cap keeps the image at or below its
+   natural width so it is never upscaled and blurred. */
+.project-media.stacked {
+  max-width: 645px;
+  margin-top: 18px;
+}
+
 .media-caption {
   display: block;
   margin-top: 8px;
@@ -1918,9 +1927,35 @@ footer a {
           <p class="kicker">Projects</p>
 
           <article class="project no-media">
-            <div class="project-media">
-              <img src="assets/coursework/solution.jpg" alt="Terminal output of the n-Queens solver, showing solutions for n=4 through n=20 with statistics" loading="lazy" />
-              <small class="media-caption">Project 1: The <i>n</i>-Queens — solver output</small>
+            <div class="project-text">
+              <h4>Project 1: The <i>n</i>-Queens</h4>
+              <p>
+                The goal is to place <i>n</i> queens on an <i>n</i> &times; <i>n</i> chess board: no two queens are allowed to be in the same row, column, or a diagonal.
+              </p>
+              <p>
+                You can represent a board configuration with a simple <i>n</i>-element sequence <i>Q<sub>n</sub></i> = {<i>q<sub>0</sub></i> <i>q<sub>1</sub></i> ... <i>q<sub>n&minus;1</sub></i>}; <i>q<sub>i</sub></i> corresponds to the column position of the <i>i</i>th queen in row <i>i</i>.
+                For example, {0 2 1 3} would correspond to the 4 queens in positions (0,0) (row 0, column 0), (1,2) (row 1, column 2), (2,1) (row 2, column 1), and (3,3) (row 3, column 3).
+                Note that in our representation we do not use row indexes: the <i>i</i>th queen is placed in the <i>i</i>th row and its column index is <i>q<sub>i</sub></i>.
+                To check whether a sequence <i>Q<sub>n</sub></i> solves the <i>n</i>-Queens problem you need to make sure that
+              </p>
+              <ol>
+                <li>Two queens do not share a column, i.e. <i>q<sub>i</sub></i> &ne; <i>q<sub>j</sub></i> for <i>i</i> &ne; <i>j</i>, and</li>
+                <li>Two queens do not share a diagonal, i.e. |<i>q<sub>i</sub></i> &minus; <i>q<sub>j</sub></i>| &ne; |<i>i</i> &minus; <i>j</i>| when <i>i</i> &ne; <i>j</i>.</li>
+              </ol>
+              <p>
+                There are multiple ways to solve this problem. The simplest one would be to generate all possible configurations and check if they solve the problem.
+                Note that there are <i>n<sup>n</sup></i> possible configurations that would need to be checked. You can do better if you realize that you only need to check permutations of numbers 0, ..., <i>n</i>&minus;1 as possible configurations.
+                Note that in the case of the 4 queens that would be 256 possible board configurations, but there are only 24 permutations; you can verify that there are just 4 legal 4-queen placements.
+                However, the method for generating all possible permutations is somewhat involved; it is much easier to generate random permutations.
+              </p>
+              <p>
+                My program solves the <i>n</i>-queens problem for <i>n</i> = 4, ..., 20 using random board configurations: a <code>randperm</code> function generates candidate boards as random permutations, <code>checkboard</code> tests whether a permutation solves the problem, and <code>displayboard</code> prints a solution.
+                Each board size is solved 10 times to collect statistics — the minimum, maximum, and mean number of random boards generated before a solution was found, reported alongside <i>n<sup>n</sup></i> and <i>n</i>! for comparison.
+              </p>
+            </div>
+            <div class="project-media stacked">
+              <img src="assets/coursework/solution.jpg" alt="Terminal output of the n-Queens solver: a solved 20-queen board followed by a table of minimum, maximum, and mean board counts for n = 4 to 20" loading="lazy" />
+              <small class="media-caption">Program output: a solution for <i>n</i> = 20, and the collected statistics</small>
             </div>
           </article>
 
