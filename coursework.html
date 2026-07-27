@@ -1674,10 +1674,87 @@ footer a {
 
           <article class="project no-media">
             <div class="project-text">
-              <h4>Project 1</h4>
+              <h4>Project 1: OP CPU Scheduler</h4>
+               <p>
+                A CPU scheduler written in C for TRILBY-VM, a process-level virtual machine that runs real Linux programs under a custom scheduling policy.
+                The VM itself was provided; my work was the scheduling library it links against (<code>op_sched.c</code>), which owns every data structure the VM consults when deciding what to run next.
+                This was also an exercise in working inside a large existing codebase — most of the project shipped as pre-compiled object files, so my code had to satisfy an interface I could not change.
+              </p>
               <p>
-                <!-- TODO: replace with the project description. -->
-                Description coming soon.
+                The scheduler maintains three singly linked lists of processes, built from scratch with no library containers:
+              </p>
+              <ol>
+                <li><b>Ready Queue &ndash; High</b> — the default priority level; the VM always draws from here first.</li>
+                <li><b>Ready Queue &ndash; Low</b> — processes launched with the low-priority flag, selected only when the high queue is empty.</li>
+                <li><b>Defunct Queue</b> — processes that exited normally or were terminated. These never run again.</li>
+              </ol>
+              <p>
+                Each list is fronted by a queue header struct holding a node count and the head pointer.
+                Keeping the head inside a header rather than passing it directly is what lets the insert and remove functions change the front of a list without double pointers, which is a frequent source of aliasing bugs in C linked-list code.
+                The project also forbids dummy nodes, so every head pointer is either <code>NULL</code> or a genuine process node, and the empty-list case has to be handled explicitly at each call site rather than papered over by a sentinel.
+              </p>
+
+              <p>
+                Process metadata is bit-packed into a single 32-bit <code>unsigned int</code>, a common systems-programming technique for keeping several small fields inside one word.
+                All reads and writes to it use bitwise operators (<code>&amp;</code>, <code>|</code>, <code>^</code>, <code>~</code>, <code>&lt;&lt;</code>, <code>&gt;&gt;</code>) so that individual flags can be set or cleared without disturbing their neighbors:
+              </p>
+              <table>
+                <caption>Table 1: layout of the 32-bit process state word</caption>
+                <thead>
+                  <tr>
+                    <th>Bit(s)</th>
+                    <th>Field</th>
+                    <th>Meaning</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>31</td>
+                    <td>C</td>
+                    <td>Critical flag — process preempts the queue order</td>
+                  </tr>
+                  <tr>
+                    <td>30</td>
+                    <td>L</td>
+                    <td>Low-priority flag — routes the process to the low ready queue</td>
+                  </tr>
+                  <tr>
+                    <td>29</td>
+                    <td>R</td>
+                    <td>Ready state</td>
+                  </tr>
+                  <tr>
+                    <td>28</td>
+                    <td>D</td>
+                    <td>Defunct state</td>
+                  </tr>
+                  <tr>
+                    <td>27&ndash;0</td>
+                    <td>exit code</td>
+                    <td>Lower 28 bits of the process exit status</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p>
+                The two state bits carry an invariant worth naming: exactly one of them is set at any moment, so a state transition is a paired set-and-clear rather than a single write.
+                Because the priority and critical flags share the same word, every transition had to be a masked update — clearing a state bit by overwriting the word would silently discard the process's priority.
+              </p>
+
+              <p>
+                The selection policy is a multi-level feedback queue, and three behaviors interact to produce it:
+              </p>
+              <ol>
+                <li><b>Priority.</b> The high queue is drained before the low queue is consulted at all.</li>
+                <li><b>Critical preemption.</b> <code>op_select_high</code> defaults to the front of the list, but scans for a process carrying the critical flag and returns the first one it finds instead, jumping it ahead of everything queued in front of it.</li>
+                <li><b>Aging.</b> Strict priority alone starves the low queue indefinitely, so <code>op_promote_processes</code> runs after every selection: it increments an age counter on each low-priority process and migrates any that reach <code>MAX_AGE</code> to the tail of the high queue. A promoted process gets one turn at high priority, then returns to its normal level.</li>
+              </ol>
+              <p>
+                The remaining functions cover the process lifecycle: allocating the schedule and its three headers, constructing process nodes (including a bounded <code>strncpy</code> of the command string into memory sized for it), routing a node to the correct ready queue by inspecting its priority bit, reporting queue depth, moving a process to the defunct queue on normal exit, locating a process by PID across both ready queues to terminate it mid-flight, and finally tearing down every node, string, and header at shutdown.
+              </p>
+              <p>
+                Two constraints shaped the implementation. The build runs under <code>-Wall -Werror</code>, so every warning is a hard compile failure.
+                And because the API receives pointers from code I did not write, each function validates its arguments before dereferencing anything and reports failure through its return value rather than trusting the caller — the difference between a handled error and a segfault.
+                The finished scheduler runs TRILBY-VM to completion under <code>valgrind</code> with all heap blocks freed and no leaks.
               </p>
             </div>
           </article>
